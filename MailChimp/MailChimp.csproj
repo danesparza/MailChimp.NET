@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\AccountDetails.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,7 +56,6 @@
     <Folder Include="Campaigns\" />
     <Folder Include="Ecomm\" />
     <Folder Include="Folders\" />
-    <Folder Include="Helper\" />
     <Folder Include="Lists\" />
     <Folder Include="Reports\" />
     <Folder Include="Templates\" />
