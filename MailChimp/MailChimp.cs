@@ -156,10 +156,10 @@ namespace MailChimp
                 string errorBody = ex.GetResponseBody();
 
                 //  Serialize the error information:
-                ApiError apiError = errorBody.ToJson<ApiError>();
+                ApiError apiError = errorBody.FromJson<ApiError>();
 
                 //  Throw a new exception based on this information:
-                throw new MailChimpAPIException(apiError.Message, ex, apiError);
+                throw new MailChimpAPIException(apiError.Error, ex, apiError);
             }
 
             //  Return the results

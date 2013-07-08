@@ -34,8 +34,8 @@ namespace MailChimp.Errors
             set;
         }
 
-        [DataMember(Name = "message")]
-        public string Message
+        [DataMember(Name = "error")]
+        public string Error
         {
             get;
             set;
