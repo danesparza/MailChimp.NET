@@ -205,5 +205,15 @@ namespace MailChimp.Helper
             get;
             set;
         }
+
+        /// <summary>
+        /// A list of each connected integration that can be used with campaigns
+        /// </summary>
+        [DataMember(Name = "integrations")]
+        public List<Integration> IntegrationInfo
+        {
+            get;
+            set;
+        }
     }
 }
