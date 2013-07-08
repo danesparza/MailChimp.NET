@@ -213,6 +213,3 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-
-# Global test config
-TestGlobal.cs
