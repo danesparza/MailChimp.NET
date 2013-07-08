@@ -215,4 +215,4 @@ pip-log.txt
 .mr.developer.cfg
 
 # Global test config
-MailChimp.Tests/TestGlobal.cs
+TestGlobal.cs
