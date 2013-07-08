@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MailChimp.Errors;
 using MailChimp.Helper;
 using ServiceStack.Text;
 
@@ -130,8 +132,35 @@ namespace MailChimp
             //  Next, construct the full url based on the passed apiAction:
             string fullUrl = string.Format(_httpsUrl, _dataCenterPrefix, apiAction);
 
-            //  Call the API with the passed arguments:
-            T results = fullUrl.PostJsonToUrl(args).FromJson<T>();
+            //  Initialize the results to return:
+            T results = default(T);
+
+            try
+            {
+                //  Call the API with the passed arguments:
+                results = fullUrl.PostJsonToUrl(args).FromJson<T>();
+            }
+            catch(Exception ex)
+            {
+                var knownError = ex.IsBadRequest()
+                || ex.IsNotFound()
+                || ex.IsUnauthorized()
+                || ex.IsForbidden()
+                || ex.IsInternalServerError();
+
+                var isAnyRedirectionError = ex.IsAny300();
+                var isAnyClientError = ex.IsAny400();
+                var isAnyServerError = ex.IsAny500();
+
+                HttpStatusCode? errorStatus = ex.GetStatus();
+                string errorBody = ex.GetResponseBody();
+
+                //  Serialize the error information:
+                ApiError apiError = errorBody.ToJson<ApiError>();
+
+                //  Throw a new exception based on this information:
+                throw new MailChimpAPIException(apiError.Message, ex, apiError);
+            }
 
             //  Return the results
             return results;

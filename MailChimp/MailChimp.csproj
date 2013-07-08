@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Errors\ApiError.cs" />
+    <Compile Include="Errors\MailChimpAPIException.cs" />
     <Compile Include="Helper\AccountDetails.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
