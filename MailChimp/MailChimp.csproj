@@ -48,6 +48,8 @@
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\MailChimpAPIException.cs" />
     <Compile Include="Helper\AccountDetails.cs" />
+    <Compile Include="Helper\Contact.cs" />
+    <Compile Include="Helper\Module.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

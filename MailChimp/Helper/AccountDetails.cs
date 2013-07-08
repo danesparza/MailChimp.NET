@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MailChimp.Helper
 {
     /// <summary>
-    /// Retrieve lots of account information including payments made, plan info, 
+    /// Account information including payments made, plan info, 
     /// some account stats, installed modules, contact info, and more. No private 
     /// information like Credit Card numbers is available.
     /// More information: http://apidocs.mailchimp.com/api/2.0/helper/account-details.php
@@ -186,5 +186,24 @@ namespace MailChimp.Helper
             set;
         }
 
+        /// <summary>
+        /// Contact details for the account
+        /// </summary>
+        [DataMember(Name = "contact")]
+        public Contact ContactInfo
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// A list of addon modules installed in the account
+        /// </summary>
+        [DataMember(Name = "modules")]
+        public List<Module> ModuleInfo
+        {
+            get;
+            set;
+        }
     }
 }

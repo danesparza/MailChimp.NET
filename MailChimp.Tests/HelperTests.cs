@@ -19,6 +19,8 @@ namespace MailChimp.Tests
 
             //  Assert
             Debug.WriteLine(details.UserId);
+            Debug.WriteLine(details.ContactInfo.Url);
+            Debug.WriteLine(details.ModuleInfo.Count);
         }
     }
 }
