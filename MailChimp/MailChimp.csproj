@@ -54,6 +54,7 @@
     <Compile Include="Helper\EmailParameter.cs" />
     <Compile Include="Helper\FacebookProfile.cs" />
     <Compile Include="Helper\Integration.cs" />
+    <Compile Include="Helper\ListForEmail.cs" />
     <Compile Include="Helper\Module.cs" />
     <Compile Include="Helper\Order.cs" />
     <Compile Include="Helper\Rewards.cs" />

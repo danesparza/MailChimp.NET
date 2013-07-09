@@ -138,6 +138,27 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Retrieve minimal List data for all lists a member is subscribed to.
+        /// </summary>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <returns></returns>
+        public List<ListForEmail> GetListsForEmail(EmailParameter emailParam)
+        {
+            //  Our api action:
+            string apiAction = "helper/lists-for-email";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = emailParam
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<ListForEmail>>(apiAction, args);
+        }
+
+        /// <summary>
         /// Return the current Chimp Chatter messages for an account.
         /// </summary>
         /// <returns></returns>

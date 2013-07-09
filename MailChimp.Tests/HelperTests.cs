@@ -39,6 +39,22 @@ namespace MailChimp.Tests
         }
 
         [TestMethod]
+        public void GetListsForEmail_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+
+            //  Act
+            List<ListForEmail> details = mc.GetListsForEmail(new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            });
+
+            //  Assert
+            Debug.WriteLine(details.Count);
+        }
+
+        [TestMethod]
         public void GetChimpChatter_Successful()
         {
             //  Arrange
