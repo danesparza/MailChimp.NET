@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -119,7 +120,7 @@ namespace MailChimp
         public List<CampaignForEmail> GetCampaignsForEmail(EmailParameter emailParam, string filterListId = "")
         {
             //  Our api action:
-            string apiAction = "/helper/campaigns-for-email";
+            string apiAction = "helper/campaigns-for-email";
 
             //  Create our arguments object:
             object args = new
@@ -134,6 +135,25 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<List<CampaignForEmail>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Return the current Chimp Chatter messages for an account.
+        /// </summary>
+        /// <returns></returns>
+        public List<ChimpChatterMessage> GetChimpChatter()
+        {
+            //  Our api action:
+            string apiAction = "helper/chimp-chatter";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<ChimpChatterMessage>>(apiAction, args);
         }
 
         #endregion

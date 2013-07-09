@@ -37,5 +37,18 @@ namespace MailChimp.Tests
             //  Assert
             Debug.WriteLine(details.Count);
         }
+
+        [TestMethod]
+        public void GetChimpChatter_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+
+            //  Act
+            List<ChimpChatterMessage> details = mc.GetChimpChatter();
+
+            //  Assert
+            Debug.WriteLine(details.Count);
+        }
     }
 }
