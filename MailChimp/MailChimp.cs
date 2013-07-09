@@ -177,6 +177,29 @@ namespace MailChimp
             return MakeAPICall<List<ChimpChatterMessage>>(apiAction, args);
         }
 
+        /// <summary>
+        /// "Ping" the MailChimp API - a simple method you can call that will 
+        /// return a constant value as long as everything is good. Note than unlike 
+        /// most all of our methods, we don't throw an Exception if we are having 
+        /// issues. You will simply receive a different string back that will explain 
+        /// our view on what is going on.
+        /// </summary>
+        /// <returns></returns>
+        public PingMessage Ping()
+        {
+            //  Our api action:
+            string apiAction = "helper/ping";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<PingMessage>(apiAction, args);
+        }
+
         #endregion
 
         #region Generic API calling method

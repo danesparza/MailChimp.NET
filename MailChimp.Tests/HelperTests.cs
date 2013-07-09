@@ -66,5 +66,18 @@ namespace MailChimp.Tests
             //  Assert
             Debug.WriteLine(details.Count);
         }
+
+        [TestMethod]
+        public void Ping_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+
+            //  Act
+            PingMessage details = mc.Ping();
+
+            //  Assert
+            Assert.AreEqual<string>("Everything's Chimpy!", details.Message);
+        }
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Helper\ListForEmail.cs" />
     <Compile Include="Helper\Module.cs" />
     <Compile Include="Helper\Order.cs" />
+    <Compile Include="Helper\PingMessage.cs" />
     <Compile Include="Helper\Rewards.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
