@@ -207,6 +207,27 @@ namespace MailChimp.Helper
         }
 
         /// <summary>
+        /// A list of orders for the account
+        /// </summary>
+        [DataMember(Name = "orders")]
+        public List<Order> OrderInfo
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Rewards details for the account including credits and inspections earned, 
+        /// number of referrals, referral details, and rewards used
+        /// </summary>
+        [DataMember(Name = "rewards")]
+        public Rewards RewardInfo
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// A list of each connected integration that can be used with campaigns
         /// </summary>
         [DataMember(Name = "integrations")]

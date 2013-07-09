@@ -52,6 +52,8 @@
     <Compile Include="Helper\FacebookProfile.cs" />
     <Compile Include="Helper\Integration.cs" />
     <Compile Include="Helper\Module.cs" />
+    <Compile Include="Helper\Order.cs" />
+    <Compile Include="Helper\Rewards.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
