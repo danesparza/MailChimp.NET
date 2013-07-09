@@ -48,7 +48,9 @@
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\MailChimpAPIException.cs" />
     <Compile Include="Helper\AccountDetails.cs" />
+    <Compile Include="Helper\CampaignForEmail.cs" />
     <Compile Include="Helper\Contact.cs" />
+    <Compile Include="Helper\EmailParameter.cs" />
     <Compile Include="Helper\FacebookProfile.cs" />
     <Compile Include="Helper\Integration.cs" />
     <Compile Include="Helper\Module.cs" />

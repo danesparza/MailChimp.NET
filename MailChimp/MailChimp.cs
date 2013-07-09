@@ -108,7 +108,33 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<AccountDetails>(apiAction, args);
-        } 
+        }
+
+        /// <summary>
+        /// Retrieve minimal data for all Campaigns a member was sent
+        /// </summary>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="filterListId">A list_id to limit the campaigns to</param>
+        /// <returns>an array of structs containing campaign data for each matching campaign</returns>
+        public List<CampaignForEmail> GetCampaignsForEmail(EmailParameter emailParam, string filterListId = "")
+        {
+            //  Our api action:
+            string apiAction = "/helper/campaigns-for-email";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = emailParam,
+                options = new
+                {
+                    list_id = filterListId
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<CampaignForEmail>>(apiAction, args);
+        }
 
         #endregion
 
