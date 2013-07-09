@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailChimp.Errors;
 using MailChimp.Helper;
+using MailChimp.Lists;
 using ServiceStack.Text;
 
 namespace MailChimp
@@ -199,6 +200,39 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<PingMessage>(apiAction, args);
         }
+
+        #endregion
+
+        #region API: Lists
+        
+        /// <summary>
+        /// Retrieve all of the lists defined for your user account
+        /// </summary>
+        /// <param name="filterParam">filters to apply to this query - all are optional</param>
+        /// <param name="start">optional - control paging of lists, start results at this list #, defaults to 1st page of data (page 0)</param>
+        /// <param name="limit">optional - control paging of lists, number of lists to return with each call, defaults to 25 (max=100)</param>
+        /// <param name="sort_field">optional - "created" (the created date, default) or "web" (the display order in the web app). Invalid values will fall back on "created" - case insensitive.</param>
+        /// <param name="sort_dir">optional - "DESC" for descending (default), "ASC" for Ascending - case insensitive. Note: to get the exact display order as the web app you'd use "web" and "ASC"</param>
+        /// <returns></returns>
+        public ListResult GetLists(ListFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "created", string sort_dir = "DESC")
+        {
+            //  Our api action:
+            string apiAction = "lists/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                filters = filterParam,
+                start = start,
+                limit = limit,
+                sort_field = sort_field,
+                sort_dir = sort_dir
+            };
+
+            //  Make the call:
+            return MakeAPICall<ListResult>(apiAction, args);
+        } 
 
         #endregion
 
