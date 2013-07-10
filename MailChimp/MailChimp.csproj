@@ -72,6 +72,7 @@
     <Compile Include="Lists\MCLocation.cs" />
     <Compile Include="Lists\MCNote.cs" />
     <Compile Include="Lists\MergeVar.cs" />
+    <Compile Include="Lists\UnsubscribeResult.cs" />
     <Compile Include="MailChimp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

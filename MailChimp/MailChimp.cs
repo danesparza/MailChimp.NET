@@ -351,6 +351,35 @@ namespace MailChimp
             return MakeAPICall<ListAddResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Unsubscribe the given email address from the list
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="deleteMember">optional - flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
+        /// <param name="sendGoodbye">optional - flag to send the goodbye email to the email address, defaults to true</param>
+        /// <param name="sendNotify">optional - flag to send the unsubscribe notification email to the address defined in the list email notification settings, defaults to true</param>
+        /// <returns></returns>
+        public UnsubscribeResult Unsubscribe(string listId, EmailParameter emailParam, bool deleteMember = false, bool sendGoodbye = true, bool sendNotify = true)
+        {
+            //  Our api action:
+            string apiAction = "lists/unsubscribe";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                delete_member = deleteMember,
+                send_goodbye = sendGoodbye,
+                send_notify = sendNotify
+            };
+
+            //  Make the call:
+            return MakeAPICall<UnsubscribeResult>(apiAction, args);
+        }
+
         #endregion
 
         #region Generic API calling method

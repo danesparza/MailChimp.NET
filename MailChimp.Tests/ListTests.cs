@@ -106,5 +106,24 @@ namespace MailChimp.Tests
             Assert.IsNotNull(results);
             Assert.IsTrue(results.AddCount == 2);
         }
+
+        [TestMethod]
+        public void Unsubscribe_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            EmailParameter email = new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            };
+
+            //  Act
+            UnsubscribeResult results = mc.Unsubscribe(lists.Data[1].Id, email);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Complete);
+        }
     }
 }
