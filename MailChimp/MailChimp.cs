@@ -331,7 +331,7 @@ namespace MailChimp
         /// <param name="updateExisting"></param>
         /// <param name="replaceInterests"></param>
         /// <returns></returns>
-        public ListAddResult BatchSubscribe(string listId, List<BatchEmailParameter> listOfEmails, bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true)
+        public BatchSubscribeResult BatchSubscribe(string listId, List<BatchEmailParameter> listOfEmails, bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true)
         {
             //  Our api action:
             string apiAction = "lists/batch-subscribe";
@@ -348,7 +348,7 @@ namespace MailChimp
             };
 
             //  Make the call:
-            return MakeAPICall<ListAddResult>(apiAction, args);
+            return MakeAPICall<BatchSubscribeResult>(apiAction, args);
         }
 
         /// <summary>
@@ -379,6 +379,8 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<UnsubscribeResult>(apiAction, args);
         }
+
+
 
         #endregion
 

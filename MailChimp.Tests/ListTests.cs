@@ -100,7 +100,7 @@ namespace MailChimp.Tests
             emails.Add(email2);
 
             //  Act
-            ListAddResult results = mc.BatchSubscribe(lists.Data[1].Id, emails);
+            BatchSubscribeResult results = mc.BatchSubscribe(lists.Data[1].Id, emails);
 
             //  Assert
             Assert.IsNotNull(results);

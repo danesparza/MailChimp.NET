@@ -9,7 +9,7 @@ using MailChimp.Helper;
 namespace MailChimp.Lists
 {
     [DataContract]
-    public class ListAddResult
+    public class BatchSubscribeResult
     {
         /// <summary>
         /// Number of email addresses that were successfully added
