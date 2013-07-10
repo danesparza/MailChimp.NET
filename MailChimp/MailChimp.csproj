@@ -62,6 +62,7 @@
     <Compile Include="Lists\AbuseReport.cs" />
     <Compile Include="Lists\AbuseResult.cs" />
     <Compile Include="Lists\BatchEmailParameter.cs" />
+    <Compile Include="Lists\BatchUnsubscribeResult.cs" />
     <Compile Include="Lists\Grouping.cs" />
     <Compile Include="Lists\ListActivity.cs" />
     <Compile Include="Lists\ListError.cs" />

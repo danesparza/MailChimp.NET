@@ -380,7 +380,34 @@ namespace MailChimp
             return MakeAPICall<UnsubscribeResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Unsubscribe a batch of email addresses from a list
+        /// </summary>
+        /// <param name="listId">the list id to connect to.</param>
+        /// <param name="listOfEmails">array of emails to unsubscribe</param>
+        /// <param name="deleteMember">flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
+        /// <param name="sendGoodbye">flag to send the goodbye email to the email addresses, defaults to true</param>
+        /// <param name="sendNotify">flag to send the unsubscribe notification email to the address defined in the list email notification settings, defaults to false</param>
+        /// <returns></returns>
+        public BatchUnsubscribeResult BatchUnsubscribe(string listId, List<EmailParameter> listOfEmails, bool deleteMember = false, bool sendGoodbye = true, bool sendNotify = false)
+        {
+            //  Our api action:
+            string apiAction = "lists/batch-unsubscribe";
 
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                batch = listOfEmails,
+                delete_member = deleteMember,
+                send_goodbye = sendGoodbye,
+                send_notify = sendNotify
+            };
+
+            //  Make the call:
+            return MakeAPICall<BatchUnsubscribeResult>(apiAction, args);
+        }
 
         #endregion
 
