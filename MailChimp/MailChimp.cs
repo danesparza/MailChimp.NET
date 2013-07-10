@@ -282,6 +282,75 @@ namespace MailChimp
             return MakeAPICall<List<ListActivity>>(apiAction, args);
         }
 
+        /// <summary>
+        /// Subscribe the provided email to a list. By default this sends a 
+        /// confirmation email - you will not see new members until the 
+        /// link contained in it is clicked!
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="mergeVars">optional merges for the email (FNAME, LNAME, etc.)</param>
+        /// <param name="emailType">optional email type preference for the email (html or text - defaults to html)</param>
+        /// <param name="doubleOptIn">optional flag to control whether a double opt-in confirmation message is sent, defaults to true. Abusing this may cause your account to be suspended.</param>
+        /// <param name="updateExisting">optional flag to control whether existing subscribers should be updated instead of throwing an error, defaults to false</param>
+        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
+        /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
+        /// <returns></returns>
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        {
+            //  Our api action:
+            string apiAction = "lists/subscribe";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                merge_vars = mergeVars,
+                email_type = emailType,
+                double_optin = doubleOptIn,
+                update_existing = updateExisting,
+                replace_interests = replaceInterests,
+                send_welcome = sendWelcome
+            };
+
+            //  Make the call:
+            return MakeAPICall<EmailParameter>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Subscribe a batch of email addresses to a list at once. Maximum batch sizes vary based 
+        /// on the amount of data in each record, though you should cap them 
+        /// at 5k - 10k records, depending on your experience. These calls are also 
+        /// long, so be sure you increase your timeout values.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <param name="listOfEmails"></param>
+        /// <param name="doubleOptIn"></param>
+        /// <param name="updateExisting"></param>
+        /// <param name="replaceInterests"></param>
+        /// <returns></returns>
+        public ListAddResult BatchSubscribe(string listId, List<BatchEmailParameter> listOfEmails, bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true)
+        {
+            //  Our api action:
+            string apiAction = "lists/batch-subscribe";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                batch = listOfEmails,
+                double_optin = doubleOptIn,
+                update_existing = updateExisting,
+                replace_interests = replaceInterests
+            };
+
+            //  Make the call:
+            return MakeAPICall<ListAddResult>(apiAction, args);
+        }
+
         #endregion
 
         #region Generic API calling method
