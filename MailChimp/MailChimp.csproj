@@ -64,7 +64,7 @@
     <Compile Include="Lists\BatchEmailParameter.cs" />
     <Compile Include="Lists\Grouping.cs" />
     <Compile Include="Lists\ListActivity.cs" />
-    <Compile Include="Lists\ListAddError.cs" />
+    <Compile Include="Lists\ListError.cs" />
     <Compile Include="Lists\ListAddResult.cs" />
     <Compile Include="Lists\ListFilter.cs" />
     <Compile Include="Lists\ListInfo.cs" />

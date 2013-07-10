@@ -11,7 +11,7 @@ namespace MailChimp.Lists
     /// Error messages from batch subscribes
     /// </summary>
     [DataContract]
-    public class ListAddError
+    public class ListError
     {
         /// <summary>
         /// whatever was passed in the batch record's email parameter

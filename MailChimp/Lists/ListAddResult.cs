@@ -65,7 +65,7 @@ namespace MailChimp.Lists
         /// Error information
         /// </summary>
         [DataMember(Name = "errors")]
-        public List<ListAddError> Errors
+        public List<ListError> Errors
         {
             get;
             set;
