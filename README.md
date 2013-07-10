@@ -5,7 +5,7 @@ MailChimp.NET
 
 
 ### Status
-Here is the progress so far:
+Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
 - Campaigns related: **0%** (0 of 15)
 - Ecomm related: **0%** (0 of 3)
@@ -17,4 +17,4 @@ Here is the progress so far:
 - User related: **0%** (0 of 6)
 - Vip related: **0%** (0 of 4)
 
-- **Overall**: **6%** (6 of 102)
+**Overall**: **6%** (6 of 102)
