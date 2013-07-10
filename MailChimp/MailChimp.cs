@@ -232,7 +232,34 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<ListResult>(apiAction, args);
-        } 
+        }
+
+        /// <summary>
+        /// Get all email addresses that complained about a campaign sent to a list
+        /// </summary>
+        /// <param name="listId">the list id to pull abuse reports for (can be gathered using GetLists())</param>
+        /// <param name="start">optional for large data sets, the page number to start at - defaults to 1st page of data (page 0)</param>
+        /// <param name="limit">optional for large data sets, the number of results to return - defaults to 500, upper limit set at 1000</param>
+        /// <param name="since">optional pull only messages since this time - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
+        /// <returns></returns>
+        public AbuseResult GetAbuseReports(string listId, int start = 0, int limit = 500, string since = "")
+        {
+            //  Our api action:
+            string apiAction = "lists/abuse-reports";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                start = start,
+                limit = limit,
+                since = since
+            };
+
+            //  Make the call:
+            return MakeAPICall<AbuseResult>(apiAction, args);
+        }
 
         #endregion
 
