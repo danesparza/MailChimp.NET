@@ -5,16 +5,16 @@ MailChimp.NET
 
 
 ### Status
-I will update the library following the [method categories described by the API docs](http://apidocs.mailchimp.com/api/1.3/#method-&-error-code-docs). Here is the progress so far:
+Here is the progress so far:
 
 - Campaigns related: **0%** (0 of 15)
 - Ecomm related: **0%** (0 of 3)
 - Folder related: **0%** (0 of 4)
-- List related: **18%** (1 of 36)
-- Helper related: **0%** (0 of 10)
+- List related: **2%** (1 of 36)
+- Helper related: **50%** (5 of 10)
 - Reports related: **0%** (0 of 18)
 - Templates related: **0%** (0 of 6)
 - User related: **0%** (0 of 6)
-- Vip related: **0%** (0 of 6)
+- Vip related: **0%** (0 of 4)
 
-- **Overall**: **6%** (6 of 99)
+- **Overall**: **6%** (6 of 102)
