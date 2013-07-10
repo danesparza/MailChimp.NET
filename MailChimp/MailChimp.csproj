@@ -61,6 +61,7 @@
     <Compile Include="Helper\Rewards.cs" />
     <Compile Include="Lists\AbuseReport.cs" />
     <Compile Include="Lists\AbuseResult.cs" />
+    <Compile Include="Lists\ListActivity.cs" />
     <Compile Include="Lists\ListFilter.cs" />
     <Compile Include="Lists\ListInfo.cs" />
     <Compile Include="Lists\ListResult.cs" />

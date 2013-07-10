@@ -242,7 +242,7 @@ namespace MailChimp
         /// <param name="limit">optional for large data sets, the number of results to return - defaults to 500, upper limit set at 1000</param>
         /// <param name="since">optional pull only messages since this time - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
         /// <returns></returns>
-        public AbuseResult GetAbuseReports(string listId, int start = 0, int limit = 500, string since = "")
+        public AbuseResult GetListAbuseReports(string listId, int start = 0, int limit = 500, string since = "")
         {
             //  Our api action:
             string apiAction = "lists/abuse-reports";
@@ -259,6 +259,27 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<AbuseResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Access up to the previous 180 days of daily detailed aggregated activity stats for a given list. Does not include AutoResponder activity.
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <returns></returns>
+        public List<ListActivity> GetListActivity(string listId)
+        {
+            //  Our api action:
+            string apiAction = "lists/activity";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<ListActivity>>(apiAction, args);
         }
 
         #endregion
