@@ -4,6 +4,7 @@ using MailChimp.Lists;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using MailChimp.Helper;
+using System.Diagnostics;
 
 namespace MailChimp.Tests
 {
@@ -192,11 +193,21 @@ namespace MailChimp.Tests
             MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
-            //  Act
-            MembersResult results = mc.GetAllMembersForList(lists.Data[1].Id);
+            //  For each list
+            foreach(var list in lists.Data)
+            {
+                //  Write out the list name:
+                Debug.WriteLine("Users for the list " + list.Name);
 
-            //  Assert
-            Assert.IsNotNull(results);
+                //  Get the first 100 members of each list:
+                MembersResult results = mc.GetAllMembersForList(list.Id, "subscribed", 0, 100);
+
+                //  Write out each member's email address:
+                foreach(var member in results.Data)
+                {
+                    Debug.WriteLine(member.Email);
+                }
+            }
         }
     }
 }
