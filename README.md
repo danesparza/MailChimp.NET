@@ -14,6 +14,29 @@ In your application, call:
     MailChimp mc = new MailChimp("YourApiKeyHere-us2");
     ListResult lists = mc.GetLists();
 
+### Examples
+
+Getting the first 100 users in each list:
+
+	MailChimp mc = new MailChimp("YourApiKeyHere-us2");
+    ListResult lists = mc.GetLists();
+
+    //  For each list
+    foreach(var list in lists.Data)
+    {
+        //  Write out the list name:
+        Debug.WriteLine("Users for the list " + list.Name);
+
+        //  Get the first 100 members of each list:
+        MembersResult results = mc.GetAllMembersForList(list.Id, "subscribed", 0, 100);
+
+        //  Write out each member's email address:
+        foreach(var member in results.Data)
+        {
+            Debug.WriteLine(member.Email);
+        }
+    }
+
 
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
