@@ -325,7 +325,7 @@ namespace MailChimp
         /// at 5k - 10k records, depending on your experience. These calls are also 
         /// long, so be sure you increase your timeout values.
         /// </summary>
-        /// <param name="listId"></param>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
         /// <param name="listOfEmails"></param>
         /// <param name="doubleOptIn"></param>
         /// <param name="updateExisting"></param>
@@ -354,7 +354,7 @@ namespace MailChimp
         /// <summary>
         /// Unsubscribe the given email address from the list
         /// </summary>
-        /// <param name="listId"></param>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
         /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
         /// <param name="deleteMember">optional - flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
         /// <param name="sendGoodbye">optional - flag to send the goodbye email to the email address, defaults to true</param>
@@ -383,7 +383,7 @@ namespace MailChimp
         /// <summary>
         /// Unsubscribe a batch of email addresses from a list
         /// </summary>
-        /// <param name="listId">the list id to connect to.</param>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
         /// <param name="listOfEmails">array of emails to unsubscribe</param>
         /// <param name="deleteMember">flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
         /// <param name="sendGoodbye">flag to send the goodbye email to the email addresses, defaults to true</param>
@@ -407,6 +407,64 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<BatchUnsubscribeResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Get all the information for particular members of a list
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="listOfEmails">an array of up to 50 email address struct to retrieve member information for</param>
+        /// <returns></returns>
+        public MemberInfoResult GetMemberInfo(string listId, List<EmailParameter> listOfEmails)
+        {
+            //  Our api action:
+            string apiAction = "lists/member-info";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                emails = listOfEmails
+            };
+
+            //  Make the call:
+            return MakeAPICall<MemberInfoResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Get all of the list members for a list that are of a particular status and 
+        /// potentially matching a segment. This will cause locking, so don't run multiples at once.
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="status">optional - the status to get members for - one of(subscribed, unsubscribed, cleaned)</param>
+        /// <param name="start">for large data sets, the page number to start at</param>
+        /// <param name="limit">for large data sets, the number of results to return - defaults to 25, upper limit set at 100</param>
+        /// <param name="sort_field">the data field to sort by - mergeX (1-30), your custom merge tags, "email", "rating","last_update_time", or "optin_time" - invalid fields will be ignored</param>
+        /// <param name="sort_dir">the direct - ASC or DESC</param>
+        /// <returns></returns>
+        public MembersResult GetAllMembersForList(string listId, string status = "subscribed", int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC")
+        {
+            //  Our api action:
+            string apiAction = "lists/members";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                status = status,
+                opts = new 
+                {
+                    start = start,
+                    limit = limit,
+                    sort_field = sort_field,
+                    sort_dir = sort_dir
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<MembersResult>(apiAction, args);
         }
 
         #endregion

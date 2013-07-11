@@ -155,5 +155,48 @@ namespace MailChimp.Tests
             Assert.IsNotNull(results);
             Assert.IsTrue(results.SuccessCount == 2);
         }
+
+        [TestMethod]
+        public void GetMemberInfo_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+
+            List<EmailParameter> emails = new List<EmailParameter>();
+
+            EmailParameter email1 = new EmailParameter()
+            {
+                Email = "customeremail1@righthere.com"
+            };
+
+            EmailParameter email2 = new EmailParameter()
+            {
+                Email = "customeremail2@righthere.com"
+            };
+
+            emails.Add(email1);
+            emails.Add(email2);
+
+            //  Act
+            MemberInfoResult results = mc.GetMemberInfo(lists.Data[1].Id, emails);
+
+            //  Assert
+            Assert.IsNotNull(results);
+        }
+
+        [TestMethod]
+        public void GetAllMembersForList_Successful()
+        {
+            //  Arrange
+            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+
+            //  Act
+            MembersResult results = mc.GetAllMembersForList(lists.Data[1].Id);
+
+            //  Assert
+            Assert.IsNotNull(results);
+        }
     }
 }

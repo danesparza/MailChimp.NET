@@ -63,6 +63,7 @@
     <Compile Include="Lists\AbuseResult.cs" />
     <Compile Include="Lists\BatchEmailParameter.cs" />
     <Compile Include="Lists\BatchUnsubscribeResult.cs" />
+    <Compile Include="Lists\Client.cs" />
     <Compile Include="Lists\Grouping.cs" />
     <Compile Include="Lists\ListActivity.cs" />
     <Compile Include="Lists\ListError.cs" />
@@ -72,6 +73,11 @@
     <Compile Include="Lists\ListResult.cs" />
     <Compile Include="Lists\MCLocation.cs" />
     <Compile Include="Lists\MCNote.cs" />
+    <Compile Include="Lists\MemberGeo.cs" />
+    <Compile Include="Lists\MemberInfo.cs" />
+    <Compile Include="Lists\MemberInfoResult.cs" />
+    <Compile Include="Lists\MemberNote.cs" />
+    <Compile Include="Lists\MembersResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\UnsubscribeResult.cs" />
     <Compile Include="MailChimp.cs" />
