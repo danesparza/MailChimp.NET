@@ -11,14 +11,14 @@ Next, you will need to provide MailChimp.NET with your API key.  Need help findi
 
 In your application, call:
 
-    MailChimp mc = new MailChimp("YourApiKeyHere-us2");
+    MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
     ListResult lists = mc.GetLists();
 
 ### Examples
 
 Getting the first 100 users in each list:
 
-	MailChimp mc = new MailChimp("YourApiKeyHere-us2");
+	MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
     ListResult lists = mc.GetLists();
 
     //  For each list
