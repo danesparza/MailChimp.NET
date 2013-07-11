@@ -12,7 +12,7 @@ namespace MailChimp.Tests
         public void GetAccountDetails_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             AccountDetails details = mc.GetAccountDetails();
@@ -26,7 +26,7 @@ namespace MailChimp.Tests
         public void GetCampaignsForEmail_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             List<CampaignForEmail> details = mc.GetCampaignsForEmail(new EmailParameter()
@@ -42,7 +42,7 @@ namespace MailChimp.Tests
         public void GetListsForEmail_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             List<ListForEmail> details = mc.GetListsForEmail(new EmailParameter()
@@ -58,7 +58,7 @@ namespace MailChimp.Tests
         public void GetChimpChatter_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             List<ChimpChatterMessage> details = mc.GetChimpChatter();
@@ -71,7 +71,7 @@ namespace MailChimp.Tests
         public void Ping_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             PingMessage details = mc.Ping();

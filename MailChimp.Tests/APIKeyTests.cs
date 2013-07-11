@@ -13,7 +13,7 @@ namespace MailChimp.Tests
             string apiKey = "testapikey-us2";
 
             //  Act
-            MailChimp mc = new MailChimp(apiKey);
+            MailChimpManager mc = new MailChimpManager(apiKey);
 
             PrivateObject po = new PrivateObject(mc);
             string dataCenterPrefix = po.GetField("_dataCenterPrefix").ToString();

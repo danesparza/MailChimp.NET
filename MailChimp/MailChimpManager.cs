@@ -16,7 +16,7 @@ namespace MailChimp
     /// .NET API Wrapper for the Mailchimp v2.0 API.  
     /// More information here: http://apidocs.mailchimp.com/api/2.0/
     /// </summary>
-    public class MailChimp
+    public class MailChimpManager
     {
         #region Fields and properties
         
@@ -37,7 +37,7 @@ namespace MailChimp
         #region Constructors and API key
 
         //  Default constructor
-        public MailChimp()
+        public MailChimpManager()
         {
 
         }
@@ -62,7 +62,7 @@ namespace MailChimp
         /// Create an instance of the wrappper with your API key
         /// </summary>
         /// <param name="apiKey">The MailChimp API key to use</param>
-        public MailChimp(string apiKey)
+        public MailChimpManager(string apiKey)
             : this()
         {
             this.APIKey = apiKey;

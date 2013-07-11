@@ -80,7 +80,7 @@
     <Compile Include="Lists\MembersResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\UnsubscribeResult.cs" />
-    <Compile Include="MailChimp.cs" />
+    <Compile Include="MailChimpManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

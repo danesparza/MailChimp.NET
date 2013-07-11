@@ -15,7 +15,7 @@ namespace MailChimp.Tests
         public void GetLists_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
 
             //  Act
             ListResult details = mc.GetLists();
@@ -28,7 +28,7 @@ namespace MailChimp.Tests
         public void GetAbuseReport_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             //  Act
@@ -42,7 +42,7 @@ namespace MailChimp.Tests
         public void GetListActivity_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             //  Act
@@ -57,7 +57,7 @@ namespace MailChimp.Tests
         public void Subscribe_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
             EmailParameter email = new EmailParameter()
             {
@@ -76,7 +76,7 @@ namespace MailChimp.Tests
         public void BatchSubscribe_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             List<BatchEmailParameter> emails = new List<BatchEmailParameter>();
@@ -112,7 +112,7 @@ namespace MailChimp.Tests
         public void Unsubscribe_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
             EmailParameter email = new EmailParameter()
             {
@@ -131,7 +131,7 @@ namespace MailChimp.Tests
         public void BatchUnsubscribe_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             List<EmailParameter> emails = new List<EmailParameter>();
@@ -161,7 +161,7 @@ namespace MailChimp.Tests
         public void GetMemberInfo_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             List<EmailParameter> emails = new List<EmailParameter>();
@@ -190,7 +190,7 @@ namespace MailChimp.Tests
         public void GetAllMembersForList_Successful()
         {
             //  Arrange
-            MailChimp mc = new MailChimp(TestGlobal.Test_APIKey);
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
             //  For each list
