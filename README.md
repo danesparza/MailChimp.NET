@@ -18,6 +18,9 @@ In your application, call:
 
 Getting the first 100 users in each list:
 
+	using MailChimp;
+	using MailChimp.Lists;
+
 	MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
     ListResult lists = mc.GetLists();
 
