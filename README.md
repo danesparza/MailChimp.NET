@@ -3,6 +3,17 @@ MailChimp.NET
 
 .NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/)
 
+### Quick Start
+
+Add a reference to MailChimp.dll
+
+Next, you will need to provide MailChimp.NET with your API key.  Need help finding your API key?  Check here: http://kb.mailchimp.com/article/where-can-i-find-my-api-key
+
+In your application, call:
+
+    MailChimp mc = new MailChimp("YourApiKeyHere-us2");
+    ListResult lists = mc.GetLists();
+
 
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
