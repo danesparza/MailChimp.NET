@@ -16,7 +16,7 @@ In your application, call:
 
 ### Examples
 
-Getting the first 100 users in each list:
+##### Getting the first 100 users in each list:
 
 	using MailChimp;
 	using MailChimp.Lists;
@@ -37,6 +37,38 @@ Getting the first 100 users in each list:
         foreach(var member in results.Data)
         {
             Debug.WriteLine(member.Email);
+        }
+    }
+
+##### Subscribe an email address to a list:
+	
+	MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+    
+    //	Create the email parameter
+    EmailParameter email = new EmailParameter()
+    {
+        Email = "customeremail@righthere.com"
+    };
+
+    EmailParameter results = mc.Subscribe("YourListID", email);
+
+##### Getting location data for each list:
+
+    MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+    ListResult lists = mc.GetLists();
+
+    //  For each list
+    foreach(var list in lists.Data)
+    {
+        Debug.WriteLine("Information for " + list.Name);
+
+        //  Get the location data for each list:
+        List<SubscriberLocation> locations = mc.GetLocationsForList(list.Id);
+
+        //  Write out each of the locations:
+        foreach(var location in locations)
+        {
+            Debug.WriteLine("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total);
         }
     }
 
