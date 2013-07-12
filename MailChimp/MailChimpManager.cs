@@ -204,35 +204,6 @@ namespace MailChimp
         #endregion
 
         #region API: Lists
-        
-        /// <summary>
-        /// Retrieve all of the lists defined for your user account
-        /// </summary>
-        /// <param name="filterParam">filters to apply to this query - all are optional</param>
-        /// <param name="start">optional - control paging of lists, start results at this list #, defaults to 1st page of data (page 0)</param>
-        /// <param name="limit">optional - control paging of lists, number of lists to return with each call, defaults to 25 (max=100)</param>
-        /// <param name="sort_field">optional - "created" (the created date, default) or "web" (the display order in the web app). Invalid values will fall back on "created" - case insensitive.</param>
-        /// <param name="sort_dir">optional - "DESC" for descending (default), "ASC" for Ascending - case insensitive. Note: to get the exact display order as the web app you'd use "web" and "ASC"</param>
-        /// <returns></returns>
-        public ListResult GetLists(ListFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "created", string sort_dir = "DESC")
-        {
-            //  Our api action:
-            string apiAction = "lists/list";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                filters = filterParam,
-                start = start,
-                limit = limit,
-                sort_field = sort_field,
-                sort_dir = sort_dir
-            };
-
-            //  Make the call:
-            return MakeAPICall<ListResult>(apiAction, args);
-        }
 
         /// <summary>
         /// Get all email addresses that complained about a campaign sent to a list
@@ -283,43 +254,6 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// Subscribe the provided email to a list. By default this sends a 
-        /// confirmation email - you will not see new members until the 
-        /// link contained in it is clicked!
-        /// </summary>
-        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
-        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
-        /// <param name="mergeVars">optional merges for the email (FNAME, LNAME, etc.)</param>
-        /// <param name="emailType">optional email type preference for the email (html or text - defaults to html)</param>
-        /// <param name="doubleOptIn">optional flag to control whether a double opt-in confirmation message is sent, defaults to true. Abusing this may cause your account to be suspended.</param>
-        /// <param name="updateExisting">optional flag to control whether existing subscribers should be updated instead of throwing an error, defaults to false</param>
-        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
-        /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
-        /// <returns></returns>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
-        {
-            //  Our api action:
-            string apiAction = "lists/subscribe";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                id = listId,
-                email = emailParam,
-                merge_vars = mergeVars,
-                email_type = emailType,
-                double_optin = doubleOptIn,
-                update_existing = updateExisting,
-                replace_interests = replaceInterests,
-                send_welcome = sendWelcome
-            };
-
-            //  Make the call:
-            return MakeAPICall<EmailParameter>(apiAction, args);
-        }
-
-        /// <summary>
         /// Subscribe a batch of email addresses to a list at once. Maximum batch sizes vary based 
         /// on the amount of data in each record, though you should cap them 
         /// at 5k - 10k records, depending on your experience. These calls are also 
@@ -352,35 +286,6 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// Unsubscribe the given email address from the list
-        /// </summary>
-        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
-        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
-        /// <param name="deleteMember">optional - flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
-        /// <param name="sendGoodbye">optional - flag to send the goodbye email to the email address, defaults to true</param>
-        /// <param name="sendNotify">optional - flag to send the unsubscribe notification email to the address defined in the list email notification settings, defaults to true</param>
-        /// <returns></returns>
-        public UnsubscribeResult Unsubscribe(string listId, EmailParameter emailParam, bool deleteMember = false, bool sendGoodbye = true, bool sendNotify = true)
-        {
-            //  Our api action:
-            string apiAction = "lists/unsubscribe";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                id = listId,
-                email = emailParam,
-                delete_member = deleteMember,
-                send_goodbye = sendGoodbye,
-                send_notify = sendNotify
-            };
-
-            //  Make the call:
-            return MakeAPICall<UnsubscribeResult>(apiAction, args);
-        }
-
-        /// <summary>
         /// Unsubscribe a batch of email addresses from a list
         /// </summary>
         /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
@@ -407,6 +312,56 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<BatchUnsubscribeResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve all of the lists defined for your user account
+        /// </summary>
+        /// <param name="filterParam">filters to apply to this query - all are optional</param>
+        /// <param name="start">optional - control paging of lists, start results at this list #, defaults to 1st page of data (page 0)</param>
+        /// <param name="limit">optional - control paging of lists, number of lists to return with each call, defaults to 25 (max=100)</param>
+        /// <param name="sort_field">optional - "created" (the created date, default) or "web" (the display order in the web app). Invalid values will fall back on "created" - case insensitive.</param>
+        /// <param name="sort_dir">optional - "DESC" for descending (default), "ASC" for Ascending - case insensitive. Note: to get the exact display order as the web app you'd use "web" and "ASC"</param>
+        /// <returns></returns>
+        public ListResult GetLists(ListFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "created", string sort_dir = "DESC")
+        {
+            //  Our api action:
+            string apiAction = "lists/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                filters = filterParam,
+                start = start,
+                limit = limit,
+                sort_field = sort_field,
+                sort_dir = sort_dir
+            };
+
+            //  Make the call:
+            return MakeAPICall<ListResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the locations (countries) that the list's subscribers have been tagged to based on geocoding their IP address
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <returns></returns>
+        public List<SubscriberLocation> GetLocationsForList(string listId)
+        {
+            //  Our api action:
+            string apiAction = "lists/locations";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<SubscriberLocation>>(apiAction, args);
         }
 
         /// <summary>
@@ -454,7 +409,7 @@ namespace MailChimp
                 apikey = this.APIKey,
                 id = listId,
                 status = status,
-                opts = new 
+                opts = new
                 {
                     start = start,
                     limit = limit,
@@ -468,24 +423,69 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// Retrieve the locations (countries) that the list's subscribers have been tagged to based on geocoding their IP address
+        /// Subscribe the provided email to a list. By default this sends a 
+        /// confirmation email - you will not see new members until the 
+        /// link contained in it is clicked!
         /// </summary>
         /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="mergeVars">optional merges for the email (FNAME, LNAME, etc.)</param>
+        /// <param name="emailType">optional email type preference for the email (html or text - defaults to html)</param>
+        /// <param name="doubleOptIn">optional flag to control whether a double opt-in confirmation message is sent, defaults to true. Abusing this may cause your account to be suspended.</param>
+        /// <param name="updateExisting">optional flag to control whether existing subscribers should be updated instead of throwing an error, defaults to false</param>
+        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
+        /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
         /// <returns></returns>
-        public List<SubscriberLocation> GetLocationsForList(string listId)
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
-            string apiAction = "lists/locations";
+            string apiAction = "lists/subscribe";
 
             //  Create our arguments object:
             object args = new
             {
                 apikey = this.APIKey,
-                id = listId
+                id = listId,
+                email = emailParam,
+                merge_vars = mergeVars,
+                email_type = emailType,
+                double_optin = doubleOptIn,
+                update_existing = updateExisting,
+                replace_interests = replaceInterests,
+                send_welcome = sendWelcome
             };
 
             //  Make the call:
-            return MakeAPICall<List<SubscriberLocation>>(apiAction, args);
+            return MakeAPICall<EmailParameter>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Unsubscribe the given email address from the list
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="deleteMember">optional - flag to completely delete the member from your list instead of just unsubscribing, default to false</param>
+        /// <param name="sendGoodbye">optional - flag to send the goodbye email to the email address, defaults to true</param>
+        /// <param name="sendNotify">optional - flag to send the unsubscribe notification email to the address defined in the list email notification settings, defaults to true</param>
+        /// <returns></returns>
+        public UnsubscribeResult Unsubscribe(string listId, EmailParameter emailParam, bool deleteMember = false, bool sendGoodbye = true, bool sendNotify = true)
+        {
+            //  Our api action:
+            string apiAction = "lists/unsubscribe";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                delete_member = deleteMember,
+                send_goodbye = sendGoodbye,
+                send_notify = sendNotify
+            };
+
+            //  Make the call:
+            return MakeAPICall<UnsubscribeResult>(apiAction, args);
         }
 
         #endregion
