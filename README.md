@@ -5,14 +5,13 @@ MailChimp.NET
 
 ### Quick Start
 
-Add a reference to MailChimp.dll, or install the NuGet package (located here https://nuget.org/packages/MailChimp.NET/ )
-
-Next, you will need to provide MailChimp.NET with your API key.  Need help finding your API key?  Check here: http://kb.mailchimp.com/article/where-can-i-find-my-api-key
+1. Add a reference to MailChimp.dll, or install the NuGet package (located here https://nuget.org/packages/MailChimp.NET/ )
+2. Next, you will need to provide MailChimp.NET with your API key in code.  Need help finding your API key?  Check here: http://kb.mailchimp.com/article/where-can-i-find-my-api-key
 
 In your application, call:
 
-    MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
-    ListResult lists = mc.GetLists();
+	MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+	ListResult lists = mc.GetLists();
 
 ### Examples
 
