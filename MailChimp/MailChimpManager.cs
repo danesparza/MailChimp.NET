@@ -467,6 +467,27 @@ namespace MailChimp
             return MakeAPICall<MembersResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Retrieve the locations (countries) that the list's subscribers have been tagged to based on geocoding their IP address
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <returns></returns>
+        public List<SubscriberLocation> GetLocationsForList(string listId)
+        {
+            //  Our api action:
+            string apiAction = "lists/locations";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<SubscriberLocation>>(apiAction, args);
+        }
+
         #endregion
 
         #region Generic API calling method
@@ -499,17 +520,6 @@ namespace MailChimp
             }
             catch(Exception ex)
             {
-                var knownError = ex.IsBadRequest()
-                || ex.IsNotFound()
-                || ex.IsUnauthorized()
-                || ex.IsForbidden()
-                || ex.IsInternalServerError();
-
-                var isAnyRedirectionError = ex.IsAny300();
-                var isAnyClientError = ex.IsAny400();
-                var isAnyServerError = ex.IsAny500();
-
-                HttpStatusCode? errorStatus = ex.GetStatus();
                 string errorBody = ex.GetResponseBody();
 
                 //  Serialize the error information:
