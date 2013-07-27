@@ -13,7 +13,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Campaign Id (used for all other campaign functions)
         /// </summary>
-        [DataMember(Name="")]
+        [DataMember(Name="id")]
         public string Id
         {
             get;
@@ -23,7 +23,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The Campaign id used in our web app, allows you to create a link directly to it
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "web_id")]
         public int WebId
         {
             get;
@@ -33,7 +33,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The List used for this campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "list_id")]
         public string ListId
         {
             get;
@@ -43,7 +43,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The Folder this campaign is in
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "folder_id")]
         public int FolderId
         {
             get;
@@ -53,7 +53,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The Template this campaign uses
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "template_id")]
         public int TemplateId
         {
             get;
@@ -63,7 +63,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// How the campaign's content is put together - one of 'template', 'html', 'url'
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "content_type")]
         public string ContentType
         {
             get;
@@ -73,7 +73,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Title of the campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "title")]
         public string Title
         {
             get;
@@ -83,7 +83,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The type of campaign this is (regular,plaintext,absplit,rss,inspection,auto)
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "type")]
         public string Type
         {
             get;
@@ -93,7 +93,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Creation time for the campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "create_time")]
         public string CreateTime
         {
             get;
@@ -103,7 +103,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Send time for the campaign - also the scheduled time for scheduled campaigns.
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "send_time")]
         public string SendTime
         {
             get;
@@ -113,7 +113,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Number of emails email was sent to
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "emails_sent")]
         public int EmailsSent
         {
             get;
@@ -123,7 +123,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Status of the given campaign (save,paused,schedule,sending,sent)
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "status")]
         public string Status
         {
             get;
@@ -133,7 +133,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// From name of the given campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "from_name")]
         public string FromName
         {
             get;
@@ -143,7 +143,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Reply-to email of the given campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "from_email")]
         public string FromEmail
         {
             get;
@@ -153,7 +153,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Subject of the given campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "subject")]
         public string Subject
         {
             get;
@@ -163,7 +163,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Custom "To:" email string using merge variables
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "to_name")]
         public string ToName
         {
             get;
@@ -173,7 +173,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Archive link for the given campaign
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "archive_url")]
         public string ArchiveUrl
         {
             get;
@@ -183,7 +183,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Whether or not the campaign content's css was auto-inlined
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "inline_css")]
         public bool InlineCSS
         {
             get;
@@ -193,7 +193,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Either "google" if enabled or "N" if disabled
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "analytics")]
         public string Analytics
         {
             get;
@@ -203,7 +203,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// The name/tag the campaign's links were tagged with if analytics were enabled.
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "analytics_tag")]
         public string AnalyticsTag
         {
             get;
@@ -213,7 +213,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Whether or not the campaign was authenticated
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "authenticate")]
         public bool Authenticate
         {
             get;
@@ -223,7 +223,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Whether or not ecomm360 tracking was appended to links
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "ecomm360")]
         public bool Ecomm360
         {
             get;
@@ -233,7 +233,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// Whether or not the campaign was auto tweeted after sending
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "auto_tweet")]
         public bool AutoTweet
         {
             get;
@@ -241,9 +241,10 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// A comma delimited list of Facebook Profile/Page Ids the 
+        /// campaign was posted to after sending. If not used, blank.
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "auto_fb_post")]
         public string AutoFacebookPost
         {
             get;
@@ -251,9 +252,9 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// Whether or not the auto_footer was manually turned on
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "auto_footer")]
         public bool AutoFooter
         {
             get;
@@ -261,9 +262,9 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// Whether or not the campaign used Timewarp
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "timewarp")]
         public bool Timewarp
         {
             get;
@@ -271,9 +272,11 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// The time, in GMT, that the Timewarp campaign is being sent. 
+        /// For A/B Split campaigns, this is blank and is instead in 
+        /// their schedule_a and schedule_b in the type_opts array
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "timewarp_schedule")]
         public string TimewarpSchedule
         {
             get;
@@ -281,9 +284,10 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// the unique id of the parent campaign 
+        /// (currently only valid for rss children)
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "parent_id")]
         public string ParentId
         {
             get;
@@ -291,10 +295,32 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// 
+        /// a string marked-up with HTML explaining the segment 
+        /// used for the campaign in plain English
         /// </summary>
-        [DataMember(Name = "")]
+        [DataMember(Name = "segment_text")]
         public string SegmentText
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// total number of comments left on this campaign
+        /// </summary>
+        [DataMember(Name = "comments_total")]
+        public int CommentsTotal
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// total number of unread comments for this campaign 
+        /// based on the login the apikey belongs to
+        /// </summary>
+        [DataMember(Name = "comments_unread")]
+        public int CommentsUnread
         {
             get;
             set;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MailChimp.Campaigns;
 using MailChimp.Errors;
 using MailChimp.Helper;
 using MailChimp.Lists;
@@ -82,123 +83,35 @@ namespace MailChimp
 
         #endregion
 
-        #region API: Helper
-        
+        #region API: Campaigns
+
         /// <summary>
-        /// Retrieve lots of account information including payments made, plan info, 
-        /// some account stats, installed modules, contact info, and more. No private 
-        /// information like Credit Card numbers is available.
-        /// More information: http://apidocs.mailchimp.com/api/2.0/helper/account-details.php
+        /// Get the list of campaigns and their details matching the specified filters
         /// </summary>
-        /// <param name="exclude">Allows controlling which extra arrays are returned since they can 
-        /// slow down calls. Valid keys are "modules", "orders", "rewards-credits", 
-        /// "rewards-inspections", "rewards-referrals", "rewards-applied", "integrations". 
-        /// Hint: "rewards-referrals" is typically the culprit. To avoid confusion, 
-        /// if data is excluded, the corresponding key will not be returned at all.</param>
+        /// <param name="filterParam">Filters to apply</param>
+        /// <param name="start">control paging of campaigns, start results at this campaign #</param>
+        /// <param name="limit">control paging of campaigns, number of campaigns to return with each call</param>
+        /// <param name="sort_field">one of "create_time", "send_time", "title", "subject" . Invalid values will fall back on "create_time" - case insensitive</param>
+        /// <param name="sort_dir">"DESC" for descending (default), "ASC" for Ascending. Invalid values will fall back on "DESC" - case insensitive.</param>
         /// <returns></returns>
-        public AccountDetails GetAccountDetails(string[] exclude = null)
+        public CampaignListResult GetCampaigns(List<CampaignFilter> filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
         {
             //  Our api action:
-            string apiAction = "helper/account-details";
+            string apiAction = "campaigns/list";
 
             //  Create our arguments object:
             object args = new
             {
                 apikey = this.APIKey,
-                exclude = exclude
+                filters = filterParam,
+                start = start,
+                limit = limit,
+                sort_field = sort_field,
+                sort_dir = sort_dir
             };
 
             //  Make the call:
-            return MakeAPICall<AccountDetails>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Retrieve minimal data for all Campaigns a member was sent
-        /// </summary>
-        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
-        /// <param name="filterListId">A list_id to limit the campaigns to</param>
-        /// <returns>an array of structs containing campaign data for each matching campaign</returns>
-        public List<CampaignForEmail> GetCampaignsForEmail(EmailParameter emailParam, string filterListId = "")
-        {
-            //  Our api action:
-            string apiAction = "helper/campaigns-for-email";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                email = emailParam,
-                options = new
-                {
-                    list_id = filterListId
-                }
-            };
-
-            //  Make the call:
-            return MakeAPICall<List<CampaignForEmail>>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Retrieve minimal List data for all lists a member is subscribed to.
-        /// </summary>
-        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
-        /// <returns></returns>
-        public List<ListForEmail> GetListsForEmail(EmailParameter emailParam)
-        {
-            //  Our api action:
-            string apiAction = "helper/lists-for-email";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                email = emailParam
-            };
-
-            //  Make the call:
-            return MakeAPICall<List<ListForEmail>>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Return the current Chimp Chatter messages for an account.
-        /// </summary>
-        /// <returns></returns>
-        public List<ChimpChatterMessage> GetChimpChatter()
-        {
-            //  Our api action:
-            string apiAction = "helper/chimp-chatter";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey
-            };
-
-            //  Make the call:
-            return MakeAPICall<List<ChimpChatterMessage>>(apiAction, args);
-        }
-
-        /// <summary>
-        /// "Ping" the MailChimp API - a simple method you can call that will 
-        /// return a constant value as long as everything is good. Note than unlike 
-        /// most all of our methods, we don't throw an Exception if we are having 
-        /// issues. You will simply receive a different string back that will explain 
-        /// our view on what is going on.
-        /// </summary>
-        /// <returns></returns>
-        public PingMessage Ping()
-        {
-            //  Our api action:
-            string apiAction = "helper/ping";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey
-            };
-
-            //  Make the call:
-            return MakeAPICall<PingMessage>(apiAction, args);
+            return MakeAPICall<CampaignListResult>(apiAction, args);
         }
 
         #endregion
@@ -490,7 +403,126 @@ namespace MailChimp
 
         #endregion
 
+        #region API: Helper
 
+        /// <summary>
+        /// Retrieve lots of account information including payments made, plan info, 
+        /// some account stats, installed modules, contact info, and more. No private 
+        /// information like Credit Card numbers is available.
+        /// More information: http://apidocs.mailchimp.com/api/2.0/helper/account-details.php
+        /// </summary>
+        /// <param name="exclude">Allows controlling which extra arrays are returned since they can 
+        /// slow down calls. Valid keys are "modules", "orders", "rewards-credits", 
+        /// "rewards-inspections", "rewards-referrals", "rewards-applied", "integrations". 
+        /// Hint: "rewards-referrals" is typically the culprit. To avoid confusion, 
+        /// if data is excluded, the corresponding key will not be returned at all.</param>
+        /// <returns></returns>
+        public AccountDetails GetAccountDetails(string[] exclude = null)
+        {
+            //  Our api action:
+            string apiAction = "helper/account-details";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                exclude = exclude
+            };
+
+            //  Make the call:
+            return MakeAPICall<AccountDetails>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve minimal data for all Campaigns a member was sent
+        /// </summary>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="filterListId">A list_id to limit the campaigns to</param>
+        /// <returns>an array of structs containing campaign data for each matching campaign</returns>
+        public List<CampaignForEmail> GetCampaignsForEmail(EmailParameter emailParam, string filterListId = "")
+        {
+            //  Our api action:
+            string apiAction = "helper/campaigns-for-email";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = emailParam,
+                options = new
+                {
+                    list_id = filterListId
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<CampaignForEmail>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve minimal List data for all lists a member is subscribed to.
+        /// </summary>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <returns></returns>
+        public List<ListForEmail> GetListsForEmail(EmailParameter emailParam)
+        {
+            //  Our api action:
+            string apiAction = "helper/lists-for-email";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = emailParam
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<ListForEmail>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Return the current Chimp Chatter messages for an account.
+        /// </summary>
+        /// <returns></returns>
+        public List<ChimpChatterMessage> GetChimpChatter()
+        {
+            //  Our api action:
+            string apiAction = "helper/chimp-chatter";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<ChimpChatterMessage>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// "Ping" the MailChimp API - a simple method you can call that will 
+        /// return a constant value as long as everything is good. Note than unlike 
+        /// most all of our methods, we don't throw an Exception if we are having 
+        /// issues. You will simply receive a different string back that will explain 
+        /// our view on what is going on.
+        /// </summary>
+        /// <returns></returns>
+        public PingMessage Ping()
+        {
+            //  Our api action:
+            string apiAction = "helper/ping";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<PingMessage>(apiAction, args);
+        }
+
+        #endregion
 
         #region Generic API calling method
         

@@ -55,6 +55,7 @@
     <Compile Include="HelperTests.cs" />
     <Compile Include="TestGlobal.cs" />
     <Compile Include="ListTests.cs" />
+    <Compile Include="CampaignTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MailChimp\MailChimp.csproj">
