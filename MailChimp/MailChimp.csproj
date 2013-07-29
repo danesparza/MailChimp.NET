@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Campaigns\Campaign.cs" />
+    <Compile Include="Campaigns\CampaignContent.cs" />
     <Compile Include="Campaigns\CampaignError.cs" />
     <Compile Include="Campaigns\CampaignFilter.cs" />
     <Compile Include="Campaigns\CampaignListResult.cs" />

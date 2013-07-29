@@ -114,6 +114,34 @@ namespace MailChimp
             return MakeAPICall<CampaignListResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Get the content (both html and text) for a campaign either as it would appear in the campaign archive or as the raw, original content
+        /// </summary>
+        /// <param name="cId">the campaign id to get content for (can be gathered using GetCampaigns())</param>
+        /// <param name="view">optional one of "archive" (default), "preview" (like our popup-preview) or "raw"</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <returns></returns>
+        public CampaignContent GetCampaignContent(string cId, string view = "archive", EmailParameter emailParam = null)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/content";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                options = new
+                {
+                    view = view,
+                    email = emailParam
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignContent>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists

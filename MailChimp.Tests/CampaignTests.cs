@@ -19,5 +19,18 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsNotNull(details.Data);
         }
+
+        [TestMethod]
+        public void GetCampaignContent_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+
+            //  Act
+            CampaignContent details = mc.GetCampaignContent("875485faba");
+
+            //  Assert
+            Assert.IsFalse(string.IsNullOrWhiteSpace(details.Html));
+        }
     }
 }
