@@ -42,9 +42,9 @@ namespace MailChimp.Tests
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             List<string> testEmails = new List<string>()
             {
-                "esparza.dan@gmail.com"
+                "testemails@domain.com"
             };
-            string campaignId = "875485faba";
+            string campaignId = "yourcampaignidhere";
 
             //  Act
             CampaignSendResult details = mc.SendCampaignTest(campaignId, testEmails);
