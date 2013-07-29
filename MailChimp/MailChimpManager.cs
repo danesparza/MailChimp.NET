@@ -143,9 +143,10 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// Send a given campaign immediately. For RSS campaigns, this will "start" them
+        /// Send a given campaign immediately. 
+        /// For RSS campaigns, this will "start" them
         /// </summary>
-        /// <param name="cId"></param>
+        /// <param name="cId">the id of the campaign</param>
         /// <returns></returns>
         public CampaignSendResult SendCampaign(string cId)
         {
@@ -157,6 +158,32 @@ namespace MailChimp
             {
                 apikey = this.APIKey,
                 cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignSendResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Send a test of this campaign to the provided email addresses
+        /// </summary>
+        /// <param name="cId">the id of the campaign to test</param>
+        /// <param name="testEmails">an array of email address to 
+        /// receive the test message</param>
+        /// <param name="sendType">by default just html is sent - can be "html" or "text" send specify the format</param>
+        /// <returns></returns>
+        public CampaignSendResult SendCampaignTest(string cId, List<string> testEmails = null, string sendType = "html")
+        {
+            //  Our api action:
+            string apiAction = "campaigns/send-test";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                test_emails = testEmails,
+                send_type = sendType
             };
 
             //  Make the call:
