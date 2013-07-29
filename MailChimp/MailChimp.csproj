@@ -50,6 +50,7 @@
     <Compile Include="Campaigns\CampaignError.cs" />
     <Compile Include="Campaigns\CampaignFilter.cs" />
     <Compile Include="Campaigns\CampaignListResult.cs" />
+    <Compile Include="Campaigns\CampaignSendResult.cs" />
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\MailChimpAPIException.cs" />
     <Compile Include="Helper\AccountDetails.cs" />

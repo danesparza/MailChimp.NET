@@ -142,6 +142,27 @@ namespace MailChimp
             return MakeAPICall<CampaignContent>(apiAction, args);
         }
 
+        /// <summary>
+        /// Send a given campaign immediately. For RSS campaigns, this will "start" them
+        /// </summary>
+        /// <param name="cId"></param>
+        /// <returns></returns>
+        public CampaignSendResult SendCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/send";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignSendResult>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists
