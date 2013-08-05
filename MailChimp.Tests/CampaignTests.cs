@@ -47,7 +47,7 @@ namespace MailChimp.Tests
             string campaignId = "yourcampaignidhere";
 
             //  Act
-            CampaignSendResult details = mc.SendCampaignTest(campaignId, testEmails);
+            CampaignActionResult details = mc.SendCampaignTest(campaignId, testEmails);
 
             //  Assert
             Assert.IsTrue(details.Complete);

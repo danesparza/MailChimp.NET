@@ -148,7 +148,7 @@ namespace MailChimp
         /// </summary>
         /// <param name="cId">the id of the campaign</param>
         /// <returns></returns>
-        public CampaignSendResult SendCampaign(string cId)
+        public CampaignActionResult SendCampaign(string cId)
         {
             //  Our api action:
             string apiAction = "campaigns/send";
@@ -161,7 +161,7 @@ namespace MailChimp
             };
 
             //  Make the call:
-            return MakeAPICall<CampaignSendResult>(apiAction, args);
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace MailChimp
         /// receive the test message</param>
         /// <param name="sendType">by default just html is sent - can be "html" or "text" send specify the format</param>
         /// <returns></returns>
-        public CampaignSendResult SendCampaignTest(string cId, List<string> testEmails = null, string sendType = "html")
+        public CampaignActionResult SendCampaignTest(string cId, List<string> testEmails = null, string sendType = "html")
         {
             //  Our api action:
             string apiAction = "campaigns/send-test";
@@ -187,7 +187,28 @@ namespace MailChimp
             };
 
             //  Make the call:
-            return MakeAPICall<CampaignSendResult>(apiAction, args);
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Pause an AutoResponder or RSS campaign from sending
+        /// </summary>
+        /// <param name="cId">the id of the campaign to pause</param>
+        /// <returns></returns>
+        public CampaignActionResult PauseCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/pause";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
         #endregion

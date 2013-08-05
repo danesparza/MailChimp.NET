@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MailChimp.Campaigns
 {
     [DataContract]
-    public class CampaignSendResult
+    public class CampaignActionResult
     {
         /// <summary>
         /// whether the call worked. Realistically 
