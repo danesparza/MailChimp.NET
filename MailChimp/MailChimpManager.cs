@@ -232,6 +232,27 @@ namespace MailChimp
             return MakeAPICall<Campaign>(apiAction, args);
         }
 
+        /// <summary>
+        /// Resume sending an AutoResponder or RSS campaign
+        /// </summary>
+        /// <param name="cId"></param>
+        /// <returns></returns>
+        public CampaignActionResult ResumeCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/resume";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists
