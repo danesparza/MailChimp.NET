@@ -275,6 +275,59 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Schedule a campaign to be sent in the future
+        /// </summary>
+        /// <param name="cId">the id of the campaign to schedule</param>
+        /// <param name="scheduleTime">the time to schedule the campaign. For A/B Split "schedule" campaigns, the time for Group A - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
+        /// <param name="scheduleTimeB">the time to schedule Group B of an A/B Split "schedule" campaign - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
+        /// <returns></returns>
+        public CampaignActionResult ScheduleCampaign(string cId, string scheduleTime, string scheduleTimeB = "")
+        {
+            //  Our api action:
+            string apiAction = "campaigns/schedule";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                schedule_time = scheduleTime,
+                schedule_time_b = scheduleTimeB
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Schedule a campaign to be sent in batches sometime in the future. 
+        /// Only valid for "regular" campaigns
+        /// </summary>
+        /// <param name="cId">the id of the campaign to schedule</param>
+        /// <param name="scheduleTime">the time to schedule the campaign.</param>
+        /// <param name="numBatches">the number of batches between 2 and 26 to send</param>
+        /// <param name="staggerMins">the number of minutes between each batch - 5, 10, 15, 20, 25, 30, or 60</param>
+        /// <returns></returns>
+        public CampaignActionResult ScheduleBatchCampaign(string cId, string scheduleTime, int numBatches = 2, int staggerMins = 5)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/schedule-batch";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                schedule_time = scheduleTime,
+                num_batches = numBatches,
+                stagger_mins = staggerMins
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists
