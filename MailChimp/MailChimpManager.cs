@@ -211,6 +211,27 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Replicate a campaign.
+        /// </summary>
+        /// <param name="cId">the id of the campaign to replicate</param>
+        /// <returns></returns>
+        public Campaign ReplicateCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/replicate";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Campaign>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists

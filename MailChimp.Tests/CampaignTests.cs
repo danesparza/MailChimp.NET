@@ -52,5 +52,20 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsTrue(details.Complete);
         }
+
+        [TestMethod]
+        public void ReplicateCampaign_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            CampaignListResult cl = mc.GetCampaigns();
+            string campaignId = cl.Data[0].Id;
+
+            //  Act
+            Campaign details = mc.ReplicateCampaign(campaignId);
+
+            //  Assert
+            Assert.IsNotNull(details);
+        }
     }
 }
