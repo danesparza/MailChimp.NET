@@ -86,6 +86,28 @@ namespace MailChimp
         #region API: Campaigns
 
         /// <summary>
+        /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
+        /// Seriously, no one can undelete these.
+        /// </summary>
+        /// <param name="cId">the Campaign Id to delete</param>
+        /// <returns></returns>
+        public CampaignActionResult DeleteCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/delete";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
         /// Get the list of campaigns and their details matching the specified filters
         /// </summary>
         /// <param name="filterParam">Filters to apply</param>
@@ -704,7 +726,7 @@ namespace MailChimp
 
             //  Return the results
             return results;
-        } 
+        }
 
         #endregion
 
