@@ -328,6 +328,27 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Unschedule a campaign that is scheduled to be sent in the future
+        /// </summary>
+        /// <param name="cId">the id of the campaign to unschedule</param>
+        /// <returns></returns>
+        public CampaignActionResult UnscheduleCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/unschedule";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Lists
