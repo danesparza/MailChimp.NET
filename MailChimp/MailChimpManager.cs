@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailChimp.Campaigns;
 using MailChimp.Errors;
+using MailChimp.Folders;
 using MailChimp.Helper;
 using MailChimp.Lists;
 using ServiceStack.Text;
@@ -348,6 +349,103 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
+
+        #endregion
+
+        #region API: Folders
+
+        /// <summary>
+        /// List all the folders of a certain type
+        /// </summary>
+        /// <param name="folderType">the type of folders to return "campaign", "autoresponder", or "template"</param>
+        /// <returns></returns>
+        public List<FolderListResult> GetFolders(string folderType)
+        {
+            //  Our api action:
+            string apiAction = "folders/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                type = folderType
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<FolderListResult>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Add a new folder to file campaigns, autoresponders, or templates in
+        /// </summary>
+        /// <param name="folderName">a unique name for a folder (max 100 bytes)</param>
+        /// <param name="folderType">the type of folder to create - one of "campaign", "autoresponder", or "template".</param>
+        /// <returns></returns>
+        public FolderAddResult AddFolder(string folderName, string folderType)
+        {
+            //  Our api action:
+            string apiAction = "folders/add";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                name = folderName,
+                type = folderType
+            };
+
+            //  Make the call:
+            return MakeAPICall<FolderAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete a campaign, autoresponder, or template folder. Note that this will simply make whatever was in the folder appear unfiled, no other data is removed
+        /// </summary>
+        /// <param name="fId"></param>
+        /// <param name="folderType"></param>
+        /// <returns></returns>
+        public FolderActionResult DeleteFolder(int fId, string folderType)
+        {
+            //  Our api action:
+            string apiAction = "folders/del";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                fid = fId,
+                type = folderType
+            };
+
+            //  Make the call:
+            return MakeAPICall<FolderActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Update the name of a folder for campaigns, autoresponders, or templates
+        /// </summary>
+        /// <param name="fId">the folder id to update</param>
+        /// <param name="folderName">a new, unique name for the folder (max 100 bytes)</param>
+        /// <param name="folderType">the type of folder to update - one of "campaign", "autoresponder", or "template"</param>
+        /// <returns></returns>
+        public FolderActionResult UpdateFolder(int fId, string folderName, string folderType)
+        {
+            //  Our api action:
+            string apiAction = "folders/update";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                fid = fId,
+                name = folderName,
+                type = folderType
+            };
+
+            //  Make the call:
+            return MakeAPICall<FolderActionResult>(apiAction, args);
+        }
+
 
         #endregion
 

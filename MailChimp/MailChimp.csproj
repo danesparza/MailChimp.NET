@@ -53,6 +53,9 @@
     <Compile Include="Campaigns\CampaignActionResult.cs" />
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\MailChimpAPIException.cs" />
+    <Compile Include="Folders\FolderActionResult.cs" />
+    <Compile Include="Folders\FolderAddResult.cs" />
+    <Compile Include="Folders\FolderListResult.cs" />
     <Compile Include="Helper\AccountDetails.cs" />
     <Compile Include="Helper\CampaignForEmail.cs" />
     <Compile Include="Helper\ChimpChatterMessage.cs" />
@@ -92,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ecomm\" />
-    <Folder Include="Folders\" />
     <Folder Include="Reports\" />
     <Folder Include="Templates\" />
     <Folder Include="Users\" />
