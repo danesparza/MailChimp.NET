@@ -10,6 +10,7 @@ using MailChimp.Errors;
 using MailChimp.Folders;
 using MailChimp.Helper;
 using MailChimp.Lists;
+using MailChimp.Users;
 using ServiceStack.Text;
 
 namespace MailChimp
@@ -853,6 +854,97 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<PingMessage>(apiAction, args);
+        }
+
+        #endregion
+
+        #region API: Users
+
+        /// <summary>
+        /// Invite a user to your account
+        /// </summary>
+        /// <param name="email">A valid email address to send the invitation to</param>
+        /// <param name="role">the role to assign to the user - one of viewer, author, manager, admin</param>
+        /// <param name="message">an optional message to include. Plain text any HTML tags will be stripped</param>
+        /// <returns></returns>
+        public UserActionResult InviteUser(string email, string role = "viewer", string message = "")
+        {
+            //  Our api action:
+            string apiAction = "users/invite";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = email,
+                role = role,
+                msg = message
+            };
+
+            //  Make the call:
+            return MakeAPICall<UserActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Resend an invite a user to your account. Note, if the same address has been invited multiple times, 
+        /// this will simpy re-send the most recent invite
+        /// </summary>
+        /// <param name="email">A valid email address to resend an invitation to</param>
+        /// <returns></returns>
+        public UserActionResult InviteResend(string email)
+        {
+            //  Our api action:
+            string apiAction = "users/invite-resend";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = email
+            };
+
+            //  Make the call:
+            return MakeAPICall<UserActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Revoke an invitation sent to a user to your account. Note, if the same address has been invited multiple times, this will simpy revoke the most recent invite
+        /// </summary>
+        /// <param name="email">A valid email address to revoke</param>
+        /// <returns></returns>
+        public UserActionResult InviteRevoke(string email)
+        {
+            //  Our api action:
+            string apiAction = "users/invite-revoke";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                email = email
+            };
+
+            //  Make the call:
+            return MakeAPICall<UserActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of pending users invitations have been sent for.
+        /// </summary>
+        /// <returns></returns>
+        public List<UserInvite> GetInvites()
+        {
+            //  Our api action:
+            string apiAction = "users/invites";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<UserInvite>>(apiAction, args);
         }
 
         #endregion
