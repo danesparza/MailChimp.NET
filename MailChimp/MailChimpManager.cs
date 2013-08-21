@@ -42,7 +42,7 @@ namespace MailChimp
         //  Default constructor
         public MailChimpManager()
         {
-            // remove "__type" information from ServiceStack.Text JSON Serializer
+            // remove "__type" member from ServiceStack.Text JSON Serializer serialized strings
             JsConfig.ExcludeTypeInfo = true;
         }
 
