@@ -976,7 +976,7 @@ namespace MailChimp
             try
             {
                 //  Call the API with the passed arguments:
-                results = fullUrl.PostJsonToUrl(args).FromJson<T>();
+                results = fullUrl.PostJsonToUrl(args).Trim().FromJson<T>();
             }
             catch(Exception ex)
             {
