@@ -42,7 +42,8 @@ namespace MailChimp
         //  Default constructor
         public MailChimpManager()
         {
-
+            // remove "__type" member from ServiceStack.Text JSON Serializer serialized strings
+            JsConfig.ExcludeTypeInfo = true;
         }
 
         /// <summary>
@@ -683,7 +684,7 @@ namespace MailChimp
         /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
         /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
         /// <returns></returns>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
             string apiAction = "lists/subscribe";
