@@ -89,6 +89,10 @@
     <Compile Include="Lists\MemberNote.cs" />
     <Compile Include="Lists\MembersResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
+    <Compile Include="Lists\StaticSegmentAddResult.cs" />
+    <Compile Include="Lists\StaticSegmentDeleteResult.cs" />
+    <Compile Include="Lists\StaticSegmentMembersAddResult.cs" />
+    <Compile Include="Lists\StaticSegmentResult.cs" />
     <Compile Include="Lists\SubscriberLocation.cs" />
     <Compile Include="Lists\UnsubscribeResult.cs" />
     <Compile Include="MailChimpManager.cs" />

@@ -16,7 +16,7 @@ using ServiceStack.Text;
 namespace MailChimp
 {
     /// <summary>
-    /// .NET API Wrapper for the Mailchimp v2.0 API.  
+    /// .NET API Wrapper for the Mailchimp v2.0 API.
     /// More information here: http://apidocs.mailchimp.com/api/2.0/
     /// </summary>
     public class MailChimpManager
@@ -87,7 +87,6 @@ namespace MailChimp
         #endregion
 
         #region API: Campaigns
-
         /// <summary>
         /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
         /// Seriously, no one can undelete these.
@@ -734,6 +733,81 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<UnsubscribeResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Save a segment against a list for later use.
+        /// There is no limit to the number of segments which can be saved. Static Segments are not tied to any merge data, interest groups, etc.
+        /// They essentially allow you to configure an unlimited number of custom segments which will have standard performance.
+        /// When using proper segments, Static Segments are one of the available options for segmentation just as if you used a merge var (and they can be used with other segmentation options), though performance may degrade at that point.
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentName">Name of the static segment.</param>
+        /// <returns></returns>
+        public StaticSegmentAddResult AddStaticSegment(string listId, string staticSegmentName)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                name = staticSegmentName
+            };
+            return MakeAPICall<StaticSegmentAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete a static segment. Note that this will, of course, remove any member affiliations with the segment
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">the id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <returns></returns>
+        public StaticSegmentDeleteResult DeleteStaticSegment(string listId, int staticSegmentID)
+        {
+             // our api action:
+            string apiAction = "lists/static-segment-del";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+            };
+            return MakeAPICall<StaticSegmentDeleteResult>(apiAction, args);
+        }
+
+        public StaticSegmentMembersAddResult AddStaticSegmentMembers(string listId, int staticSegmentID, List<EmailParameter> emails)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-members-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+                batch = emails
+            };
+            return MakeAPICall<StaticSegmentMembersAddResult>(apiAction, args);
+        }
+
+        public List<StaticSegmentResult> GetStaticSegmentsForList(string listId)
+        {
+            // our api action:
+            string apiAction = "lists/static-segments";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+            };
+            return MakeAPICall<List<StaticSegmentResult>>(apiAction, args);
         }
 
         #endregion
