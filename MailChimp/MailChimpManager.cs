@@ -763,9 +763,9 @@ namespace MailChimp
         /// Delete a static segment. Note that this will, of course, remove any member affiliations with the segment
         /// </summary>
         /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
-        /// <param name="staticSegmentID">the id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
         /// <returns></returns>
-        public StaticSegmentDeleteResult DeleteStaticSegment(string listId, int staticSegmentID)
+        public StaticSegmentActionResult DeleteStaticSegment(string listId, int staticSegmentID)
         {
              // our api action:
             string apiAction = "lists/static-segment-del";
@@ -777,9 +777,18 @@ namespace MailChimp
                 id = listId,
                 seg_id = staticSegmentID,
             };
-            return MakeAPICall<StaticSegmentDeleteResult>(apiAction, args);
+            return MakeAPICall<StaticSegmentActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Add list members to a static segment. 
+        /// It is suggested that you limit batch size to no more than 10,000 addresses per call. 
+        /// Email addresses must exist on the list in order to be included - this will not subscribe them to the list!
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <param name="emails">Array of emails to add to the segment</param>
+        /// <returns></returns>
         public StaticSegmentMembersAddResult AddStaticSegmentMembers(string listId, int staticSegmentID, List<EmailParameter> emails)
         {
             // our api action:
@@ -795,7 +804,58 @@ namespace MailChimp
             };
             return MakeAPICall<StaticSegmentMembersAddResult>(apiAction, args);
         }
+        /// <summary>
+        /// Remove list members to a static segment. 
+        /// It is suggested that you limit batch size to no more than 10,000 addresses per call. 
+        /// Email addresses must exist on the list in order to be included - this will not unsubscribe them from the list!
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <param name="emails">Array of emails to remove from the segment</param>
+        /// <returns></returns>
+        public StaticSegmentMembersDeleteResult DeleteStaticSegmentMembers(string listId, int staticSegmentID, List<EmailParameter> emails)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-members-del";
 
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+                batch = emails
+            };
+            return MakeAPICall<StaticSegmentMembersDeleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Resets a static segment - removes all members from the static segment. 
+        /// Note: does not actually affect list member data
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to be reset - get from getStaticSegmentsForList()</param>
+        /// <returns></returns>
+        public StaticSegmentActionResult ResetStaticSegment(string listId, int staticSegmentID)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-reset";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+            };
+            return MakeAPICall<StaticSegmentActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve all of the Static Segments for a list.
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <returns></returns>
         public List<StaticSegmentResult> GetStaticSegmentsForList(string listId)
         {
             // our api action:

@@ -7,13 +7,13 @@ using System.Text;
 namespace MailChimp.Lists
 {
     [DataContract]
-    public class StaticSegmentDeleteResult
+    public class StaticSegmentActionResult
     {
         /// <summary>
         /// The segment was removed
         /// </summary>
-        [DataMember(Name = "completed")]
-        public bool Completed
+        [DataMember(Name = "complete")]
+        public bool Complete
         {
             get;
             set;
