@@ -46,12 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Campaigns\CampaignAnalyticsOptions.cs" />
+    <Compile Include="Campaigns\CampaignCreateContent.cs" />
+    <Compile Include="Campaigns\CampaignCreateOptions.cs" />
+    <Compile Include="Campaigns\CampaignSegmentOptions.cs" />
+    <Compile Include="Campaigns\CampaignSegmentTestResult.cs" />
     <Compile Include="Campaigns\Campaign.cs" />
     <Compile Include="Campaigns\CampaignContent.cs" />
     <Compile Include="Campaigns\CampaignError.cs" />
     <Compile Include="Campaigns\CampaignFilter.cs" />
     <Compile Include="Campaigns\CampaignListResult.cs" />
     <Compile Include="Campaigns\CampaignActionResult.cs" />
+    <Compile Include="Campaigns\CampaignSegmentCriteria.cs" />
+    <Compile Include="Campaigns\CampaignTrackingOptions.cs" />
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\MailChimpAPIException.cs" />
     <Compile Include="Folders\FolderActionResult.cs" />

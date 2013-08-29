@@ -351,6 +351,46 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        ///Allows one to test their segmentation rules before creating a campaign using them. 
+        /// </summary>
+        /// <param name="listId">The list id to test</param>
+        /// <param name="options">The segmentation options to apply</param>
+        /// <returns></returns>
+        public CampaignSegmentTestResult CampaignSegmentTest(string listId, CampaignSegmentOptions options)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/segment-test";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                list_id = listId,
+                options = options
+            };
+            //  Make the call:
+            return MakeAPICall<CampaignSegmentTestResult>(apiAction, args);
+        }
+        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions, object typeOptions )
+        {
+            //  Our api action:
+            string apiAction = "campaigns/create";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                type = type,
+                options = options,
+                content = content,
+                segment_options = segmentOptions,
+                type_opts = typeOptions
+            };
+            //  Make the call:
+            return MakeAPICall<Campaign>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Folders
