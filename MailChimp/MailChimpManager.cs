@@ -382,7 +382,7 @@ namespace MailChimp
         /// <param name="segmentOptions">optional - if you wish to do Segmentation with this campaign this array should contain: see CampaignSegmentTest(). It's suggested that you test your options against campaignSegmentTest().</param>
         /// <param name="typeOptions">optional - various extra options based on the campaign type</param>
         /// <returns></returns>
-        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, object typeOptions = null )
+        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, CampaignTypeOptions typeOptions = null)
         {
             //  Our api action:
             string apiAction = "campaigns/create";
