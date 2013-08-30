@@ -12,6 +12,7 @@ using MailChimp.Helper;
 using MailChimp.Lists;
 using MailChimp.Users;
 using ServiceStack.Text;
+using MailChimp.Templates;
 
 namespace MailChimp
 {
@@ -1133,8 +1134,32 @@ namespace MailChimp
 
         #endregion
 
+        #region API: Templates
+
+        /// <summary>
+        /// Retrieve various templates available in the system, allowing some thing similar to our template gallery to be created.
+        /// </summary>
+        /// <param name="templateTypes">optional - optional the types of templates to return</param>
+        /// <param name="templateFilters">optional - optional options to control how inactive templates are returned, if at alld</param>
+        /// <returns></returns>
+        public TemplateListResult GetTemplates(TemplateTypes templateTypes = null, TemplateFilters templateFilters = null)
+        {
+            //  Our api action:
+            string apiAction = "templates/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                types = templateTypes,
+                filters = templateFilters
+            };
+            //  Make the call:
+            return MakeAPICall<TemplateListResult>(apiAction, args);
+        }
+        #endregion
         #region Generic API calling method
-        
+
         /// <summary>
         /// Generic API call.  Expects to be able to serialize the results
         /// to the specified type

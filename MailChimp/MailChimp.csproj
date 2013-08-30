@@ -110,13 +110,16 @@
     <Compile Include="Lists\UnsubscribeResult.cs" />
     <Compile Include="MailChimpManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\TemplateFilters.cs" />
+    <Compile Include="Templates\TemplateListResult.cs" />
+    <Compile Include="Templates\TemplateTypes.cs" />
+    <Compile Include="Templates\TemplateListInfo.cs" />
     <Compile Include="Users\UserActionResult.cs" />
     <Compile Include="Users\UserInvite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ecomm\" />
     <Folder Include="Reports\" />
-    <Folder Include="Templates\" />
     <Folder Include="VIP\" />
   </ItemGroup>
   <ItemGroup>
