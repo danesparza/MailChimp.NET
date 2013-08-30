@@ -11,9 +11,13 @@ namespace MailChimp.Campaigns
     {
         public CampaignCreateOptions()
         {
-            //set the default values
+            //set the default values based upon the documentation
             FacebookComments = true;
             AutoFooter = false;
+            InlineCSS = false;
+            GenerateText = false;
+            AutoTweet = false;
+            Ecommerce360Tracking = false;
         }
         /// <summary>
         /// the list to send this campaign to- get lists using lists()
@@ -164,6 +168,15 @@ namespace MailChimp.Campaigns
         /// </summary>
         [DataMember(Name = "auto_tweet")]
         public bool AutoTweet
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// optional If set, this campaign will be auto-posted to the page_ids contained in the array. If a Facebook account isn't linked or the account does not have permission to post to the page_ids requested, those failures will be silently ignored.
+        /// </summary>
+        [DataMember(Name = "auto_fb_post")]
+        public List<string> AutoFacebookPost
         {
             get;
             set;

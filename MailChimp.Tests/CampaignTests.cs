@@ -96,9 +96,8 @@ namespace MailChimp.Tests
             CampaignSegmentOptions segmentOptions = new CampaignSegmentOptions();
             segmentOptions.Match = "All";
             string dateListCreated = lists.Data[1].DateCreated;
-            List<CampaignSegmentCriteria> conditions = new List<CampaignSegmentCriteria>();
-            conditions.Add(new CampaignSegmentCriteria { Field = "date", Operator = "eq", Value = dateListCreated });
-            segmentOptions.Conditions = conditions;
+            segmentOptions.Conditions = new List<CampaignSegmentCriteria>();
+            segmentOptions.Conditions.Add(new CampaignSegmentCriteria { Field = "date", Operator = "eq", Value = dateListCreated });
             CampaignCreateContent content = new CampaignCreateContent();
             content.HTML = "<p>Testing</p>";
             CampaignCreateOptions options = new CampaignCreateOptions();
@@ -108,11 +107,22 @@ namespace MailChimp.Tests
             options.FromEmail = "testemails@gmail.com";
             options.FromName = "Testing Company Name";
             options.Subject = "Test Subject";
-            options.AutoFooter = false;
+
             //Act
             Campaign result = mc.CreateCampaign("regular", options, content, segmentOptions, null);
             // Assert
             Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void CampaignDelete_Successful()
+        {
+            // Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            CampaignListResult campaigns = mc.GetCampaigns();
+            //Act
+            CampaignActionResult result = mc.DeleteCampaign(campaigns.Data[0].Id);
+            // Assert
+            Assert.IsTrue(result.Complete);
         }
     }
 }

@@ -372,7 +372,17 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<CampaignSegmentTestResult>(apiAction, args);
         }
-        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions, object typeOptions )
+        /// <summary>
+        ///Create a new draft campaign to send. You can not have more than 32,000 campaigns in your account.
+        ///See http://apidocs.mailchimp.com/api/2.0/campaigns/create.php for explanation of full options.
+        /// </summary>
+        /// <param name="type">The Campaign Type to create - one of "regular", "plaintext", "absplit", "rss", "auto"</param>
+        /// <param name="options">A struct of the standard options for this campaign.</param>
+        /// <param name="content">The content for this campaign </param>
+        /// <param name="segmentOptions">optional - if you wish to do Segmentation with this campaign this array should contain: see CampaignSegmentTest(). It's suggested that you test your options against campaignSegmentTest().</param>
+        /// <param name="typeOptions">optional - various extra options based on the campaign type</param>
+        /// <returns></returns>
+        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, object typeOptions = null )
         {
             //  Our api action:
             string apiAction = "campaigns/create";
@@ -390,7 +400,6 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<Campaign>(apiAction, args);
         }
-
         #endregion
 
         #region API: Folders
