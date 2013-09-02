@@ -116,6 +116,11 @@
     <Compile Include="Templates\TemplateListInfo.cs" />
     <Compile Include="Users\UserActionResult.cs" />
     <Compile Include="Users\UserInvite.cs" />
+    <Compile Include="Webhooks\CleanedWebhookData.cs" />
+    <Compile Include="Webhooks\CleanedWebhookResult.cs" />
+    <Compile Include="Webhooks\UnsubscribeWebhookData.cs" />
+    <Compile Include="Webhooks\UnsubscribeWebhookResult.cs" />
+    <Compile Include="Webhooks\WebhookMerges.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ecomm\" />
