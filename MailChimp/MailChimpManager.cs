@@ -395,7 +395,7 @@ namespace MailChimp
                 type = type,
                 options = options,
                 content = content,
-                segment_options = segmentOptions,
+                segment_opts = segmentOptions,
                 type_opts = typeOptions
             };
             //  Make the call:
