@@ -88,6 +88,7 @@ namespace MailChimp
         #endregion
 
         #region API: Campaigns
+        
         /// <summary>
         /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
         /// Seriously, no one can undelete these.
@@ -1154,10 +1155,13 @@ namespace MailChimp
                 types = templateTypes,
                 filters = templateFilters
             };
+
             //  Make the call:
             return MakeAPICall<TemplateListResult>(apiAction, args);
         }
+
         #endregion
+
         #region Generic API calling method
 
         /// <summary>
