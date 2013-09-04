@@ -232,5 +232,78 @@ namespace MailChimp.Tests
                 }
             }
         }
+        [TestMethod]
+        public void AddStaticSegment_Successful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            // Act
+            StaticSegmentAddResult result = mc.AddStaticSegment(lists.Data[1].Id, "Test Segment");
+            // Assert
+            Assert.IsNotNull(result.NewStaticSegmentID);
+        }
+        [TestMethod]
+        public void GetStaticSegmentsForList_Successful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            // Act
+            List<StaticSegmentResult> result = mc.GetStaticSegmentsForList(lists.Data[1].Id);
+            // Assert
+            Assert.IsTrue(result.Count > 0);
+        }
+        [TestMethod]
+        public void DeleteStaticSegment_Succesful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            List<StaticSegmentResult> segments = mc.GetStaticSegmentsForList(lists.Data[1].Id);
+            // Act
+            StaticSegmentActionResult result = mc.DeleteStaticSegment(lists.Data[1].Id, segments[1].StaticSegmentId);
+            Assert.IsTrue(result.Complete);
+        }
+        [TestMethod] 
+        public void AddStaticSegmentMembers_Successful()
+        {
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            List<StaticSegmentResult> segments = mc.GetStaticSegmentsForList(lists.Data[1].Id);
+            EmailParameter email1 = new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            };
+            List<EmailParameter> emails = new List<EmailParameter>();
+            emails.Add(email1);
+            StaticSegmentMembersAddResult result = mc.AddStaticSegmentMembers(lists.Data[1].Id,segments[0].StaticSegmentId,emails);
+            Assert.IsTrue(result.successCount == 1);
+        }
+        [TestMethod]
+        public void DeleteStaticSegmentMembers_Successful()
+        {
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            List<StaticSegmentResult> segments = mc.GetStaticSegmentsForList(lists.Data[1].Id);
+            EmailParameter email1 = new EmailParameter()
+            {
+                Email = "customeremail1@righthere.com"
+            };
+            List<EmailParameter> emails = new List<EmailParameter>();
+            emails.Add(email1);
+            StaticSegmentMembersDeleteResult result = mc.DeleteStaticSegmentMembers(lists.Data[1].Id, segments[0].StaticSegmentId, emails);
+            Assert.IsTrue(result.successCount == 1);
+            Assert.IsTrue(result.errorCount == 0);
+        }
+        [TestMethod]
+        public void ResetStaticSegment_Successful()
+        {
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            List<StaticSegmentResult> segments = mc.GetStaticSegmentsForList(lists.Data[1].Id);
+            StaticSegmentActionResult result = mc.ResetStaticSegment(lists.Data[1].Id, segments[0].StaticSegmentId);
+            Assert.IsTrue(result.Complete);
+        }
     }
 }

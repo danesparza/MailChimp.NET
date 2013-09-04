@@ -12,11 +12,12 @@ using MailChimp.Helper;
 using MailChimp.Lists;
 using MailChimp.Users;
 using ServiceStack.Text;
+using MailChimp.Templates;
 
 namespace MailChimp
 {
     /// <summary>
-    /// .NET API Wrapper for the Mailchimp v2.0 API.  
+    /// .NET API Wrapper for the Mailchimp v2.0 API.
     /// More information here: http://apidocs.mailchimp.com/api/2.0/
     /// </summary>
     public class MailChimpManager
@@ -87,7 +88,6 @@ namespace MailChimp
         #endregion
 
         #region API: Campaigns
-
         /// <summary>
         /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
         /// Seriously, no one can undelete these.
@@ -352,6 +352,55 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
+        /// <summary>
+        ///Allows one to test their segmentation rules before creating a campaign using them. 
+        /// </summary>
+        /// <param name="listId">The list id to test</param>
+        /// <param name="options">The segmentation options to apply</param>
+        /// <returns></returns>
+        public CampaignSegmentTestResult CampaignSegmentTest(string listId, CampaignSegmentOptions options)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/segment-test";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                list_id = listId,
+                options = options
+            };
+            //  Make the call:
+            return MakeAPICall<CampaignSegmentTestResult>(apiAction, args);
+        }
+        /// <summary>
+        ///Create a new draft campaign to send. You can not have more than 32,000 campaigns in your account.
+        ///See http://apidocs.mailchimp.com/api/2.0/campaigns/create.php for explanation of full options.
+        /// </summary>
+        /// <param name="type">The Campaign Type to create - one of "regular", "plaintext", "absplit", "rss", "auto"</param>
+        /// <param name="options">A struct of the standard options for this campaign.</param>
+        /// <param name="content">The content for this campaign </param>
+        /// <param name="segmentOptions">optional - if you wish to do Segmentation with this campaign this array should contain: see CampaignSegmentTest(). It's suggested that you test your options against campaignSegmentTest().</param>
+        /// <param name="typeOptions">optional - various extra options based on the campaign type</param>
+        /// <returns></returns>
+        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, CampaignTypeOptions typeOptions = null)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/create";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                type = type,
+                options = options,
+                content = content,
+                segment_opts = segmentOptions,
+                type_opts = typeOptions
+            };
+            //  Make the call:
+            return MakeAPICall<Campaign>(apiAction, args);
+        }
         #endregion
 
         #region API: Folders
@@ -736,6 +785,141 @@ namespace MailChimp
             return MakeAPICall<UnsubscribeResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Save a segment against a list for later use.
+        /// There is no limit to the number of segments which can be saved. Static Segments are not tied to any merge data, interest groups, etc.
+        /// They essentially allow you to configure an unlimited number of custom segments which will have standard performance.
+        /// When using proper segments, Static Segments are one of the available options for segmentation just as if you used a merge var (and they can be used with other segmentation options), though performance may degrade at that point.
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentName">Name of the static segment.</param>
+        /// <returns></returns>
+        public StaticSegmentAddResult AddStaticSegment(string listId, string staticSegmentName)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                name = staticSegmentName
+            };
+            return MakeAPICall<StaticSegmentAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete a static segment. Note that this will, of course, remove any member affiliations with the segment
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <returns></returns>
+        public StaticSegmentActionResult DeleteStaticSegment(string listId, int staticSegmentID)
+        {
+             // our api action:
+            string apiAction = "lists/static-segment-del";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+            };
+            return MakeAPICall<StaticSegmentActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Add list members to a static segment. 
+        /// It is suggested that you limit batch size to no more than 10,000 addresses per call. 
+        /// Email addresses must exist on the list in order to be included - this will not subscribe them to the list!
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <param name="emails">Array of emails to add to the segment</param>
+        /// <returns></returns>
+        public StaticSegmentMembersAddResult AddStaticSegmentMembers(string listId, int staticSegmentID, List<EmailParameter> emails)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-members-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+                batch = emails
+            };
+            return MakeAPICall<StaticSegmentMembersAddResult>(apiAction, args);
+        }
+        /// <summary>
+        /// Remove list members to a static segment. 
+        /// It is suggested that you limit batch size to no more than 10,000 addresses per call. 
+        /// Email addresses must exist on the list in order to be included - this will not unsubscribe them from the list!
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to delete - get from getStaticSegmentsForList()</param>
+        /// <param name="emails">Array of emails to remove from the segment</param>
+        /// <returns></returns>
+        public StaticSegmentMembersDeleteResult DeleteStaticSegmentMembers(string listId, int staticSegmentID, List<EmailParameter> emails)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-members-del";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+                batch = emails
+            };
+            return MakeAPICall<StaticSegmentMembersDeleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Resets a static segment - removes all members from the static segment. 
+        /// Note: does not actually affect list member data
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="staticSegmentID">The id of the static segment to be reset - get from getStaticSegmentsForList()</param>
+        /// <returns></returns>
+        public StaticSegmentActionResult ResetStaticSegment(string listId, int staticSegmentID)
+        {
+            // our api action:
+            string apiAction = "lists/static-segment-reset";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = staticSegmentID,
+            };
+            return MakeAPICall<StaticSegmentActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve all of the Static Segments for a list.
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <returns></returns>
+        public List<StaticSegmentResult> GetStaticSegmentsForList(string listId)
+        {
+            // our api action:
+            string apiAction = "lists/static-segments";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+            };
+            return MakeAPICall<List<StaticSegmentResult>>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Helper
@@ -950,8 +1134,32 @@ namespace MailChimp
 
         #endregion
 
+        #region API: Templates
+
+        /// <summary>
+        /// Retrieve various templates available in the system, allowing some thing similar to our template gallery to be created.
+        /// </summary>
+        /// <param name="templateTypes">optional - optional the types of templates to return</param>
+        /// <param name="templateFilters">optional - optional options to control how inactive templates are returned, if at alld</param>
+        /// <returns></returns>
+        public TemplateListResult GetTemplates(TemplateTypes templateTypes = null, TemplateFilters templateFilters = null)
+        {
+            //  Our api action:
+            string apiAction = "templates/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                types = templateTypes,
+                filters = templateFilters
+            };
+            //  Make the call:
+            return MakeAPICall<TemplateListResult>(apiAction, args);
+        }
+        #endregion
         #region Generic API calling method
-        
+
         /// <summary>
         /// Generic API call.  Expects to be able to serialize the results
         /// to the specified type
