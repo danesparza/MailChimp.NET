@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using MailChimp.Campaigns;
 using MailChimp.Errors;
 using MailChimp.Folders;
 using MailChimp.Helper;
 using MailChimp.Lists;
+using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
-using MailChimp.Templates;
 
 namespace MailChimp
 {
