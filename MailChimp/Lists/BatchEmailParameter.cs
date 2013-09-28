@@ -35,7 +35,7 @@ namespace MailChimp.Lists
         /// data for the various list specific and special merge vars
         /// </summary>
         [DataMember(Name = "merge_vars")]
-        public MergeVar MergVars
+        public object MergVars
         {
             get;
             set;
