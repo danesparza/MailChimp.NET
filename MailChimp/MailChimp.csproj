@@ -87,6 +87,7 @@
     <Compile Include="Lists\BatchUnsubscribeResult.cs" />
     <Compile Include="Lists\Client.cs" />
     <Compile Include="Lists\Grouping.cs" />
+    <Compile Include="Lists\InterestGrouping.cs" />
     <Compile Include="Lists\ListActivity.cs" />
     <Compile Include="Lists\ListError.cs" />
     <Compile Include="Lists\BatchSubscribeResult.cs" />
