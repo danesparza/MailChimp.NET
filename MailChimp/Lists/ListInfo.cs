@@ -157,6 +157,61 @@ namespace MailChimp.Lists
             get;
             set;
         }
+        
+        [DataMember(Name = "stats")]
+        public ListStats Stats { get; set; }
+
+        [DataContract]
+        public class ListStats
+        {
+            [DataMember(Name = "member_count")]
+            public int MemberCount { get; set; }
+
+            [DataMember(Name = "unsubscribe_count")]
+            public int UnsubscribeCount { get; set; }
+        
+            [DataMember(Name = "cleaned_count")]
+            public int CleanedCount { get; set; }
+
+            [DataMember(Name = "member_count_since_send")]
+            public int MemberCountSinceSend  { get; set; }
+
+            [DataMember(Name = "unsubscribe_count_since_send")]
+            public int UnsubscribeCountSinceSend { get; set; }
+
+            [DataMember(Name = "cleaned_count_since_send")]
+            public int CleanedCountSinceSend { get; set; }
+
+            [DataMember(Name = "campaign_count")]
+            public int CampaignCount { get; set; }
+            
+            [DataMember(Name = "grouping_count")]
+            public int GroupingCount { get; set; }
+
+            [DataMember(Name = "group_count")]
+            public int GroupCount { get; set; }
+
+            [DataMember(Name = "merge_var_count")]
+            public int MergeVarCount { get; set; }
+
+            [DataMember(Name = "avg_sub_rate")]
+            public int AvgSubRate { get; set; }
+
+            [DataMember(Name = "avg_unsub_rate")]
+            public int AvgUnsubRate { get; set; }
+
+            [DataMember(Name = "target_sub_rate")]
+            public int TargetSubRate { get; set; }
+
+            [DataMember(Name = "open_rate")]
+            public int OpenRate { get; set; }
+
+            [DataMember(Name = "click_rate")]
+            public int ClickRate { get; set; }
+
+            [DataMember(Name = "date_last_campaign")]
+            public int DateLastCampaign { get; set; }
+        }
 
     }
 }
