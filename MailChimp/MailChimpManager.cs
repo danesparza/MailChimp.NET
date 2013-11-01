@@ -636,7 +636,27 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<ListResult>(apiAction, args);
         }
+        /// <summary>
+        /// Retrieve the interest groups for a list.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public List<InterestGrouping> GetListInterestGroupings(string listId)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-groupings";
 
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<InterestGrouping>>(apiAction, args);
+        }
+        
         /// <summary>
         /// Retrieve the locations (countries) that the list's subscribers have been tagged to based on geocoding their IP address
         /// </summary>
@@ -1184,7 +1204,8 @@ namespace MailChimp
             try
             {
                 //  Call the API with the passed arguments:
-                results = fullUrl.PostJsonToUrl(args).Trim().FromJson<T>();
+                var resultString = fullUrl.PostJsonToUrl(args);
+                results = resultString.Trim().FromJson<T>();
             }
             catch(Exception ex)
             {
