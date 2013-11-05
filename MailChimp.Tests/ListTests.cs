@@ -53,6 +53,23 @@ namespace MailChimp.Tests
             Assert.IsTrue(results.Any());
         }
 
+
+        [TestMethod]
+        public void GetListInterestGroupings_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager("efb48a02f2f56120e2f3f6e2fef71803-us6");
+            ListResult lists = mc.GetLists(new ListFilter(){ListName = "TestAPIGetInterestGroup"});
+            Assert.IsNotNull(lists);
+            Assert.IsTrue(lists.Data.Any());
+            //  Act
+            List<InterestGrouping> results = mc.GetListInterestGroupings(lists.Data.FirstOrDefault().Id);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Any());
+        }
+
         [TestMethod]
         public void Subscribe_Successful()
         {

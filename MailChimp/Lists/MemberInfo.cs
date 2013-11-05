@@ -220,5 +220,45 @@ namespace MailChimp.Lists
             get;
             set;
         }
+
+        [DataMember(Name = "merges")]
+        public MemberMergeInfo MemberMergeInfo { get; set; }
+
+    }
+    
+    [DataContract]
+    public class MemberMergeInfo
+    {
+        [DataMember(Name = "EMAIL")]
+        public string Email { get; set; }
+
+        [DataMember(Name = "FNAME")]
+        public string FirstName { get; set; }
+
+        [DataMember(Name = "LNAME")]
+        public string LastName { get; set; }
+
+        [DataMember(Name = "GROUPINGS")]
+        public List<MemberGroup> Groups { get; set; }
+
+        [DataContract]
+        public class MemberGroup
+        {
+            [DataMember(Name = "name")]
+            public string Name { get; set; }
+
+            [DataMember(Name = "groups")]
+            public List<MemberInterestGroups> Groups { get; set; }
+
+            [DataContract]
+            public class MemberInterestGroups
+            {
+                [DataMember(Name = "name")]
+                public string Name { get; set; }
+
+                [DataMember(Name = "interested")]
+                public bool Interested { get; set; }
+            }
+        }
     }
 }
