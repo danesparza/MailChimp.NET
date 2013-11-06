@@ -131,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ecomm\" />
-    <Folder Include="Reports\" />
     <Folder Include="VIP\" />
   </ItemGroup>
   <ItemGroup>
