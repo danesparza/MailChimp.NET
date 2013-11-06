@@ -9,6 +9,7 @@ using MailChimp.Lists;
 using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
+using MailChimp.Reports;
 
 namespace MailChimp
 {
@@ -1174,6 +1175,52 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<TemplateListResult>(apiAction, args);
+        }
+
+        #endregion
+        
+        #region API: Reports
+
+        /// <summary>
+        /// Retrieve summary stats of campaign.
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <returns></returns>
+        public ReportSummary GetReportSummary(string cId)
+        {
+            //  Our api action:
+            string apiAction = "reports/summary";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<ReportSummary>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve click of campaign.
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <returns></returns>
+        public Clicks GetReportClicks(string cId)
+        {
+            //  Our api action:
+            string apiAction = "reports/clicks";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Clicks>(apiAction, args);
         }
 
         #endregion
