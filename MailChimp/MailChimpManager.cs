@@ -1059,6 +1059,28 @@ namespace MailChimp
             return MakeAPICall<PingMessage>(apiAction, args);
         }
 
+        /// <summary>
+        /// Search account wide or on a specific list using the specified query terms
+        /// </summary>
+        /// <returns></returns>
+        public Matches SearchMembers(string query, string listId = "", int offest = 0)
+        {
+            //  Our api action:
+            string apiAction = "helper/search-members";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                query = query,
+                id = listId,
+                offest = offest
+            };
+
+            //  Make the call:
+            return MakeAPICall<Matches>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Users
