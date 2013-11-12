@@ -10,7 +10,7 @@ namespace MailChimp.Helper
         /// containing the total matches and current results
         /// </summary>
         [DataMember(Name = "exact_matches")]
-        public List<Match> ExactMatches
+        public Match ExactMatches
         {
             get;
             set;
@@ -20,7 +20,7 @@ namespace MailChimp.Helper
         /// containing the total matches and current results
         /// </summary>
         [DataMember(Name = "full_search")]
-        public List<Match> FullSearch
+        public Match FullSearch
         {
             get;
             set;
