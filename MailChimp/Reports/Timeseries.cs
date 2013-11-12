@@ -6,42 +6,27 @@ namespace MailChimp.Reports
     /// optional - various extra options based on the campaign type
     /// </summary>
    [DataContract]
-   public class Industry
+   public class Timeseries
     {
        /// <summary>
-       ///the selected industry
+       ///The timestemp in Y-m-d H:00:00 format
        /// </summary>
-       [DataMember(Name = "type")]
-       public string Type { get; set; }
+       [DataMember(Name = "timestamp")]
+       public string Timestamp { get; set; }
        /// <summary>
-       ///industry open rate
+       ///the total emails sent during the hour
        /// </summary>
-       [DataMember(Name = "open_rate")]
-       public float OpenRate { get; set; }
-       /// <summary>
-       ///industry click rate
+       [DataMember(Name = "emails_sent")]
+       public int EmailsSent { get; set; }
+        /// <summary>
+       ///unique opens seen during the hour
        /// </summary>
-       [DataMember(Name = "click_rate")]
-       public float ClickRate { get; set; }
-       /// <summary>
-       ///industry bounce rate
+       [DataMember(Name = "unique_opens")]
+       public int UniqueOpens { get; set; }
+        /// <summary>
+       ///unique clicks seen during the hour
        /// </summary>
-       [DataMember(Name = "bounce_rate")]
-       public float BounceRate { get; set; }
-       /// <summary>
-       ///industry unopen rate
-       /// </summary>
-       [DataMember(Name = "unopen_rate")]
-       public float UnopenRate { get; set; }
-       /// <summary>
-       ///industry unsub rate
-       /// </summary>
-       [DataMember(Name = "unsub_rate")]
-       public float UnsubRate { get; set; }
-       /// <summary>
-       ///industry abuse rate
-       /// </summary>
-       [DataMember(Name = "abuse_rate")]
-       public float AbuseRate { get; set; }
+       [DataMember(Name = "recipients_click")]
+       public int RecipientsClick { get; set; }
     }
 }
