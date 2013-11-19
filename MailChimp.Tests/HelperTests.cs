@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using MailChimp.Helper;
+using MailChimp.Lists;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MailChimp.Tests
@@ -78,6 +80,39 @@ namespace MailChimp.Tests
 
             //  Assert
             Assert.AreEqual<string>("Everything's Chimpy!", details.Message);
+        }
+
+        [TestMethod]
+        public void SearchMembers_FindsExactMatchMember()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            string listId = lists.Data[1].Id;
+
+            //  Act
+            Matches matches = mc.SearchMembers("customeremail@righthere.com", listId);
+
+            //  Assert
+            Assert.AreEqual(matches.ExactMatches.Total, 1);
+            Assert.AreEqual(matches.ExactMatches.Members[0].Email, "customeremail@righthere.com");
+            Assert.AreEqual(matches.FullSearch.Total, -1);
+        }
+
+        [TestMethod]
+        public void SearchMembers_FindsPartialMatchMember()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            string listId = lists.Data[1].Id;
+
+            //  Act
+            Matches matches = mc.SearchMembers("customeremail", listId);
+
+            //  Assert
+            Assert.IsTrue(matches.FullSearch.Total > 0);
+            Assert.IsTrue(matches.FullSearch.Members.Any(member => member.Email == "customeremail@righthere.com"));
         }
     }
 }
