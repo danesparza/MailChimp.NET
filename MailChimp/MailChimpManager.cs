@@ -20,7 +20,7 @@ namespace MailChimp
     public class MailChimpManager
     {
         #region Fields and properties
-        
+
         /// <summary>
         /// The HTTPS endpoint for the API.  
         /// See http://apidocs.mailchimp.com/api/2.0/#api-endpoints for more information
@@ -31,7 +31,7 @@ namespace MailChimp
         /// The datacenter prefix.  This will be automatically determined
         /// based on your API key
         /// </summary>
-        private string _dataCenterPrefix = string.Empty; 
+        private string _dataCenterPrefix = string.Empty;
 
         #endregion
 
@@ -52,7 +52,7 @@ namespace MailChimp
         private string GetDatacenterPrefix(string apiKey)
         {
             //  The key should contain a '-'.  If it doesn't, throw an exception:
-            if(!apiKey.Contains('-'))
+            if (!apiKey.Contains('-'))
             {
                 throw new ArgumentException("API key is not valid.  Must be a valid v2.0 Mailchimp API key.");
             }
@@ -80,12 +80,12 @@ namespace MailChimp
         {
             get;
             set;
-        } 
+        }
 
         #endregion
 
         #region API: Campaigns
-        
+
         /// <summary>
         /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
         /// Seriously, no one can undelete these.
@@ -657,7 +657,7 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<List<InterestGrouping>>(apiAction, args);
         }
-        
+
         /// <summary>
         /// Retrieve the locations (countries) that the list's subscribers have been tagged to based on geocoding their IP address
         /// </summary>
@@ -835,7 +835,7 @@ namespace MailChimp
         /// <returns></returns>
         public StaticSegmentActionResult DeleteStaticSegment(string listId, int staticSegmentID)
         {
-             // our api action:
+            // our api action:
             string apiAction = "lists/static-segment-del";
 
             // create our arguements object:
@@ -1059,6 +1059,28 @@ namespace MailChimp
             return MakeAPICall<PingMessage>(apiAction, args);
         }
 
+        /// <summary>
+        /// Search account wide or on a specific list using the specified query terms
+        /// </summary>
+        /// <returns></returns>
+        public Matches SearchMembers(string query, string listId = "", int offest = 0)
+        {
+            //  Our api action:
+            string apiAction = "helper/search-members";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                query = query,
+                id = listId,
+                offest = offest
+            };
+
+            //  Make the call:
+            return MakeAPICall<Matches>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Users
@@ -1178,7 +1200,7 @@ namespace MailChimp
         }
 
         #endregion
-        
+
         #region API: Reports
 
         /// <summary>
@@ -1239,7 +1261,7 @@ namespace MailChimp
         {
             //  First, make sure the datacenter prefix is set properly.  
             //  If it's not, throw an exception:
-            if(string.IsNullOrEmpty(_dataCenterPrefix))
+            if (string.IsNullOrEmpty(_dataCenterPrefix))
                 throw new ApplicationException("API key not valid (datacenter not specified)");
 
             //  Next, construct the full url based on the passed apiAction:
@@ -1254,7 +1276,7 @@ namespace MailChimp
                 var resultString = fullUrl.PostJsonToUrl(args);
                 results = resultString.Trim().FromJson<T>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errorBody = ex.GetResponseBody();
 
