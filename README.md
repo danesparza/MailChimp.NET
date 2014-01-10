@@ -81,8 +81,8 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - List related: **47%** (17 of 36)
 - Helper related: **60%** (6 of 10)
 - Reports related: **11%** (2 of 18)
-- Templates related: **16%** (1 of 6)
+- Templates related: **100%** (6 of 6)
 - User related: **66%** (4 of 6)
 - Vip related: **0%** (0 of 4)
 
-**Overall**: **46%** (47 of 102)
+**Overall**: **50%** (52 of 102)
