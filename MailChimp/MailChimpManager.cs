@@ -1177,6 +1177,75 @@ namespace MailChimp
         #region API: Templates
 
         /// <summary>
+        /// Create a new user template, NOT campaign content. These templates can then be applied while creating campaigns.
+        /// </summary>
+        /// <param name="templateName">The name for the template - names must be unique and a max of 50 bytes</param>
+        /// <param name="html">A string specifying the entire template to be created. This is NOT campaign content. They are intended to utilize our template language.</param>
+        /// <param name="folderId">Optional - the folder to put this template in.</param>
+        /// <returns></returns>
+        public TemplateAddResult AddTemplate(string templateName, string html, int? folderId = null)
+        {
+            //  Our api action:
+            string apiAction = "templates/add";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                name = templateName,
+                html = html,
+                folder_id = folderId
+            };
+
+            //  Make the call:
+            return MakeAPICall<TemplateAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete (deactivate) a user template
+        /// </summary>
+        /// <param name="templateId">The id of the user template to delete</param>
+        /// <returns></returns>
+        public TemplateDeleteResult DeleteTemplate(int templateId)
+        {
+            //  Our api action:
+            string apiAction = "templates/del";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                template_id = templateId,
+            };
+
+            //  Make the call:
+            return MakeAPICall<TemplateDeleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Pull details for a specific template to help support editing
+        /// </summary>
+        /// <param name="templateId">The template id - get from templates/list()</param>
+        /// <param name="type">Optional - optional the template type to load - one of 'user', 'gallery', 'base', defaults to user.</param>
+        /// <returns></returns>
+        public TemplateInformationResult GetTemplateInformation(int templateId, string type = null)
+        {
+            //  Our api action:
+            string apiAction = "templates/info";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                template_id = templateId,
+                type = type
+            };
+
+            //  Make the call:
+            return MakeAPICall<TemplateInformationResult>(apiAction, args);
+        }
+
+        /// <summary>
         /// Retrieve various templates available in the system, allowing some thing similar to our template gallery to be created.
         /// </summary>
         /// <param name="templateTypes">optional - optional the types of templates to return</param>
@@ -1197,6 +1266,50 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<TemplateListResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Undelete (reactivate) a user template
+        /// </summary>
+        /// <param name="templateId">The id of the user template to reactivate.</param>
+        /// <returns></returns>
+        public TemplateUndeleteResult UndeleteTemplate(int templateId)
+        {
+            //  Our api action:
+            string apiAction = "templates/undel";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                template_id = templateId,
+            };
+
+            //  Make the call:
+            return MakeAPICall<TemplateUndeleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Replace the content of a user template, NOT campaign content.
+        /// </summary>
+        /// <param name="templateId">The id of the user template to update</param>
+        /// <param name="value">The values to updates - while both are optional, at least one should be provided. Both can be updated at the same time.</param>
+        /// <returns></returns>
+        public TemplateUpdateResult UpdateTemplate(int templateId, TemplateUpdateValue value)
+        {
+            //  Our api action:
+            string apiAction = "templates/update";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                template_id = templateId,
+                values = value
+            };
+
+            //  Make the call:
+            return MakeAPICall<TemplateUpdateResult>(apiAction, args);
         }
 
         #endregion
