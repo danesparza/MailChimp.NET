@@ -549,6 +549,29 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Get the most recent 100 activities for particular list members (open, click, bounce, unsub, abuse, sent to, etc.)
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="listOfEmails">an array of up to 50 email structs</param>
+        /// <returns></returns>
+        public MemberActivityResult GetMemberActivity(string listId, List<EmailParameter> listOfEmails)
+        {
+            //  Our api action:
+            string apiAction = "lists/member-activity";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                emails = listOfEmails
+            };
+
+            //  Make the call:
+            return MakeAPICall<MemberActivityResult>(apiAction, args);
+        }
+
+        /// <summary>
         /// Subscribe a batch of email addresses to a list at once. Maximum batch sizes vary based 
         /// on the amount of data in each record, though you should cap them 
         /// at 5k - 10k records, depending on your experience. These calls are also 
