@@ -82,7 +82,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         /// optional - use a template from the public gallery to generate the HTML content of the campaign (takes precendence over base template options)
         /// </summary>
-        [DataMember(Name="gallery_template_id")]
+        [DataMember(Name="base_template_id")]
         public int BaseTemplateId
         {
             get;
@@ -101,7 +101,7 @@ namespace MailChimp.Campaigns
         ///optional - set which recipient actions will be tracked. Click tracking can not be disabled for Free accounts.
         /// </summary>
         [DataMember(Name="tracking")]
-        public CampaignCreateOptions Tracking
+        public CampaignCreateTrackingOptions Tracking
         {
             get;
             set;
