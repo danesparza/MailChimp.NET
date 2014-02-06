@@ -84,6 +84,38 @@ namespace MailChimp
 
         #endregion
 
+        #region Helper Methods
+
+        /// <summary>
+        /// Formats a date parameter for the mailchimp API.  If date is equal to DateTime.MinValue, then an empty string is returned.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ConvertDateTimeToMailChimpAPI(DateTime date)
+        {
+            string strDate = (date == DateTime.MinValue) ? "" : date.ToString("yyyy-MM-dd HH:mm:ss");
+            return strDate;
+        }
+
+        /// <summary>
+        /// Formats a date parameter for the mailchimp API.  If date is null or equal to DateTime.MinValue, then an empty string is returned.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ConvertDateTimeToMailChimpAPI(DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                return ConvertDateTimeToMailChimpAPI(date.Value);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        #endregion
+
         #region API: Campaigns
 
         /// <summary>
