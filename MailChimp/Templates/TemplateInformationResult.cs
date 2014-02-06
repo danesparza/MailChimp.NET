@@ -16,7 +16,7 @@ namespace MailChimp.Templates
         /// The default content broken down into the named editable sections for the template - dependant upon template, so not documented
         /// </summary>
         [DataMember(Name = "default_content")]
-        public object DefaultContent
+        public Dictionary<string,string> DefaultContent
         {
             get;
             set;
@@ -26,7 +26,7 @@ namespace MailChimp.Templates
         /// The valid editable section names - dependant upon template, so not documented
         /// </summary>
         [DataMember(Name = "sections")]
-        public object Sections
+        public Dictionary<string,string> Sections
         {
             get;
             set;
