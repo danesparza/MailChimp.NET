@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Campaigns\CampaignAnalyticsOptions.cs" />
     <Compile Include="Campaigns\CampaignCreateContent.cs" />
+    <Compile Include="Campaigns\CampaignCreateTrackingOptions.cs" />
     <Compile Include="Campaigns\CampaignCreateOptions.cs" />
     <Compile Include="Campaigns\CampaignScheduleDays.cs" />
     <Compile Include="Campaigns\CampaignSegmentOptions.cs" />
