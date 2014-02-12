@@ -212,6 +212,15 @@ namespace MailChimp.Lists
         }
 
         /// <summary>
+        /// Static segments this member belongs to
+        /// </summary>
+        [DataMember(Name = "static_segments")]
+        public List<StaticSegment> StaticSegments {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Notes entered for this member
         /// </summary>
         [DataMember(Name = "notes")]
