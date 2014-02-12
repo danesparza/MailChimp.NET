@@ -67,7 +67,6 @@
     <Compile Include="Campaigns\CampaignTypeRssOptions.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
-    <Compile Include="Lists\StaticSegment.cs" />
     <Compile Include="Reports\Absplit.cs" />
     <Compile Include="Reports\Clicks.cs" />
     <Compile Include="Reports\Timeseries.cs" />
@@ -112,6 +111,7 @@
     <Compile Include="Lists\MemberNote.cs" />
     <Compile Include="Lists\MembersResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
+    <Compile Include="Lists\StaticSegment.cs" />
     <Compile Include="Lists\StaticSegmentAddResult.cs" />
     <Compile Include="Lists\StaticSegmentActionResult.cs" />
     <Compile Include="Lists\StaticSegmentMembersAddResult.cs" />
