@@ -111,6 +111,7 @@
     <Compile Include="Lists\MemberNote.cs" />
     <Compile Include="Lists\MembersResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
+    <Compile Include="Lists\StaticSegment.cs" />
     <Compile Include="Lists\StaticSegmentAddResult.cs" />
     <Compile Include="Lists\StaticSegmentActionResult.cs" />
     <Compile Include="Lists\StaticSegmentMembersAddResult.cs" />
