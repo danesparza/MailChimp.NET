@@ -132,7 +132,7 @@ namespace MailChimp.Tests
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             CampaignListResult campaigns = mc.GetCampaigns();
             //Act
-            var result = mc.UpdateCampaign(campaigns.Data[0].Id, "title", "Different Campaign Title");
+            var result = mc.UpdateCampaign(campaigns.Data[0].Id, "options", new { title = "Different Campaign Title" });
             // Assert
             Assert.IsTrue(result.Errors.Count == 0);
         }
