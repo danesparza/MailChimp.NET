@@ -431,6 +431,30 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<Campaign>(apiAction, args);
         }
+
+        /// <summary>
+        /// Update just about any setting besides type for a campaign that has not been sent. See campaigns/create() for details.
+        /// </summary>
+        /// <param name="cid">The Campaign Id to update</param>
+        /// <param name="name">The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts", which will be the name of the type - rss, auto, etc. The campaign "type" can not be changed.</param>
+        /// <param name="value">An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.</param>
+        /// <returns>Updated campaign details and any errors</returns>
+        public CampaignUpdateResult UpdateCampaign(string cid, string name, object value)
+        {
+            string apiAction = "campaigns/update";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cid,
+                name = name,
+                value = value
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignUpdateResult>(apiAction, args);
+        }
         #endregion
 
         #region API: Folders
@@ -578,6 +602,29 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<List<ListActivity>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Get the most recent 100 activities for particular list members (open, click, bounce, unsub, abuse, sent to, etc.)
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="listOfEmails">an array of up to 50 email structs</param>
+        /// <returns></returns>
+        public MemberActivityResult GetMemberActivity(string listId, List<EmailParameter> listOfEmails)
+        {
+            //  Our api action:
+            string apiAction = "lists/member-activity";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                emails = listOfEmails
+            };
+
+            //  Make the call:
+            return MakeAPICall<MemberActivityResult>(apiAction, args);
         }
 
         /// <summary>

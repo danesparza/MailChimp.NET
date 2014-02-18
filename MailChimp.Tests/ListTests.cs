@@ -53,6 +53,34 @@ namespace MailChimp.Tests
             Assert.IsTrue(results.Any());
         }
 
+        [TestMethod]
+        public void GetMemberActivity_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            
+            ListResult lists = mc.GetLists();
+            Assert.IsNotNull(lists.Data);
+            Assert.IsTrue(lists.Data.Any());
+
+            MembersResult members = mc.GetAllMembersForList(lists.Data[0].Id);
+            Assert.IsNotNull(members.Data);
+            Assert.IsTrue(members.Data.Any());
+
+            List<EmailParameter> memberEmails = new List<EmailParameter>();
+
+            foreach (MemberInfo member in members.Data)
+            {
+                memberEmails.Add(new EmailParameter() { Email = member.Email });
+            }
+
+            //  Act
+            MemberActivityResult results = mc.GetMemberActivity(lists.Data[0].Id, memberEmails);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Data.Any());
+        }
 
         [TestMethod]
         public void GetListInterestGroupings_Successful()
