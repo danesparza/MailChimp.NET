@@ -75,14 +75,14 @@ In your application, call:
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
-- Campaigns related: **86%** (13 of 15)
+- Campaigns related: **93%** (14 of 15)
 - Ecomm related: **0%** (0 of 3)
 - Folder related: **100%** (4 of 4)
-- List related: **47%** (17 of 36)
+- List related: **50%** (18 of 36)
 - Helper related: **60%** (6 of 10)
 - Reports related: **11%** (2 of 18)
 - Templates related: **100%** (6 of 6)
 - User related: **66%** (4 of 6)
 - Vip related: **0%** (0 of 4)
 
-**Overall**: **50%** (52 of 102)
+**Overall**: **52%** (54 of 102)
