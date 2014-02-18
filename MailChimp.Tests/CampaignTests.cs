@@ -124,5 +124,17 @@ namespace MailChimp.Tests
             // Assert
             Assert.IsTrue(result.Complete);
         }
+
+        [TestMethod]
+        public void CampaignUpdate_Successful()
+        {
+            // Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            CampaignListResult campaigns = mc.GetCampaigns();
+            //Act
+            var result = mc.UpdateCampaign(campaigns.Data[0].Id, "title", "Different Campaign Title");
+            // Assert
+            Assert.IsTrue(result.Errors.Count == 0);
+        }
     }
 }

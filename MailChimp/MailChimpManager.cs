@@ -399,6 +399,30 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<Campaign>(apiAction, args);
         }
+
+        /// <summary>
+        /// Update just about any setting besides type for a campaign that has not been sent. See campaigns/create() for details.
+        /// </summary>
+        /// <param name="cid">The Campaign Id to update</param>
+        /// <param name="name">The parameter name ( see campaigns/create() ). This will be that parameter name (options, content, segment_opts) except "type_opts", which will be the name of the type - rss, auto, etc. The campaign "type" can not be changed.</param>
+        /// <param name="value">An appropriate set of values for the parameter ( see campaigns/create() ). For additional parameters, this is the same value passed to them.</param>
+        /// <returns>Updated campaign details and any errors</returns>
+        public CampaignUpdateResult UpdateCampaign(string cid, string name, object value)
+        {
+            string apiAction = "campaigns/update";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cid,
+                name = name,
+                value = value
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignUpdateResult>(apiAction, args);
+        }
         #endregion
 
         #region API: Folders

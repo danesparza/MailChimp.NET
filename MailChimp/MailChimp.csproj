@@ -64,6 +64,8 @@
     <Compile Include="Campaigns\CampaignTypeAutoResponderOptions.cs" />
     <Compile Include="Campaigns\CampaignTypeOptions.cs" />
     <Compile Include="Campaigns\CampaignTypeRssOptions.cs" />
+    <Compile Include="Campaigns\CampaignUpdateError.cs" />
+    <Compile Include="Campaigns\CampaignUpdateResult.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
     <Compile Include="Lists\MemberActivity.cs" />
