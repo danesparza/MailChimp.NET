@@ -6,10 +6,10 @@ using MailChimp.Errors;
 using MailChimp.Folders;
 using MailChimp.Helper;
 using MailChimp.Lists;
+using MailChimp.Reports;
 using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
-using MailChimp.Reports;
 
 namespace MailChimp
 {
@@ -1249,6 +1249,44 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<List<UserInvite>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of active logins.
+        /// </summary>
+        /// <returns></returns>
+        public List<UserLoginsResult> GetLogins()
+        {
+            //  Our api action:
+            string apiAction = "users/logins";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<UserLoginsResult>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the profile for the login owning the provided API Key
+        /// </summary>
+        /// <returns></returns>
+        public UserProfile GetUserProfile()
+        {
+            //  Our api action:
+            string apiAction = "users/profile";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<UserProfile>(apiAction, args);
         }
 
         #endregion

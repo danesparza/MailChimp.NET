@@ -138,6 +138,8 @@
     <Compile Include="Templates\TemplateUpdateValue.cs" />
     <Compile Include="Users\UserActionResult.cs" />
     <Compile Include="Users\UserInvite.cs" />
+    <Compile Include="Users\UserLoginsResult.cs" />
+    <Compile Include="Users\UserProfile.cs" />
     <Compile Include="Webhooks\CleanedWebhookData.cs" />
     <Compile Include="Webhooks\CleanedWebhookResult.cs" />
     <Compile Include="Webhooks\UnsubscribeWebhookData.cs" />
