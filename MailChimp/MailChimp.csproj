@@ -69,6 +69,8 @@
     <Compile Include="Campaigns\CampaignUpdateResult.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
+    <Compile Include="Lists\CompleteResult.cs" />
+    <Compile Include="Lists\InterestGroupingResult.cs" />
     <Compile Include="Lists\MemberActivity.cs" />
     <Compile Include="Lists\MemberActivityItem.cs" />
     <Compile Include="Lists\MemberActivityResult.cs" />
