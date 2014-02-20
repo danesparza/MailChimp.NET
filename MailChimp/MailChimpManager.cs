@@ -717,6 +717,156 @@ namespace MailChimp
             return MakeAPICall<ListResult>(apiAction, args);
         }
         /// <summary>
+        /// Add an interest group for a list.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public CompleteResult AddListInterestGroup(string listId, string group_name, int grouping_id)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-group-add";
+            //lists/interest-group-add (string apikey, string id, string group_name, int grouping_id)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                group_name,
+                grouping_id,
+            };
+
+            //  Make the call:
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Deletes an interest group of a list.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public CompleteResult DeleteListInterestGroup(string listId, string group_name, int grouping_id)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-group-del";
+            //lists/interest-group-del (string apikey, string id, string group_name, int grouping_id)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                group_name,
+                grouping_id,
+            };
+
+            //  Make the call:
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Change the name of an Interest Group of a list.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public CompleteResult UpdateListInterestGroup(string listId, string old_name, string new_name, int grouping_id)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-group-update";
+            //lists/interest-group-update (string apikey, string old_name, string new_name, int grouping_id)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                old_name,
+                new_name,
+                grouping_id,
+            };
+
+            //  Make the call:
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Add a new Interest Grouping - if interest groups for the List are not yet enabled, adding the first grouping will automatically turn them on.
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public InterestGroupingResult AddListInterestGrouping(string listId, string name, string type, List<InterestGrouping.InnerGroup> groups)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-grouping-add";
+            //lists/interest-grouping-add (string apikey, string id, string name, string type, array groups)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                name,
+                type,
+                groups,
+            };
+
+            //  Make the call:
+            return MakeAPICall<InterestGroupingResult>(apiAction, args);
+        }
+        /// <summary>
+        /// Delete an existing Interest Grouping - this will permanently delete all contained interest groups and will remove those selections from all list members
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public CompleteResult DeleteListInterestGrouping(string listId, int grouping_id)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-grouping-del";
+            //lists/interest-grouping-del (string apikey, int grouping_id)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                grouping_id,
+            };
+
+            //  Make the call:
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+        /// <summary>
+        /// Update an existing Interest Grouping
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        public CompleteResult UpdateListInterestGrouping(string listId, int grouping_id, string name, string value)
+        {
+            //  Our api action:
+            string apiAction = "lists/interest-grouping-update";
+            //lists/interest-grouping-update (string apikey, int grouping_id, string name, string value)
+
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                grouping_id,
+                name,
+                value
+            };
+
+            //  Make the call:
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }      
+ 
+        /// <summary>
         /// Retrieve the interest groups for a list.
         /// </summary>
         /// <param name="listId"></param>
