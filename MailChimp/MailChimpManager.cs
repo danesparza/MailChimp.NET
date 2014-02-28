@@ -119,6 +119,63 @@ namespace MailChimp
         #region API: Campaigns
 
         /// <summary>
+        /// Get the content (both html and text) for a campaign either as it would appear in the campaign archive or as the raw, original content
+        /// </summary>
+        /// <param name="cId">the campaign id to get content for (can be gathered using GetCampaigns())</param>
+        /// <param name="view">optional one of "archive" (default), "preview" (like our popup-preview) or "raw"</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <returns></returns>
+        public CampaignContent GetCampaignContent(string cId, string view = "archive", EmailParameter emailParam = null)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/content";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                options = new
+                {
+                    view = view,
+                    email = emailParam
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignContent>(apiAction, args);
+        }
+
+        /// <summary>
+        ///Create a new draft campaign to send. You can not have more than 32,000 campaigns in your account.
+        ///See http://apidocs.mailchimp.com/api/2.0/campaigns/create.php for explanation of full options.
+        /// </summary>
+        /// <param name="type">The Campaign Type to create - one of "regular", "plaintext", "absplit", "rss", "auto"</param>
+        /// <param name="options">A struct of the standard options for this campaign.</param>
+        /// <param name="content">The content for this campaign </param>
+        /// <param name="segmentOptions">optional - if you wish to do Segmentation with this campaign this array should contain: see CampaignSegmentTest(). It's suggested that you test your options against campaignSegmentTest().</param>
+        /// <param name="typeOptions">optional - various extra options based on the campaign type</param>
+        /// <returns></returns>
+        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, CampaignTypeOptions typeOptions = null)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/create";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                type = type,
+                options = options,
+                content = content,
+                segment_opts = segmentOptions,
+                type_opts = typeOptions
+            };
+            //  Make the call:
+            return MakeAPICall<Campaign>(apiAction, args);
+        }
+
+        /// <summary>
         /// Delete a campaign. Seriously, "poof, gone!" - be careful! 
         /// Seriously, no one can undelete these.
         /// </summary>
@@ -170,31 +227,143 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// Get the content (both html and text) for a campaign either as it would appear in the campaign archive or as the raw, original content
+        /// Pause an AutoResponder or RSS campaign from sending
         /// </summary>
-        /// <param name="cId">the campaign id to get content for (can be gathered using GetCampaigns())</param>
-        /// <param name="view">optional one of "archive" (default), "preview" (like our popup-preview) or "raw"</param>
-        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="cId">the id of the campaign to pause</param>
         /// <returns></returns>
-        public CampaignContent GetCampaignContent(string cId, string view = "archive", EmailParameter emailParam = null)
+        public CampaignActionResult PauseCampaign(string cId)
         {
             //  Our api action:
-            string apiAction = "campaigns/content";
+            string apiAction = "campaigns/pause";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        //  campaigns/ready
+
+        /// <summary>
+        /// Replicate a campaign.
+        /// </summary>
+        /// <param name="cId">the id of the campaign to replicate</param>
+        /// <returns></returns>
+        public Campaign ReplicateCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/replicate";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Campaign>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Resume sending an AutoResponder or RSS campaign
+        /// </summary>
+        /// <param name="cId"></param>
+        /// <returns></returns>
+        public CampaignActionResult ResumeCampaign(string cId)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/resume";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Schedule a campaign to be sent in batches sometime in the future. 
+        /// Only valid for "regular" campaigns
+        /// </summary>
+        /// <param name="cId">the id of the campaign to schedule</param>
+        /// <param name="scheduleTime">the time to schedule the campaign.</param>
+        /// <param name="numBatches">the number of batches between 2 and 26 to send</param>
+        /// <param name="staggerMins">the number of minutes between each batch - 5, 10, 15, 20, 25, 30, or 60</param>
+        /// <returns></returns>
+        public CampaignActionResult ScheduleBatchCampaign(string cId, string scheduleTime, int numBatches = 2, int staggerMins = 5)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/schedule-batch";
 
             //  Create our arguments object:
             object args = new
             {
                 apikey = this.APIKey,
                 cid = cId,
-                options = new
-                {
-                    view = view,
-                    email = emailParam
-                }
+                schedule_time = scheduleTime,
+                num_batches = numBatches,
+                stagger_mins = staggerMins
             };
 
             //  Make the call:
-            return MakeAPICall<CampaignContent>(apiAction, args);
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Schedule a campaign to be sent in the future
+        /// </summary>
+        /// <param name="cId">the id of the campaign to schedule</param>
+        /// <param name="scheduleTime">the time to schedule the campaign. For A/B Split "schedule" campaigns, the time for Group A - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
+        /// <param name="scheduleTimeB">the time to schedule Group B of an A/B Split "schedule" campaign - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
+        /// <returns></returns>
+        public CampaignActionResult ScheduleCampaign(string cId, string scheduleTime, string scheduleTimeB = "")
+        {
+            //  Our api action:
+            string apiAction = "campaigns/schedule";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                schedule_time = scheduleTime,
+                schedule_time_b = scheduleTimeB
+            };
+
+            //  Make the call:
+            return MakeAPICall<CampaignActionResult>(apiAction, args);
+        }
+
+        /// <summary>
+        ///Allows one to test their segmentation rules before creating a campaign using them. 
+        /// </summary>
+        /// <param name="listId">The list id to test</param>
+        /// <param name="options">The segmentation options to apply</param>
+        /// <returns></returns>
+        public CampaignSegmentTestResult CampaignSegmentTest(string listId, CampaignSegmentOptions options)
+        {
+            //  Our api action:
+            string apiAction = "campaigns/segment-test";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                list_id = listId,
+                options = options
+            };
+            //  Make the call:
+            return MakeAPICall<CampaignSegmentTestResult>(apiAction, args);
         }
 
         /// <summary>
@@ -245,121 +414,7 @@ namespace MailChimp
             return MakeAPICall<CampaignActionResult>(apiAction, args);
         }
 
-        /// <summary>
-        /// Pause an AutoResponder or RSS campaign from sending
-        /// </summary>
-        /// <param name="cId">the id of the campaign to pause</param>
-        /// <returns></returns>
-        public CampaignActionResult PauseCampaign(string cId)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/pause";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                cid = cId
-            };
-
-            //  Make the call:
-            return MakeAPICall<CampaignActionResult>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Replicate a campaign.
-        /// </summary>
-        /// <param name="cId">the id of the campaign to replicate</param>
-        /// <returns></returns>
-        public Campaign ReplicateCampaign(string cId)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/replicate";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                cid = cId
-            };
-
-            //  Make the call:
-            return MakeAPICall<Campaign>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Resume sending an AutoResponder or RSS campaign
-        /// </summary>
-        /// <param name="cId"></param>
-        /// <returns></returns>
-        public CampaignActionResult ResumeCampaign(string cId)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/resume";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                cid = cId
-            };
-
-            //  Make the call:
-            return MakeAPICall<CampaignActionResult>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Schedule a campaign to be sent in the future
-        /// </summary>
-        /// <param name="cId">the id of the campaign to schedule</param>
-        /// <param name="scheduleTime">the time to schedule the campaign. For A/B Split "schedule" campaigns, the time for Group A - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
-        /// <param name="scheduleTimeB">the time to schedule Group B of an A/B Split "schedule" campaign - 24 hour format in GMT, eg "2013-12-30 20:30:00"</param>
-        /// <returns></returns>
-        public CampaignActionResult ScheduleCampaign(string cId, string scheduleTime, string scheduleTimeB = "")
-        {
-            //  Our api action:
-            string apiAction = "campaigns/schedule";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                cid = cId,
-                schedule_time = scheduleTime,
-                schedule_time_b = scheduleTimeB
-            };
-
-            //  Make the call:
-            return MakeAPICall<CampaignActionResult>(apiAction, args);
-        }
-
-        /// <summary>
-        /// Schedule a campaign to be sent in batches sometime in the future. 
-        /// Only valid for "regular" campaigns
-        /// </summary>
-        /// <param name="cId">the id of the campaign to schedule</param>
-        /// <param name="scheduleTime">the time to schedule the campaign.</param>
-        /// <param name="numBatches">the number of batches between 2 and 26 to send</param>
-        /// <param name="staggerMins">the number of minutes between each batch - 5, 10, 15, 20, 25, 30, or 60</param>
-        /// <returns></returns>
-        public CampaignActionResult ScheduleBatchCampaign(string cId, string scheduleTime, int numBatches = 2, int staggerMins = 5)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/schedule-batch";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                cid = cId,
-                schedule_time = scheduleTime,
-                num_batches = numBatches,
-                stagger_mins = staggerMins
-            };
-
-            //  Make the call:
-            return MakeAPICall<CampaignActionResult>(apiAction, args);
-        }
+        //  template-content
 
         /// <summary>
         /// Unschedule a campaign that is scheduled to be sent in the future
@@ -380,56 +435,6 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<CampaignActionResult>(apiAction, args);
-        }
-
-        /// <summary>
-        ///Allows one to test their segmentation rules before creating a campaign using them. 
-        /// </summary>
-        /// <param name="listId">The list id to test</param>
-        /// <param name="options">The segmentation options to apply</param>
-        /// <returns></returns>
-        public CampaignSegmentTestResult CampaignSegmentTest(string listId, CampaignSegmentOptions options)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/segment-test";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                list_id = listId,
-                options = options
-            };
-            //  Make the call:
-            return MakeAPICall<CampaignSegmentTestResult>(apiAction, args);
-        }
-        /// <summary>
-        ///Create a new draft campaign to send. You can not have more than 32,000 campaigns in your account.
-        ///See http://apidocs.mailchimp.com/api/2.0/campaigns/create.php for explanation of full options.
-        /// </summary>
-        /// <param name="type">The Campaign Type to create - one of "regular", "plaintext", "absplit", "rss", "auto"</param>
-        /// <param name="options">A struct of the standard options for this campaign.</param>
-        /// <param name="content">The content for this campaign </param>
-        /// <param name="segmentOptions">optional - if you wish to do Segmentation with this campaign this array should contain: see CampaignSegmentTest(). It's suggested that you test your options against campaignSegmentTest().</param>
-        /// <param name="typeOptions">optional - various extra options based on the campaign type</param>
-        /// <returns></returns>
-        public Campaign CreateCampaign(string type, CampaignCreateOptions options, CampaignCreateContent content, CampaignSegmentOptions segmentOptions = null, CampaignTypeOptions typeOptions = null)
-        {
-            //  Our api action:
-            string apiAction = "campaigns/create";
-
-            //  Create our arguments object:
-            object args = new
-            {
-                apikey = this.APIKey,
-                type = type,
-                options = options,
-                content = content,
-                segment_opts = segmentOptions,
-                type_opts = typeOptions
-            };
-            //  Make the call:
-            return MakeAPICall<Campaign>(apiAction, args);
         }
 
         /// <summary>

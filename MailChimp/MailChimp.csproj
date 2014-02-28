@@ -50,6 +50,8 @@
     <Compile Include="Campaigns\CampaignCreateContent.cs" />
     <Compile Include="Campaigns\CampaignCreateTrackingOptions.cs" />
     <Compile Include="Campaigns\CampaignCreateOptions.cs" />
+    <Compile Include="Campaigns\CampaignReadyCheckItem.cs" />
+    <Compile Include="Campaigns\CampaignReadyResult.cs" />
     <Compile Include="Campaigns\CampaignScheduleDays.cs" />
     <Compile Include="Campaigns\CampaignSegmentOptions.cs" />
     <Compile Include="Campaigns\CampaignSegmentTestResult.cs" />
