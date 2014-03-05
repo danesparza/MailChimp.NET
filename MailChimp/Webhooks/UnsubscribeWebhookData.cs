@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace MailChimp.Webhooks
 {
@@ -17,6 +18,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The unsubscribe reason if given
         /// </summary>
@@ -26,6 +28,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The ID of the member
         /// </summary>
@@ -35,6 +38,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The ID of the list they unsubscribed from
         /// </summary>
@@ -44,6 +48,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The email address that was unsubscribed
         /// </summary>
@@ -53,6 +58,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The type of email e.g. "Html"
         /// </summary>
@@ -62,15 +68,17 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// The merges supplied
         /// </summary>
         [DataMember(Name = "merges")]
-        public WebhookMerges Merges
+        public Dictionary<string, string> Merges
         {
             get;
             set;
         }
+
         /// <summary>
         /// IP address
         /// </summary>
@@ -80,6 +88,7 @@ namespace MailChimp.Webhooks
             get;
             set;
         }
+
         /// <summary>
         /// Campaign ID
         /// </summary>

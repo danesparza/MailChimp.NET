@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using MailChimp.Helper;
 
 namespace MailChimp.Lists
@@ -35,7 +36,7 @@ namespace MailChimp.Lists
         /// data for the various list specific and special merge vars
         /// </summary>
         [DataMember(Name = "merge_vars")]
-        public object MergVars
+        public object MergeVars
         {
             get;
             set;

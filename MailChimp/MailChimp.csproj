@@ -119,7 +119,6 @@
     <Compile Include="Lists\MemberInfoResult.cs" />
     <Compile Include="Lists\MemberNote.cs" />
     <Compile Include="Lists\MembersResult.cs" />
-    <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\StaticSegment.cs" />
     <Compile Include="Lists\StaticSegmentAddResult.cs" />
     <Compile Include="Lists\StaticSegmentActionResult.cs" />
@@ -148,7 +147,6 @@
     <Compile Include="Webhooks\CleanedWebhookResult.cs" />
     <Compile Include="Webhooks\UnsubscribeWebhookData.cs" />
     <Compile Include="Webhooks\UnsubscribeWebhookResult.cs" />
-    <Compile Include="Webhooks\WebhookMerges.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ecomm\" />
