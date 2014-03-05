@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MailChimp.Tests
 {
@@ -16,10 +17,7 @@ namespace MailChimp.Tests
         [AssemblyInitialize()]
         public static void AllTestInit(TestContext testContext)
         {
-            //  Set this to your Mailchimp API key for testing
-            //  See http://kb.mailchimp.com/article/where-can-i-find-my-api-key
-            //  for help finding your API key
-            Test_APIKey = "yourapikeyhere-us2";
+            Test_APIKey = ConfigurationManager.AppSettings["API_Key"];
         }
     }
 }
