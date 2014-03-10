@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>MailChimp.NET</id>
-        <version>1.0.0.8</version>
+        <version>1.1.0.0</version>
         <title>MailChimp.NET</title>
         <authors>Dan Esparza</authors>
         <owners>Dan Esparza</owners>
@@ -17,7 +17,7 @@ as a Dictionary&lt;string, string&gt; when getting data back.</releaseNotes>
         <language>en-US</language>
         <tags>mailchimp email</tags>
         <dependencies>
-            <dependency id="ServiceStack.Text" version="3.9.71" />
+            <dependency id="ServiceStack.Text" version="(, 3.9.71]" />
         </dependencies>
     </metadata>
     <files>
