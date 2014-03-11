@@ -350,5 +350,18 @@ namespace MailChimp.Tests
             StaticSegmentActionResult result = mc.ResetStaticSegment(lists.Data[1].Id, segments[0].StaticSegmentId);
             Assert.IsTrue(result.Complete);
         }
+	    [TestMethod]
+        public void GetSavedSegmentsForList_Successful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            
+            // Act
+            SegmentResult result = mc.GetSegmentsForList(lists.Data[1].Id, "saved");
+            
+            // Assert
+            Assert.IsTrue(result.SavedResult.Any());
+        }
     }
 }

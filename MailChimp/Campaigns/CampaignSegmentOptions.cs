@@ -9,6 +9,15 @@ namespace MailChimp.Campaigns
     [DataContract]
     public class CampaignSegmentOptions
     {
+	    /// <summary>
+        /// a saved segment id from lists/segments() - this will take precendence, otherwise the match+conditions are required.
+        /// </summary>
+        [DataMember(Name = "saved_segment_id")]
+        public string SavedSegmentId
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// Controls whether to use AND or OR when applying your options - expects "any" (for OR) or "all" (for AND)
         /// </summary>

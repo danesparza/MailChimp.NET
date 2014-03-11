@@ -1171,6 +1171,27 @@ namespace MailChimp
             };
             return MakeAPICall<List<StaticSegmentResult>>(apiAction, args);
         }
+		
+	    /// <summary>
+        /// Retrieve all of Saved Segments for a list.
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="segmentType">optional - optional, if specified should be "static" or "saved" and will limit the returned entries to that type</param>
+        /// <returns></returns>
+        public SegmentResult GetSegmentsForList(string listId, string segmentType)
+        {
+            // our api action:
+            string apiAction = "lists/segments";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                type = segmentType
+            };
+            return MakeAPICall<SegmentResult>(apiAction, args);
+        }
 
         #endregion
 
