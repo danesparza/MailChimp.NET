@@ -128,6 +128,8 @@
     <Compile Include="Lists\StaticSegmentResult.cs" />
     <Compile Include="Lists\SubscriberLocation.cs" />
     <Compile Include="Lists\UnsubscribeResult.cs" />
+    <Compile Include="Lists\SavedSegmentResult.cs" />
+    <Compile Include="Lists\SegmentResult.cs" />
     <Compile Include="MailChimpManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\TemplateAddResult.cs" />

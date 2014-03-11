@@ -86,6 +86,24 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsTrue(result.Total == 1);
         }
+	    [TestMethod]
+        public void CampaignSavedSegmentTest_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            Assert.IsNotNull(lists);
+            Assert.IsTrue(lists.Data.Count > 0);
+            string listID = lists.Data[1].Id;
+            CampaignSegmentOptions options = new CampaignSegmentOptions();
+            options.SavedSegmentId = "yourSavedSegmentId";
+
+            //  Act
+            CampaignSegmentTestResult result = mc.CampaignSegmentTest(listID, options);
+            
+            //  Assert
+            Assert.IsTrue(result.Total > 0);
+        }
         [TestMethod]
         public void CampaignCreate_Successful()
         {
