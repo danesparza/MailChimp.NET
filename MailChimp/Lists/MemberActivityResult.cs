@@ -30,7 +30,7 @@ namespace MailChimp.Lists
         /// List of members information
         /// </summary>
         [DataMember(Name = "data")]
-        public List<MergeVarListResult> Data
+        public List<MemberActivity> Data
         {
             get;
             set;
