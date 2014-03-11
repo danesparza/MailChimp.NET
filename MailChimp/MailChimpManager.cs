@@ -946,8 +946,9 @@ namespace MailChimp
         /// <param name="limit">for large data sets, the number of results to return - defaults to 25, upper limit set at 100</param>
         /// <param name="sort_field">the data field to sort by - mergeX (1-30), your custom merge tags, "email", "rating","last_update_time", or "optin_time" - invalid fields will be ignored</param>
         /// <param name="sort_dir">the direct - ASC or DESC</param>
+        /// <param name="segment">refine the members list by segments (maximum of 5 conditions)</param>
         /// <returns></returns>
-        public MembersResult GetAllMembersForList(string listId, string status = "subscribed", int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC")
+        public MembersResult GetAllMembersForList(string listId, string status = "subscribed", int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC", CampaignSegmentOptions segment = null)
         {
             //  Our api action:
             string apiAction = "lists/members";
@@ -963,7 +964,8 @@ namespace MailChimp
                     start = start,
                     limit = limit,
                     sort_field = sort_field,
-                    sort_dir = sort_dir
+                    sort_dir = sort_dir,
+                    segment = segment
                 }
             };
 
@@ -1628,6 +1630,30 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<ReportSummary>(apiAction, args);
+        }
+
+
+        /// <summary>
+        /// Get email addresses the campaign was sent to
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public SentToMembers GetReportSentTo(string cId, SentToLimits opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/sent-to";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<SentToMembers>(apiAction, args);
         }
 
         /// <summary>

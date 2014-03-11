@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace MailChimp.Campaigns
 {
@@ -295,6 +296,13 @@ namespace MailChimp.Campaigns
         /// </summary>
         [DataMember(Name = "segment_text")]
         public string SegmentText
+        {
+            get;
+            set;
+        }
+
+        [DataMember(Name = "segment_opts")]
+        public CampaignSegmentOptions SegmentOpts
         {
             get;
             set;
