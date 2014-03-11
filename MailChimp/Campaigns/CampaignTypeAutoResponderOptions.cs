@@ -86,7 +86,7 @@ namespace MailChimp.Campaigns
         /// <summary>
         ///whether or not imported subscribers (ie, any non-double optin subscribers) will receive
         /// </summary>
-        [DataMember(Name = "schedule_hour")]
+        [DataMember(Name = "use_import_time")]
         public bool UseImportTime
         {
             get;

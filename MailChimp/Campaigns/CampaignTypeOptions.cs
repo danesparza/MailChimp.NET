@@ -17,6 +17,7 @@ namespace MailChimp.Campaigns
            get;
            set;
        }
+       
        /// <summary>
        ///For A/B Split campaigns
        /// </summary>
@@ -26,6 +27,7 @@ namespace MailChimp.Campaigns
            get;
            set;
        }
+
        /// <summary>
        ///For AutoResponder campaigns
        /// </summary>
