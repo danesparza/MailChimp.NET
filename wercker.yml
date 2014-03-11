@@ -1,0 +1,11 @@
+box: wercker-labs/windows
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    # Install packages with NuGet: https://app.wercker.com/#applications/52623205f4a7b1d05a00240b/tab/details
+    - wercker-labs/nuget
+    # Build your solution file: https://app.wercker.com/#applications/526231a7f4a7b1d05a002397/tab/details
+    - wercker-labs/msbuild
+    # Run tests: https://app.wercker.com/#applications/526231e0f4a7b1d05a0023dc/tab/details
+    - wercker-labs/dotnet-test
