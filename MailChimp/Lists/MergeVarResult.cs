@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace MailChimp.Lists
 {
     [DataContract]
-    public class MemberActivityResult
+    public class MergeVarResult
     {
         /// <summary>
         /// The number of subscribers successfully found on the list
@@ -27,10 +27,20 @@ namespace MailChimp.Lists
         }
 
         /// <summary>
-        /// List of members information
+        ///LList of each merge var
         /// </summary>
         [DataMember(Name = "data")]
         public List<MergeVarListResult> Data
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// List of errors
+        /// </summary>
+        [DataMember(Name = "errors")]
+        public List<MergeVarError> Errors
         {
             get;
             set;

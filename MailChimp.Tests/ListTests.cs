@@ -277,6 +277,55 @@ namespace MailChimp.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void GetMergeVars_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+
+            // Act
+            MergeVarResult result = mc.GetMergeVars(lists.Data.Select(l => l.Id));
+
+            // Assert
+            Assert.IsNotNull(result.Data);
+        }
+
+        [TestMethod]
+        public void AddMergeVar_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+
+            MergeVarOptions options = new MergeVarOptions()
+            {
+                FieldType = "url",
+                HelpText = "A url, such as https://github.com/danesparza/MailChimp.NET"
+            };
+
+            // Act
+            MergeVarItemResult result = mc.AddMergeVar(lists.Data.First().Id, "TESTVALUE", "Test Value", options);
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void DeleteMergeVar_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+
+            // Act
+            MergeVarDeleteResult result = mc.DeleteMergeVar(lists.Data.First().Id, "TESTVALUE");
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
         [TestMethod]
         public void AddStaticSegment_Successful()
         {
@@ -288,6 +337,7 @@ namespace MailChimp.Tests
             // Assert
             Assert.IsNotNull(result.NewStaticSegmentID);
         }
+
         [TestMethod]
         public void GetStaticSegmentsForList_Successful()
         {
