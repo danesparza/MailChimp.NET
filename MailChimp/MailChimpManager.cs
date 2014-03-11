@@ -206,7 +206,7 @@ namespace MailChimp
         /// <param name="sort_field">one of "create_time", "send_time", "title", "subject" . Invalid values will fall back on "create_time" - case insensitive</param>
         /// <param name="sort_dir">"DESC" for descending (default), "ASC" for Ascending. Invalid values will fall back on "DESC" - case insensitive.</param>
         /// <returns></returns>
-        public CampaignListResult GetCampaigns(List<CampaignFilter> filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
+        public CampaignListResult GetCampaigns(CampaignFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
         {
             //  Our api action:
             string apiAction = "campaigns/list";
