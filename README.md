@@ -77,6 +77,11 @@ In your application, call:
     }
 
 
+### Making contributions
+This project is not affiliated with [MailChimp](http://mailchimp.com/about/).  All contributors to this project are unpaid average folks (just like you!) who choose to volunteer their time.  If you really like MailChimp and would like to contribute, we would love your help!  To get started contributing, just [fork the repo](https://help.github.com/articles/fork-a-repo), make your changes and submit a pull request.   
+
+Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some swag](http://www.wired.com/design/2012/12/mailchimp-swag/).
+
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
