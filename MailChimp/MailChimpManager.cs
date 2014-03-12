@@ -1043,7 +1043,6 @@ namespace MailChimp
         /// Get the list of merge tags for a given list, including their name, tag, and required setting
         /// </summary>
         /// <param name="listIds">the list ids to retrieve merge vars for. Get by calling lists/list() - max of 100 </param>
-        /// <returns></returns>
         public MergeVarResult GetMergeVars(IEnumerable<string> listIds)
         {
             string apiAction = "lists/merge-vars";
@@ -1058,7 +1057,7 @@ namespace MailChimp
         }
 
         /// <summary>
-        /// 
+        /// Add a new merge tag to a given list
         /// </summary>
         /// <param name="listId">The list id to connect to</param>
         /// <param name="tag">The merge tag to add, e.g. FNAME. 
@@ -1083,6 +1082,27 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Update most parameters for a merge tag on a given list. You cannot currently change the merge type
+        /// </summary>
+        /// <param name="listId">The list id to connect to</param>
+        /// <param name="tag">The merge tag to update</param>
+        /// <param name="options">updated options for this merge var</param>
+        /// <returns></returns>
+        public MergeVarItemResult UpdateMergeVar(string listId, string tag, MergeVarOptions options)
+        {
+            string apiAction = "lists/merge-var-update";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                tag = tag,
+                options = options
+            };
+
+            return MakeAPICall<MergeVarItemResult>(apiAction, args);
+        }
+        /// <summary>
         /// Delete a merge tag from a given list and all its members. 
         /// Seriously - the data is removed from all members as well!
         /// Note that on large lists this method may seem a bit slower than calls you typically make.
@@ -1090,7 +1110,7 @@ namespace MailChimp
         /// <param name="listId">the list id to connect to.</param>
         /// <param name="tag">The merge tag to delete</param>
         /// <returns></returns>
-        public MergeVarDeleteResult DeleteMergeVar(string listId, string tag)
+        public CompleteResult DeleteMergeVar(string listId, string tag)
         {
             string apiAction = "lists/merge-var-del";
 
@@ -1101,8 +1121,55 @@ namespace MailChimp
                 tag = tag
             };
 
-            return MakeAPICall<MergeVarDeleteResult>(apiAction, args);
+            return MakeAPICall<CompleteResult>(apiAction, args);
         }
+
+        /// <summary>
+        /// Completely resets all data stored in a merge var on a list. 
+        /// All data is removed and this action can not be undone.
+        /// </summary>
+        /// <param name="listId">the list id to connect to.</param>
+        /// <param name="tag">The merge tag to reset</param>
+        /// <returns></returns>
+        public CompleteResult ResetMergeVar(string listId, string tag)
+        {
+            string apiAction = "lists/merge-var-reset";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                tag = tag
+            };
+
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Sets a particular merge var to the specified value for every list member. 
+        /// Only merge var ids 1 - 30 may be modified this way.  This is generally a dirty method unless 
+        /// you're fixing data since you should probably be using default_values and/or conditional content. 
+        /// As with lists/merge-var-reset(), this can not be undone.
+        /// </summary>
+        /// <param name="listId">the list id to connect to.</param>
+        /// <param name="tag">The merge tag to set</param>
+        /// <param name="value">The value to set to</param>
+        /// <returns></returns>
+        public CompleteResult SetMergeVar(string listId, string tag, string value)
+        {
+            string apiAction = "lists/merge-var-set";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                tag = tag,
+                value = value
+            };
+
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
+
         /// <summary>
         /// Save a segment against a list for later use.
         /// There is no limit to the number of segments which can be saved. Static Segments are not tied to any merge data, interest groups, etc.

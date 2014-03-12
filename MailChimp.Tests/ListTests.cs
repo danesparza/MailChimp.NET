@@ -284,12 +284,25 @@ namespace MailChimp.Tests
             //  Arrange
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
+            // we don't want to have an existing merge var interfere
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "TESTGETVAR"); } 
+            catch { }
+            MergeVarOptions options = new MergeVarOptions()
+            {
+                FieldType = "url",
+                HelpText = "A url, such as https://github.com/danesparza/MailChimp.NET"
+            };
+            mc.AddMergeVar(lists.Data.First().Id, "TESTGETVAR", "Test Value", options);
 
             // Act
             MergeVarResult result = mc.GetMergeVars(lists.Data.Select(l => l.Id));
 
             // Assert
             Assert.IsNotNull(result.Data);
+            Assert.IsTrue(result.Data.Any(d => d.MergeVars.Any(m => m.Tag == "TESTGETVAR")));
+
+            // Clean up
+            mc.DeleteMergeVar(lists.Data.First().Id, "TESTGETVAR");
         }
 
         [TestMethod]
@@ -298,7 +311,9 @@ namespace MailChimp.Tests
             //  Arrange
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
-
+            // we don't want to have an existing merge var interfere
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "TESTADDVAR"); }
+            catch { }
             MergeVarOptions options = new MergeVarOptions()
             {
                 FieldType = "url",
@@ -306,10 +321,48 @@ namespace MailChimp.Tests
             };
 
             // Act
-            MergeVarItemResult result = mc.AddMergeVar(lists.Data.First().Id, "TESTVALUE", "Test Value", options);
+            MergeVarItemResult result = mc.AddMergeVar(lists.Data.First().Id, "TESTADDVAR", "Test Value", options);
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.IsTrue(result.FieldType == "url");
+
+            // Clean up
+            mc.DeleteMergeVar(lists.Data.First().Id, "TESTADDVAR");
+        }
+
+        [TestMethod]
+        public void UpdateMergeVar_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            MergeVarOptions options = new MergeVarOptions()
+            {
+                FieldType = "url",
+                HelpText = "A url, such as https://github.com/danesparza/MailChimp.NET"
+            };
+            // we don't want to have existing merge vars interfere
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "TESTUPDVAR"); }
+            catch { }
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "UPDATEDVAR"); }
+            catch { }
+            mc.AddMergeVar(lists.Data.First().Id, "TESTUPDVAR", "Test Value", options);
+
+            // Act
+            options = new MergeVarOptions()
+            {
+                Tag = "UPDATEDVAR",
+                HelpText = "Any url you like"
+            };
+            MergeVarItemResult result = mc.UpdateMergeVar(lists.Data.First().Id, "TESTUPDVAR", options);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Tag == "UPDATEDVAR");
+
+            // Clean up
+            mc.DeleteMergeVar(lists.Data.First().Id, "UPDATEDVAR");
         }
 
         [TestMethod]
@@ -319,11 +372,59 @@ namespace MailChimp.Tests
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists();
 
+            mc.AddMergeVar(lists.Data.First().Id, "TESTDELETE", "Test Value");
+
             // Act
-            MergeVarDeleteResult result = mc.DeleteMergeVar(lists.Data.First().Id, "TESTVALUE");
+            CompleteResult result = mc.DeleteMergeVar(lists.Data.First().Id, "TESTDELETE");
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.IsTrue(result.Complete);
+        }
+
+        [TestMethod]
+        public void ResetMergeVar_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            // we don't want to have an existing merge var interfere
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "TESTRESET"); }
+            catch { }
+            mc.AddMergeVar(lists.Data.First().Id, "TESTRESET", "Test Value");
+
+            // Act
+            CompleteResult result = mc.ResetMergeVar(lists.Data.First().Id, "TESTRESET");
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Complete);
+
+            // Clean up
+            mc.DeleteMergeVar(lists.Data.First().Id, "TESTRESET");
+        }
+
+        [TestMethod]
+        public void SetMergeVar_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            // we don't want to have an existing merge var interfere
+            try { mc.DeleteMergeVar(lists.Data.First().Id, "TESTSET"); }
+            catch { }
+            mc.AddMergeVar(lists.Data.First().Id, "TESTSET", "Test Value");
+
+            // Act
+            CompleteResult result = mc.SetMergeVar(lists.Data.First().Id, "TESTSET", "Set");
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Complete);
+
+
+            // Clean up
+            mc.DeleteMergeVar(lists.Data.First().Id, "TESTSET");
         }
 
         [TestMethod]
