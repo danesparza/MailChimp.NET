@@ -86,7 +86,7 @@ namespace MailChimp.Lists
         /// or search within content for filter values - defaults to true
         /// </summary>
         [DataMember(Name = "exact")]
-        public bool Exact
+        public bool? Exact
         {
             get;
             set;
