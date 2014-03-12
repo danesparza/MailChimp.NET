@@ -78,7 +78,7 @@ In your application, call:
 
 
 ### Making contributions
-This project is not affiliated with [MailChimp](http://mailchimp.com/about/).  All contributors to this project are unpaid average folks (just like you!) who choose to volunteer their time.  If you really like MailChimp and would like to contribute, we would love your help!  To get started contributing, just [fork the repo](https://help.github.com/articles/fork-a-repo), make your changes and submit a pull request.   
+This project is not affiliated with [MailChimp](http://mailchimp.com/about/).  All contributors to this project are unpaid average folks (just like you!) who choose to volunteer their time.  If you like MailChimp and want to contribute, we would appreciate your help!  To get started, just [fork the repo](https://help.github.com/articles/fork-a-repo), make your changes and submit a pull request.   
 
 Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some swag](http://www.wired.com/design/2012/12/mailchimp-swag/).
 
