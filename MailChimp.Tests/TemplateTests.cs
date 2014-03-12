@@ -76,9 +76,16 @@ namespace MailChimp.Tests
         {
             //  Arrange
             MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
-
+            var types = new TemplateTypes()
+            {
+                User = true
+            };
+            var filters = new TemplateFilters()
+            {
+                IncludeInactive = false
+            };
             //  Act
-            TemplateListResult details = mc.GetTemplates();
+            TemplateListResult details = mc.GetTemplates(types, filters);
 
             //  Assert
             Assert.IsNotNull(details);
