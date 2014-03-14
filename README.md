@@ -1,7 +1,7 @@
 MailChimp.NET
 =============
 
-.NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/)
+.NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/), built with MailChimp love :heart:
 
 ### Quick Start
 
