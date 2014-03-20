@@ -38,7 +38,7 @@ namespace MailChimp.Templates
         /// <summary>
         /// only include inactive user templates. defaults to false.
         /// </summary>
-        [DataMember(Name = "inactive_only	")]
+        [DataMember(Name = "inactive_only")]
         public bool InactiveOnly
         {
             get;

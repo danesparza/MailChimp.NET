@@ -5,9 +5,31 @@ namespace MailChimp.Lists
     [DataContract]
     public class MergeVarOptions
     {
+        /// <summary>
+        /// The new tag for an existing MergeVar.  This is used for updates only.
+        /// 10 bytes max, valid characters: "A-Z 0-9 _" no spaces, dashes, etc.
+        /// </summary>
+        [DataMember(Name = "tag")]
+        public string Tag
+        {
+            get;
+            set;
+        }
 
         /// <summary>
-        /// One of text, number, radio, dropdown, date, address, phone, url, imagurl, zip, birthday
+        /// The new long name for an existing MergeVar.   This is used for updates only.
+        /// 50 characters max.
+        /// </summary>
+        [DataMember(Name = "name")]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// One of text, number, radio, dropdown, date, address, phone, url, imagurl, zip, birthday.
+        /// This currently can not be updated once the field is created.
         /// </summary>
         [DataMember(Name = "field_type")]
         public string FieldType
@@ -39,7 +61,7 @@ namespace MailChimp.Lists
         /// <summary>
         /// optional indicates whether the field is displayed in the app's list member view - defaults to true 
         /// </summary>
-        [DataMember(Name = "public")]
+        [DataMember(Name = "show")]
         public bool? Show
         {
             get;
