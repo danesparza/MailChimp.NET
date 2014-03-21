@@ -136,10 +136,10 @@ namespace MailChimp.Campaigns
         }
 
         /// <summary>
-        /// whether to return just campaigns with or without segments
+        /// optional - whether to return just campaigns with or without segments
         /// </summary>
         [DataMember(Name = "uses_segment")]
-        public bool UsesSegment
+        public bool? UsesSegment
         {
             get;
             set;
