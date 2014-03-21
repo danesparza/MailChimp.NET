@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using MailChimp.Helper;
+using System.Runtime.Serialization;
 
 namespace MailChimp.Lists
 {
