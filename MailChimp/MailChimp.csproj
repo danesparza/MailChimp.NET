@@ -74,6 +74,7 @@
     <Compile Include="Helper\Matches.cs" />
     <Compile Include="Lists\CompleteResult.cs" />
     <Compile Include="Lists\InterestGroupingResult.cs" />
+    <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\MergeVarError.cs" />
     <Compile Include="Lists\MergeVarItemResult.cs" />
     <Compile Include="Lists\MemberActivity.cs" />
