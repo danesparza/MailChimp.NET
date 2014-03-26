@@ -117,6 +117,72 @@ namespace MailChimp.Tests
             Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
         }
 
+        [System.Runtime.Serialization.DataContract] 
+        public class MyMergeVar : MergeVar
+        {
+            [System.Runtime.Serialization.DataMember(Name = "FNAME")]
+            public string FirstName
+            {
+                get;
+                set;
+            }
+            [System.Runtime.Serialization.DataMember(Name = "LNAME")]
+            public string LastName
+            {
+                get;
+                set;
+            }
+        }
+
+        [TestMethod]
+        public void SubscribeWithGroupSelection_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            EmailParameter email = new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            };
+
+            // find a list with interest groups...
+            string strListID = null;
+            int nGroupingID = 0;
+            string strGroupName = null;
+            foreach (ListInfo li in lists.Data) {
+                List<InterestGrouping> interests = mc.GetListInterestGroupings(li.Id);
+                if (interests != null) {
+                    if (interests.Count > 0) {
+                        if (interests[0].GroupNames.Count > 0) {
+                            strListID = li.Id;
+                            nGroupingID = interests[0].Id;
+                            strGroupName = interests[0].GroupNames[0].Name;
+                            break;
+                        }
+                    }
+                }
+            }
+            Assert.IsNotNull(strListID,"no lists found in this account with groupings / group names");
+            Assert.AreNotEqual(0,nGroupingID);
+            Assert.IsNotNull(strGroupName);
+
+            MyMergeVar mvso = new MyMergeVar();
+            mvso.Groupings = new List<Grouping>();
+            mvso.Groupings.Add(new Grouping());
+            mvso.Groupings[0].Id = nGroupingID;
+            mvso.Groupings[0].GroupNames = new List<string>();
+            mvso.Groupings[0].GroupNames.Add(strGroupName);
+            mvso.FirstName = "Testy";
+            mvso.LastName = "Testerson";
+
+            //  Act
+            EmailParameter results = mc.Subscribe(strListID, email, mvso);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+        }
+
         [TestMethod]
         public void BatchSubscribe_Successful()
         {

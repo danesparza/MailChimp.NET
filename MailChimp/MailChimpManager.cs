@@ -987,7 +987,35 @@ namespace MailChimp
         /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
         /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
         /// <returns></returns>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        /// <example>
+        /// The example below shows how to add your own merge parameters by passing your own class that inherits from MergeVar:
+        /// <code>
+        /// [System.Runtime.Serialization.DataContract]
+        /// public class MyMergeVar : MergeVar
+        /// {
+        ///     [System.Runtime.Serialization.DataMember(Name = "FNAME")]
+        ///     public string FirstName { get; set; }
+        ///     [System.Runtime.Serialization.DataMember(Name = "LNAME")]
+        ///     public string LastName { get; set; }
+        /// }
+        /// 
+        /// MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+        /// EmailParameter email = new EmailParameter()
+        /// {
+        ///     Email = "customeremail@righthere.com"
+        /// };
+        /// MyMergeVar myMerge = new MyMergeVar();
+        /// mvso.Groupings = new List&lt;Grouping&gt;();
+        /// mvso.Groupings.Add(new Grouping());
+        /// mvso.Groupings[0].Id = 1234; // replace with your grouping id
+        /// mvso.Groupings[0].GroupNames = new List&lt;string&gt;();
+        /// mvso.Groupings[0].GroupNames.Add("Your Group Name");
+        /// mvso.FirstName = "Testy";
+        /// mvso.LastName = "Testerson";
+        /// EmailParameter results = mc.Subscribe(strListID, email, mvso);
+        /// </code>
+        /// </example>
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
             string apiAction = "lists/subscribe";
@@ -998,7 +1026,7 @@ namespace MailChimp
                 apikey = this.APIKey,
                 id = listId,
                 email = emailParam,
-                merge_vars = mergeVars,
+                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
                 email_type = emailType,
                 double_optin = doubleOptIn,
                 update_existing = updateExisting,
