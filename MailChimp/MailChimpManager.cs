@@ -1004,15 +1004,15 @@ namespace MailChimp
         /// {
         ///     Email = "customeremail@righthere.com"
         /// };
-        /// MyMergeVar myMerge = new MyMergeVar();
-        /// mvso.Groupings = new List&lt;Grouping&gt;();
-        /// mvso.Groupings.Add(new Grouping());
-        /// mvso.Groupings[0].Id = 1234; // replace with your grouping id
-        /// mvso.Groupings[0].GroupNames = new List&lt;string&gt;();
-        /// mvso.Groupings[0].GroupNames.Add("Your Group Name");
-        /// mvso.FirstName = "Testy";
-        /// mvso.LastName = "Testerson";
-        /// EmailParameter results = mc.Subscribe(strListID, email, mvso);
+        /// MyMergeVar myMergeVars = new MyMergeVar();
+        /// myMergeVars.Groupings = new List&lt;Grouping&gt;();
+        /// myMergeVars.Groupings.Add(new Grouping());
+        /// myMergeVars.Groupings[0].Id = 1234; // replace with your grouping id
+        /// myMergeVars.Groupings[0].GroupNames = new List&lt;string&gt;();
+        /// myMergeVars.Groupings[0].GroupNames.Add("Your Group Name");
+        /// myMergeVars.FirstName = "Testy";
+        /// myMergeVars.LastName = "Testerson";
+        /// EmailParameter results = mc.Subscribe(strListID, email, myMergeVars);
         /// </code>
         /// </example>
         public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
