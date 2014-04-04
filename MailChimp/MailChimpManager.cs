@@ -1497,6 +1497,30 @@ namespace MailChimp
             return MakeAPICall<Matches>(apiAction, args);
         }
 
+        /// <summary>
+        /// Send your HTML content to have the CSS inlined and optionally remove the original styles.
+        /// More information: http://apidocs.mailchimp.com/api/2.0/helper/inline-css.php
+        /// </summary>
+        /// <param name="html">Your HTML content</param>
+        /// <param name="strip_css">optional - optional Whether you want the CSS <style> tags stripped from the returned document. Defaults to false.</param>
+        /// <returns></returns>
+        public InlineCss InlineCss(string html, bool strip_css = false)
+        {
+            //  Our api action:
+            string apiAction = "helper/inline-css";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                html = html,
+                strip_css = strip_css
+            };
+
+            //  Make the call:
+            return MakeAPICall<InlineCss>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Users
