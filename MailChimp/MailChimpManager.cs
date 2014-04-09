@@ -1039,6 +1039,34 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Updates the member in the list with the matching emailParam  
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="mergeVars">merges for the email (new-email, FNAME, LNAME, etc.)</param>
+        /// <param name="emailType">optional email type preference for the email (html or text), leave blank to keep the existing preference</param>
+        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
+        /// <returns></returns>
+        public EmailParameter UpdateMember(string listId, EmailParameter emailParam, MergeVar mergeVars, string emailType = "", bool replaceInterests = true)
+        {
+            const string apiAction = "lists/update-member";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
+                email_type = emailType,
+                replace_interests = replaceInterests
+            };
+
+            //  Make the call:
+            return MakeAPICall<EmailParameter>(apiAction, args);
+
+        }
+
+        /// <summary>
         /// Unsubscribe the given email address from the list
         /// </summary>
         /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
