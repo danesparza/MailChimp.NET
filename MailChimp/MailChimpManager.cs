@@ -460,6 +460,30 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<CampaignUpdateResult>(apiAction, args);
         }
+
+        /// <summary>
+        /// Get the HTML template content sections for a campaign. 
+        /// Note that this will return very jagged, non-standard results based on the template a campaign is using. 
+        /// You only want to use this if you want to allow editing template sections in your application. 
+        /// </summary>
+        /// <param name="cId">the campaign id to get content for</param>
+        /// <returns>content containing all content section for the campaign - section name are dependent upon the template used</returns>
+        public Dictionary<string, string> GetCampaignTemplateContent(string cId)
+        {
+            //  Our api action:
+            const string apiAction = "campaigns/template-content";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Dictionary<string, string>>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Folders

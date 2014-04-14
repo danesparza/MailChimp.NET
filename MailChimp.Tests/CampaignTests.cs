@@ -154,5 +154,17 @@ namespace MailChimp.Tests
             // Assert
             Assert.IsTrue(result.Errors.Count == 0);
         }
+
+        [TestMethod]
+        public void GetCampaignTemplateContent_Successful()
+        {
+            // Arrange
+            var mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            CampaignListResult campaigns = mc.GetCampaigns();
+            //Act
+            var result = mc.GetCampaignTemplateContent(campaigns.Data[0].Id);
+            // Assert
+            Assert.IsTrue(result.Count > 0);
+        }
     }
 }

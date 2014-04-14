@@ -116,7 +116,7 @@ Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some 
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
-- Campaigns related: **93%** (14 of 15)
+- Campaigns related: **100%** (15 of 15)
 - Ecomm related: **0%** (0 of 3)
 - Folder related: **100%** (4 of 4)
 - List related: **69%** (25 of 36)
@@ -126,4 +126,4 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - User related: **100%** (6 of 6)
 - Vip related: **0%** (0 of 4)
 
-**Overall**: **61%** (62 of 102)
+**Overall**: **64%** (63 of 102)
