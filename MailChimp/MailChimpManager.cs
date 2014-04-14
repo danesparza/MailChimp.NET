@@ -1015,7 +1015,7 @@ namespace MailChimp
         /// EmailParameter results = mc.Subscribe(strListID, email, myMergeVars);
         /// </code>
         /// </example>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
             string apiAction = "lists/subscribe";
@@ -1870,7 +1870,8 @@ namespace MailChimp
             catch (Exception ex)
             {
                 string errorBody = ex.GetResponseBody();
-
+                if (errorBody == null)
+                    throw;
                 //  Serialize the error information:
                 ApiError apiError = errorBody.FromJson<ApiError>();
 
