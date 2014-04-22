@@ -84,6 +84,9 @@
     <Compile Include="Lists\MergeVarListResult.cs" />
     <Compile Include="Lists\MergeVarResult.cs" />
     <Compile Include="Reports\Absplit.cs" />
+    <Compile Include="Reports\CommonOptions.cs" />
+    <Compile Include="Reports\BounceMessages.cs" />
+    <Compile Include="Reports\Opened.cs" />
     <Compile Include="Reports\SentTo.cs" />
     <Compile Include="Reports\Clicks.cs" />
     <Compile Include="Reports\Timeseries.cs" />
@@ -139,6 +142,7 @@
     <Compile Include="Lists\SegmentResult.cs" />
     <Compile Include="MailChimpManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Unsubscribes.cs" />
     <Compile Include="Templates\TemplateAddResult.cs" />
     <Compile Include="Templates\TemplateDeleteResult.cs" />
     <Compile Include="Templates\TemplateFilters.cs" />

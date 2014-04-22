@@ -1860,6 +1860,76 @@ namespace MailChimp
             return MakeAPICall<Clicks>(apiAction, args);
         }
 
+        /// <summary>
+        /// Get all unsubscribed email addresses for a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Unsubscribes GetReportUnsubscribes(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/unsubscribes";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Unsubscribes>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the full bounce messages for the given campaign. Note that this can return very large amounts of data depending 
+        /// on how large the campaign was and how much cruft the bounce provider returned. 
+        /// Also, messages over 30 days old are subject to being removed
+        /// </summary>
+        /// <param name="cId">the campaign id to pull bounces for</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public BounceMessages GetReportBounceMessages(string cId, BounceMessagesOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/bounce-messages";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<BounceMessages>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of email addresses that opened a given campaign with how many times they opened
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Opened GetReportOpened(string cId, OpenedOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Opened>(apiAction, args);
+        }
         #endregion
 
         #region Generic API calling method
