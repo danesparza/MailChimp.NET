@@ -70,6 +70,11 @@
     <Compile Include="Campaigns\CampaignTypeRssOptions.cs" />
     <Compile Include="Campaigns\CampaignUpdateError.cs" />
     <Compile Include="Campaigns\CampaignUpdateResult.cs" />
+    <Compile Include="Ecomm\Order.cs" />
+    <Compile Include="Ecomm\OrderItem.cs" />
+    <Compile Include="Ecomm\OrderItemResult.cs" />
+    <Compile Include="Ecomm\OrderListResult.cs" />
+    <Compile Include="Ecomm\OrderResult.cs" />
     <Compile Include="Helper\InlineCss.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
@@ -160,7 +165,6 @@
     <Compile Include="Webhooks\UnsubscribeWebhookResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ecomm\" />
     <Folder Include="VIP\" />
   </ItemGroup>
   <ItemGroup>
