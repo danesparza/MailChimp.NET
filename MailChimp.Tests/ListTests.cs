@@ -339,7 +339,7 @@ namespace MailChimp.Tests
                 //  Write out each of the locations:
                 foreach(var location in locations)
                 {
-                    Debug.WriteLine("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total);
+                    Debug.WriteLine(string.Format("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total));
                 }
             }
         }
