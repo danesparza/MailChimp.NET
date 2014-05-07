@@ -26,7 +26,7 @@ namespace MailChimp.Templates
         /// The valid editable section names - dependant upon template, so not documented
         /// </summary>
         [DataMember(Name = "sections")]
-        public Dictionary<string,string> Sections
+        public List<string> Sections
         {
             get;
             set;

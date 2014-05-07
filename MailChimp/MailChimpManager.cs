@@ -460,6 +460,30 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<CampaignUpdateResult>(apiAction, args);
         }
+
+        /// <summary>
+        /// Get the HTML template content sections for a campaign. 
+        /// Note that this will return very jagged, non-standard results based on the template a campaign is using. 
+        /// You only want to use this if you want to allow editing template sections in your application. 
+        /// </summary>
+        /// <param name="cId">the campaign id to get content for</param>
+        /// <returns>content containing all content section for the campaign - section name are dependent upon the template used</returns>
+        public Dictionary<string, string> GetCampaignTemplateContent(string cId)
+        {
+            //  Our api action:
+            const string apiAction = "campaigns/template-content";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Dictionary<string, string>>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Folders
@@ -1015,7 +1039,7 @@ namespace MailChimp
         /// EmailParameter results = mc.Subscribe(strListID, email, myMergeVars);
         /// </code>
         /// </example>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
             string apiAction = "lists/subscribe";
@@ -1888,6 +1912,76 @@ namespace MailChimp
             return MakeAPICall<Clicks>(apiAction, args);
         }
 
+        /// <summary>
+        /// Get all unsubscribed email addresses for a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Unsubscribes GetReportUnsubscribes(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/unsubscribes";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Unsubscribes>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the full bounce messages for the given campaign. Note that this can return very large amounts of data depending 
+        /// on how large the campaign was and how much cruft the bounce provider returned. 
+        /// Also, messages over 30 days old are subject to being removed
+        /// </summary>
+        /// <param name="cId">the campaign id to pull bounces for</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public BounceMessages GetReportBounceMessages(string cId, BounceMessagesOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/bounce-messages";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<BounceMessages>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of email addresses that opened a given campaign with how many times they opened
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Opened GetReportOpened(string cId, OpenedOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Opened>(apiAction, args);
+        }
         #endregion
 
         #region Generic API calling method
@@ -1922,7 +2016,8 @@ namespace MailChimp
             catch (Exception ex)
             {
                 string errorBody = ex.GetResponseBody();
-
+                if (errorBody == null)
+                    throw;
                 //  Serialize the error information:
                 ApiError apiError = errorBody.FromJson<ApiError>();
 
