@@ -1913,6 +1913,31 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Return the list of email addresses that clicked on a given url, and how many times they clicked
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="tId">the campaign id to get click stats for (can be gathered using campaigns/list())</param>
+        /// <param name="opts">optional -  various options for controlling returned data</param>
+        /// <returns></returns>
+        public ClickDetail GetReportClickDetail(string cId, int tId, ClickDetailOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/click-detail";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                tid = tId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<ClickDetail>(apiAction, args);
+        }
+
+        /// <summary>
         /// Get all unsubscribed email addresses for a given campaign
         /// </summary>
         /// <param name="cId">the Campaign Id</param>
