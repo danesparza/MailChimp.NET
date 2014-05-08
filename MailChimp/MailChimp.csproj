@@ -33,8 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -42,7 +41,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -85,6 +83,7 @@
     <Compile Include="Lists\MergeVarListResult.cs" />
     <Compile Include="Lists\MergeVarResult.cs" />
     <Compile Include="Reports\Absplit.cs" />
+    <Compile Include="Reports\ClickDetail.cs" />
     <Compile Include="Reports\CommonOptions.cs" />
     <Compile Include="Reports\BounceMessages.cs" />
     <Compile Include="Reports\Opened.cs" />
