@@ -86,6 +86,7 @@
     <Compile Include="Reports\ClickDetail.cs" />
     <Compile Include="Reports\CommonOptions.cs" />
     <Compile Include="Reports\BounceMessages.cs" />
+    <Compile Include="Reports\NotOpened.cs" />
     <Compile Include="Reports\Opened.cs" />
     <Compile Include="Reports\SentTo.cs" />
     <Compile Include="Reports\Clicks.cs" />

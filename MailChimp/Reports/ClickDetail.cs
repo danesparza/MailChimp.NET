@@ -27,6 +27,7 @@ namespace MailChimp.Reports
 
     }
 
+    [DataContract]
     public class MemberClicks
     {
         /// <summary>

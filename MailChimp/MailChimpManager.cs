@@ -1938,6 +1938,29 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Retrieve the list of email addresses that did not open a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public NotOpened GetReportNotOpened(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/not-opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<NotOpened>(apiAction, args);
+        }
+
+        /// <summary>
         /// Get all unsubscribed email addresses for a given campaign
         /// </summary>
         /// <param name="cId">the Campaign Id</param>
