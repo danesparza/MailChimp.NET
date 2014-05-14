@@ -82,6 +82,7 @@
     <Compile Include="Lists\MergeVarOptions.cs" />
     <Compile Include="Lists\MergeVarListResult.cs" />
     <Compile Include="Lists\MergeVarResult.cs" />
+    <Compile Include="MailChimpExportManager.cs" />
     <Compile Include="Reports\Absplit.cs" />
     <Compile Include="Reports\ClickDetail.cs" />
     <Compile Include="Reports\CommonOptions.cs" />

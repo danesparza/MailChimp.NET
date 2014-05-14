@@ -10,6 +10,8 @@ using MailChimp.Reports;
 using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
+using System.IO;
+
 
 namespace MailChimp
 {
