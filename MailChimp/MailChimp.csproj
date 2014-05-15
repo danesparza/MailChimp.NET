@@ -72,6 +72,10 @@
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
     <Compile Include="Lists\CompleteResult.cs" />
+    <Compile Include="Lists\WebhookSources.cs" />
+    <Compile Include="Lists\WebhookActions.cs" />
+    <Compile Include="Lists\WebhookAddResult.cs" />
+    <Compile Include="Lists\WebhookInfo.cs" />
     <Compile Include="Lists\InterestGroupingResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\MergeVarError.cs" />
