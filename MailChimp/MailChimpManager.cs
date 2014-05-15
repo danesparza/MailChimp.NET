@@ -10,6 +10,8 @@ using MailChimp.Reports;
 using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
+using System.IO;
+
 
 namespace MailChimp
 {
@@ -1063,6 +1065,34 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Updates the member in the list with the matching emailParam  
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="mergeVars">merges for the email (new-email, FNAME, LNAME, etc.)</param>
+        /// <param name="emailType">optional email type preference for the email (html or text), leave blank to keep the existing preference</param>
+        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
+        /// <returns></returns>
+        public EmailParameter UpdateMember(string listId, EmailParameter emailParam, MergeVar mergeVars, string emailType = "", bool replaceInterests = true)
+        {
+            const string apiAction = "lists/update-member";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
+                email_type = emailType,
+                replace_interests = replaceInterests
+            };
+
+            //  Make the call:
+            return MakeAPICall<EmailParameter>(apiAction, args);
+
+        }
+
+        /// <summary>
         /// Unsubscribe the given email address from the list
         /// </summary>
         /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
@@ -1521,6 +1551,30 @@ namespace MailChimp
             return MakeAPICall<Matches>(apiAction, args);
         }
 
+        /// <summary>
+        /// Send your HTML content to have the CSS inlined and optionally remove the original styles.
+        /// More information: http://apidocs.mailchimp.com/api/2.0/helper/inline-css.php
+        /// </summary>
+        /// <param name="html">Your HTML content</param>
+        /// <param name="strip_css">optional - optional Whether you want the CSS <style> tags stripped from the returned document. Defaults to false.</param>
+        /// <returns></returns>
+        public InlineCss InlineCss(string html, bool strip_css = false)
+        {
+            //  Our api action:
+            string apiAction = "helper/inline-css";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                html = html,
+                strip_css = strip_css
+            };
+
+            //  Make the call:
+            return MakeAPICall<InlineCss>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Users
@@ -1858,6 +1912,54 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<Clicks>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Return the list of email addresses that clicked on a given url, and how many times they clicked
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="tId">the campaign id to get click stats for (can be gathered using campaigns/list())</param>
+        /// <param name="opts">optional -  various options for controlling returned data</param>
+        /// <returns></returns>
+        public ClickDetail GetReportClickDetail(string cId, int tId, ClickDetailOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/click-detail";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                tid = tId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<ClickDetail>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of email addresses that did not open a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public NotOpened GetReportNotOpened(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/not-opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<NotOpened>(apiAction, args);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MailChimp</RootNamespace>
     <AssemblyName>MailChimp</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -33,8 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -42,7 +41,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -70,6 +68,7 @@
     <Compile Include="Campaigns\CampaignTypeRssOptions.cs" />
     <Compile Include="Campaigns\CampaignUpdateError.cs" />
     <Compile Include="Campaigns\CampaignUpdateResult.cs" />
+    <Compile Include="Helper\InlineCss.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
     <Compile Include="Lists\CompleteResult.cs" />
@@ -83,9 +82,12 @@
     <Compile Include="Lists\MergeVarOptions.cs" />
     <Compile Include="Lists\MergeVarListResult.cs" />
     <Compile Include="Lists\MergeVarResult.cs" />
+    <Compile Include="MailChimpExportManager.cs" />
     <Compile Include="Reports\Absplit.cs" />
+    <Compile Include="Reports\ClickDetail.cs" />
     <Compile Include="Reports\CommonOptions.cs" />
     <Compile Include="Reports\BounceMessages.cs" />
+    <Compile Include="Reports\NotOpened.cs" />
     <Compile Include="Reports\Opened.cs" />
     <Compile Include="Reports\SentTo.cs" />
     <Compile Include="Reports\Clicks.cs" />

@@ -33,7 +33,9 @@ namespace MailChimp.Tests
             CampaignContent details = mc.GetCampaignContent(campaignId);
 
             //  Assert
-            Assert.IsFalse(string.IsNullOrWhiteSpace(details.Html));
+            // Changed from IsNullOrWhiteSpace to IsNullOrEmpty for .NET 3.5 compatibility. Consider using extension method
+            // for IsNullOrWhiteSpace support
+            Assert.IsFalse(string.IsNullOrEmpty(details.Html));
         }
 
         [TestMethod]
