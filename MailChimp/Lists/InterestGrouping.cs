@@ -47,6 +47,9 @@ namespace MailChimp.Lists
             [DataMember(Name = "bit")]
             public int Bit { get; set; }
 
+            [DataMember(Name = "subscribers")]
+            public int Subscribers { get; set; }
+
             [DataMember(Name = "name")]
             public string Name { get; set; }
 
