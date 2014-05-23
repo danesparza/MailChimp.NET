@@ -900,9 +900,10 @@ namespace MailChimp
         /// <summary>
         /// Retrieve the interest groups for a list.
         /// </summary>
-        /// <param name="listId"></param>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="counts">Optional: whether or not to return subscriber counts for each group. Defaults to false since that slows this call down a ton for large lists.</param>
         /// <returns></returns>
-        public List<InterestGrouping> GetListInterestGroupings(string listId)
+        public List<InterestGrouping> GetListInterestGroupings(string listId, bool counts = false)
         {
             //  Our api action:
             string apiAction = "lists/interest-groupings";
@@ -911,7 +912,8 @@ namespace MailChimp
             object args = new
             {
                 apikey = this.APIKey,
-                id = listId
+                id = listId,
+                counts = counts
             };
 
             //  Make the call:
