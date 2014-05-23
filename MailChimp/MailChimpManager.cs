@@ -1410,6 +1410,70 @@ namespace MailChimp
             return MakeAPICall<SegmentResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Return the Webhooks configured for the given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <returns></returns>
+        public List<WebhookInfo> GetWebhooks(string listId)
+        {
+            // our api action:
+            string apiAction = "lists/webhooks";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId
+            };
+            return MakeAPICall<List<WebhookInfo>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Add a new Webhook URL for the given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="url">a valid URL for the Webhook - it will be validated. note that a url may only exist on a list once.</param>
+        /// <param name="actions">optional - optional a hash of actions to fire this Webhook for</param>
+        /// <param name="sources">optional - optional sources to fire this Webhook for</param>
+        /// <returns></returns>
+        public WebhookAddResult AddWebhook(string listId, string url, WebhookActions actions = null, WebhookSources sources = null)
+        {
+            // our api action:
+            string apiAction = "lists/webhook-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId,
+                url = url,
+                actions = actions,
+                sources = sources
+            };
+            return MakeAPICall<WebhookAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete an existing Webhook URL from a given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="url">the URL of a Webhook on this list</param>
+        /// <returns></returns>
+        public CompleteResult DeleteWebhook(string listId, string url)
+        {
+            // our api action:
+            string apiAction = "lists/webhook-del";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId,
+                url = url,
+            };
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
         #endregion
 
         #region API: Helper
