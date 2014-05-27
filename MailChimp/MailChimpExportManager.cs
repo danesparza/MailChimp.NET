@@ -255,7 +255,7 @@ namespace MailChimp
 		/// <param name="since">only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format</param>
 		/// <param name="hashed"> if, instead of full list data, you'd prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only "sha256" is supported. NOT IN USE NOW</param>        
 		/// <returns></returns>
-		public List<Dictionary<string, string>> GetAllMembersForList(string listId, string status = "subscribed", CampaignSegmentOptions segment = null, string since = "", string hashed = "")
+		public List<Dictionary<string, string>> GetAllMembersForList(string listId, string status = "subscribed", CampaignSegmentOptions segment = null, string since = "1900-01-01 00:00:00", string hashed = "")
 		//int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC", CampaignSegmentOptions segment = null)
 		{
 			//  Our api action:
