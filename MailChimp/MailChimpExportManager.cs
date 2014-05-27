@@ -20,7 +20,7 @@ namespace MailChimp
 		/// The HTTPS endpoint for the API.  
 		/// See http://apidocs.mailchimp.com/export/1.0/#api-endpoints for more information
 		/// </summary>
-		private string _httpsUrl = "https://{0}.api.mailchimp.com/export/1.0/{1}";
+		private string _httpsUrl = "https://{0}.api.mailchimp.com/export/1.0/{1}/";
 
 		/// <summary>
 		/// The datacenter prefix.  This will be automatically determined
@@ -93,34 +93,6 @@ namespace MailChimp
 			String utcSyncString = utcSyncTime.ToString("yyyy-MM-dd HH:mm:ss");
 
 			return utcSyncString;
-		}
-
-		static string ReturnFullUrlWithParameters(String url, object args)
-		{
-			string returnString = url;
-			Dictionary<String, String> parameters = args.ToStringDictionary();
-			List<string> keys = new List<string>();
-			List<string> values = new List<string>();
-			
-			foreach(var pair in parameters)
-			{
-				keys.Add(pair.Key);
-				values.Add(pair.Value);
-			}
-
-			for (int i = 0; i < parameters.Count; i++)
-			{
-				if (i == 0)
-				{
-					returnString += "?" + keys[i] + "=" + values[i];
-				}
-				else
-				{
-					returnString += "&" + keys[i] + "=" + values[i];
-				}
-			}
-
-			return returnString;
 		}
 
 		static List<Dictionary<string, string>> ParseExportApiResults(string stringFromServer)
@@ -220,11 +192,9 @@ namespace MailChimp
 
 			try
 			{
-				//  Call the API with the passed arguments:
-				fullUrl = ReturnFullUrlWithParameters(fullUrl, args);
-				string result = WebRequestExtensions.GetStringFromUrl(fullUrl);
-				returnList = ParseExportApiResults(result);
-				
+                //  Call the API with the passed arguments:
+                var resultString = fullUrl.PostJsonToUrl(args);
+                returnList = ParseExportApiResults(resultString);
 			}
 			catch (Exception ex)
 			{
