@@ -20,6 +20,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="MailChimp\bin\Release\MailChimp.dll" target="lib\net40\MailChimp.dll" />
+        <file src=".\bin\Release\MailChimp.dll" target="lib\net40\MailChimp.dll" />
     </files>
 </package>
