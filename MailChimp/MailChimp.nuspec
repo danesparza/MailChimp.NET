@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>MailChimp.NET</id>
-        <version>1.1.0.2</version>
+        <version>$version$</version>
         <title>MailChimp.NET</title>
         <authors>Dan Esparza</authors>
         <owners>Dan Esparza</owners>
