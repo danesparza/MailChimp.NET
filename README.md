@@ -3,6 +3,8 @@ MailChimp.NET
 
 .NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/), built with MailChimp love :heart:
 
+[![Build status](https://ci.appveyor.com/api/projects/status/sltbowtdfnjj79yb)](https://ci.appveyor.com/project/danesparza/mailchimp-net)
+
 ### Quick Start
 
 1. Install the [NuGet package](https://nuget.org/packages/MailChimp.NET/) from the package manager console:
