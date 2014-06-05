@@ -10,6 +10,8 @@ using MailChimp.Reports;
 using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
+using System.IO;
+
 
 namespace MailChimp
 {
@@ -206,7 +208,7 @@ namespace MailChimp
         /// <param name="sort_field">one of "create_time", "send_time", "title", "subject" . Invalid values will fall back on "create_time" - case insensitive</param>
         /// <param name="sort_dir">"DESC" for descending (default), "ASC" for Ascending. Invalid values will fall back on "DESC" - case insensitive.</param>
         /// <returns></returns>
-        public CampaignListResult GetCampaigns(List<CampaignFilter> filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
+        public CampaignListResult GetCampaigns(CampaignFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
         {
             //  Our api action:
             string apiAction = "campaigns/list";
@@ -460,6 +462,30 @@ namespace MailChimp
             //  Make the call:
             return MakeAPICall<CampaignUpdateResult>(apiAction, args);
         }
+
+        /// <summary>
+        /// Get the HTML template content sections for a campaign. 
+        /// Note that this will return very jagged, non-standard results based on the template a campaign is using. 
+        /// You only want to use this if you want to allow editing template sections in your application. 
+        /// </summary>
+        /// <param name="cId">the campaign id to get content for</param>
+        /// <returns>content containing all content section for the campaign - section name are dependent upon the template used</returns>
+        public Dictionary<string, string> GetCampaignTemplateContent(string cId)
+        {
+            //  Our api action:
+            const string apiAction = "campaigns/template-content";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId
+            };
+
+            //  Make the call:
+            return MakeAPICall<Dictionary<string, string>>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Folders
@@ -874,9 +900,10 @@ namespace MailChimp
         /// <summary>
         /// Retrieve the interest groups for a list.
         /// </summary>
-        /// <param name="listId"></param>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="counts">Optional: whether or not to return subscriber counts for each group. Defaults to false since that slows this call down a ton for large lists.</param>
         /// <returns></returns>
-        public List<InterestGrouping> GetListInterestGroupings(string listId)
+        public List<InterestGrouping> GetListInterestGroupings(string listId, bool counts = false)
         {
             //  Our api action:
             string apiAction = "lists/interest-groupings";
@@ -885,7 +912,8 @@ namespace MailChimp
             object args = new
             {
                 apikey = this.APIKey,
-                id = listId
+                id = listId,
+                counts = counts
             };
 
             //  Make the call:
@@ -987,6 +1015,34 @@ namespace MailChimp
         /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
         /// <param name="sendWelcome">optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.</param>
         /// <returns></returns>
+        /// <example>
+        /// The example below shows how to add your own merge parameters by passing your own class that inherits from MergeVar:
+        /// <code>
+        /// [System.Runtime.Serialization.DataContract]
+        /// public class MyMergeVar : MergeVar
+        /// {
+        ///     [System.Runtime.Serialization.DataMember(Name = "FNAME")]
+        ///     public string FirstName { get; set; }
+        ///     [System.Runtime.Serialization.DataMember(Name = "LNAME")]
+        ///     public string LastName { get; set; }
+        /// }
+        /// 
+        /// MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+        /// EmailParameter email = new EmailParameter()
+        /// {
+        ///     Email = "customeremail@righthere.com"
+        /// };
+        /// MyMergeVar myMergeVars = new MyMergeVar();
+        /// myMergeVars.Groupings = new List&lt;Grouping&gt;();
+        /// myMergeVars.Groupings.Add(new Grouping());
+        /// myMergeVars.Groupings[0].Id = 1234; // replace with your grouping id
+        /// myMergeVars.Groupings[0].GroupNames = new List&lt;string&gt;();
+        /// myMergeVars.Groupings[0].GroupNames.Add("Your Group Name");
+        /// myMergeVars.FirstName = "Testy";
+        /// myMergeVars.LastName = "Testerson";
+        /// EmailParameter results = mc.Subscribe(strListID, email, myMergeVars);
+        /// </code>
+        /// </example>
         public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
@@ -998,7 +1054,7 @@ namespace MailChimp
                 apikey = this.APIKey,
                 id = listId,
                 email = emailParam,
-                merge_vars = mergeVars,
+                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
                 email_type = emailType,
                 double_optin = doubleOptIn,
                 update_existing = updateExisting,
@@ -1008,6 +1064,34 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<EmailParameter>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Updates the member in the list with the matching emailParam  
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="emailParam">An object a with one fo the following keys: email, euid, leid. Failing to provide anything will produce an error relating to the email address</param>
+        /// <param name="mergeVars">merges for the email (new-email, FNAME, LNAME, etc.)</param>
+        /// <param name="emailType">optional email type preference for the email (html or text), leave blank to keep the existing preference</param>
+        /// <param name="replaceInterests">optional flag to determine whether we replace the interest groups with the groups provided or we add the provided groups to the member's interest groups (optional, defaults to true)</param>
+        /// <returns></returns>
+        public EmailParameter UpdateMember(string listId, EmailParameter emailParam, MergeVar mergeVars, string emailType = "", bool replaceInterests = true)
+        {
+            const string apiAction = "lists/update-member";
+
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                email = emailParam,
+                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
+                email_type = emailType,
+                replace_interests = replaceInterests
+            };
+
+            //  Make the call:
+            return MakeAPICall<EmailParameter>(apiAction, args);
+
         }
 
         /// <summary>
@@ -1326,6 +1410,70 @@ namespace MailChimp
             return MakeAPICall<SegmentResult>(apiAction, args);
         }
 
+        /// <summary>
+        /// Return the Webhooks configured for the given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <returns></returns>
+        public List<WebhookInfo> GetWebhooks(string listId)
+        {
+            // our api action:
+            string apiAction = "lists/webhooks";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId
+            };
+            return MakeAPICall<List<WebhookInfo>>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Add a new Webhook URL for the given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="url">a valid URL for the Webhook - it will be validated. note that a url may only exist on a list once.</param>
+        /// <param name="actions">optional - optional a hash of actions to fire this Webhook for</param>
+        /// <param name="sources">optional - optional sources to fire this Webhook for</param>
+        /// <returns></returns>
+        public WebhookAddResult AddWebhook(string listId, string url, WebhookActions actions = null, WebhookSources sources = null)
+        {
+            // our api action:
+            string apiAction = "lists/webhook-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId,
+                url = url,
+                actions = actions,
+                sources = sources
+            };
+            return MakeAPICall<WebhookAddResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Delete an existing Webhook URL from a given list
+        /// </summary>
+        /// <param name="listId">the list id to connect to. Get by calling lists/list()</param>
+        /// <param name="url">the URL of a Webhook on this list</param>
+        /// <returns></returns>
+        public CompleteResult DeleteWebhook(string listId, string url)
+        {
+            // our api action:
+            string apiAction = "lists/webhook-del";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = APIKey,
+                id = listId,
+                url = url,
+            };
+            return MakeAPICall<CompleteResult>(apiAction, args);
+        }
         #endregion
 
         #region API: Helper
@@ -1467,6 +1615,30 @@ namespace MailChimp
 
             //  Make the call:
             return MakeAPICall<Matches>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Send your HTML content to have the CSS inlined and optionally remove the original styles.
+        /// More information: http://apidocs.mailchimp.com/api/2.0/helper/inline-css.php
+        /// </summary>
+        /// <param name="html">Your HTML content</param>
+        /// <param name="strip_css">optional - optional Whether you want the CSS <style> tags stripped from the returned document. Defaults to false.</param>
+        /// <returns></returns>
+        public InlineCss InlineCss(string html, bool strip_css = false)
+        {
+            //  Our api action:
+            string apiAction = "helper/inline-css";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                html = html,
+                strip_css = strip_css
+            };
+
+            //  Make the call:
+            return MakeAPICall<InlineCss>(apiAction, args);
         }
 
         #endregion
@@ -1808,6 +1980,124 @@ namespace MailChimp
             return MakeAPICall<Clicks>(apiAction, args);
         }
 
+        /// <summary>
+        /// Return the list of email addresses that clicked on a given url, and how many times they clicked
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="tId">the campaign id to get click stats for (can be gathered using campaigns/list())</param>
+        /// <param name="opts">optional -  various options for controlling returned data</param>
+        /// <returns></returns>
+        public ClickDetail GetReportClickDetail(string cId, int tId, ClickDetailOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/click-detail";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                tid = tId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<ClickDetail>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of email addresses that did not open a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public NotOpened GetReportNotOpened(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/not-opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<NotOpened>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Get all unsubscribed email addresses for a given campaign
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Unsubscribes GetReportUnsubscribes(string cId, CommonOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/unsubscribes";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Unsubscribes>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the full bounce messages for the given campaign. Note that this can return very large amounts of data depending 
+        /// on how large the campaign was and how much cruft the bounce provider returned. 
+        /// Also, messages over 30 days old are subject to being removed
+        /// </summary>
+        /// <param name="cId">the campaign id to pull bounces for</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public BounceMessages GetReportBounceMessages(string cId, BounceMessagesOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/bounce-messages";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<BounceMessages>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Retrieve the list of email addresses that opened a given campaign with how many times they opened
+        /// </summary>
+        /// <param name="cId">the Campaign Id</param>
+        /// <param name="opts">optional - various options for controlling returned data</param>
+        /// <returns></returns>
+        public Opened GetReportOpened(string cId, OpenedOptions opts = null)
+        {
+            //  Our api action:
+            string apiAction = "reports/opened";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                cid = cId,
+                opts = opts
+            };
+
+            //  Make the call:
+            return MakeAPICall<Opened>(apiAction, args);
+        }
         #endregion
 
         #region Generic API calling method
@@ -1842,7 +2132,8 @@ namespace MailChimp
             catch (Exception ex)
             {
                 string errorBody = ex.GetResponseBody();
-
+                if (errorBody == null)
+                    throw;
                 //  Serialize the error information:
                 ApiError apiError = errorBody.FromJson<ApiError>();
 

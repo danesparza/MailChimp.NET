@@ -99,6 +99,22 @@ namespace MailChimp.Tests
         }
 
         [TestMethod]
+        public void GetListInterestGroupingsWithCountRequested_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager("efb48a02f2f56120e2f3f6e2fef71803-us6");
+            ListResult lists = mc.GetLists(new ListFilter() { ListName = "TestAPIGetInterestGroup" });
+            Assert.IsNotNull(lists);
+            Assert.IsTrue(lists.Data.Any());
+            //  Act
+            List<InterestGrouping> results = mc.GetListInterestGroupings(lists.Data.FirstOrDefault().Id, true);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Any());
+        }
+
+        [TestMethod]
         public void Subscribe_Successful()
         {
             //  Arrange
@@ -111,6 +127,72 @@ namespace MailChimp.Tests
 
             //  Act
             EmailParameter results = mc.Subscribe(lists.Data[1].Id, email);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+        }
+
+        [System.Runtime.Serialization.DataContract] 
+        public class MyMergeVar : MergeVar
+        {
+            [System.Runtime.Serialization.DataMember(Name = "FNAME")]
+            public string FirstName
+            {
+                get;
+                set;
+            }
+            [System.Runtime.Serialization.DataMember(Name = "LNAME")]
+            public string LastName
+            {
+                get;
+                set;
+            }
+        }
+
+        [TestMethod]
+        public void SubscribeWithGroupSelection_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            EmailParameter email = new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            };
+
+            // find a list with interest groups...
+            string strListID = null;
+            int nGroupingID = 0;
+            string strGroupName = null;
+            foreach (ListInfo li in lists.Data) {
+                List<InterestGrouping> interests = mc.GetListInterestGroupings(li.Id);
+                if (interests != null) {
+                    if (interests.Count > 0) {
+                        if (interests[0].GroupNames.Count > 0) {
+                            strListID = li.Id;
+                            nGroupingID = interests[0].Id;
+                            strGroupName = interests[0].GroupNames[0].Name;
+                            break;
+                        }
+                    }
+                }
+            }
+            Assert.IsNotNull(strListID,"no lists found in this account with groupings / group names");
+            Assert.AreNotEqual(0,nGroupingID);
+            Assert.IsNotNull(strGroupName);
+
+            MyMergeVar mvso = new MyMergeVar();
+            mvso.Groupings = new List<Grouping>();
+            mvso.Groupings.Add(new Grouping());
+            mvso.Groupings[0].Id = nGroupingID;
+            mvso.Groupings[0].GroupNames = new List<string>();
+            mvso.Groupings[0].GroupNames.Add(strGroupName);
+            mvso.FirstName = "Testy";
+            mvso.LastName = "Testerson";
+
+            //  Act
+            EmailParameter results = mc.Subscribe(strListID, email, mvso);
 
             //  Assert
             Assert.IsNotNull(results);
@@ -273,7 +355,7 @@ namespace MailChimp.Tests
                 //  Write out each of the locations:
                 foreach(var location in locations)
                 {
-                    Debug.WriteLine("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total);
+                    Debug.WriteLine(string.Format("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total));
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using MailChimp.Helper;
+using System.Runtime.Serialization;
 
 namespace MailChimp.Lists
 {
@@ -12,7 +13,7 @@ namespace MailChimp.Lists
         /// whatever was passed in the batch record's email parameter
         /// </summary>
         [DataMember(Name = "email")]
-        public string Email
+        public EmailParameter Email
         {
             get;
             set;
@@ -31,7 +32,7 @@ namespace MailChimp.Lists
         /// <summary>
         /// the full error message
         /// </summary>
-        [DataMember(Name = "message")]
+        [DataMember(Name = "error")]
         public string ErrorMessage
         {
             get;

@@ -114,5 +114,29 @@ namespace MailChimp.Tests
             Assert.IsTrue(matches.FullSearch.Total > 0);
             Assert.IsTrue(matches.FullSearch.Members.Any(member => member.Email == "customeremail@righthere.com"));
         }
+
+        [TestMethod]
+        public void InlineCss_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+
+            //  Act
+            string html = @"<html>
+	                            <style type=""text/css"">
+                                .style1 {
+                                    color: red;
+		                            font-weight: bold;
+                                }
+                            </style>
+	                            <body>
+		                            <p class=""style1"">Test</p>
+	                            </body>
+                            </html>";
+            InlineCss details = mc.InlineCss(html, false);
+
+            //  Assert
+            Assert.IsNotNull(details.Html);
+        }
     }
 }

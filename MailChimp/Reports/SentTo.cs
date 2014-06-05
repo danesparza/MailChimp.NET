@@ -9,23 +9,14 @@ namespace MailChimp.Reports
     ///optional - various options for controlling returned data
     /// </summary>
     [DataContract]
-    public class SentToLimits
+    public class SentToLimits : CommonOptions
     {
        /// <summary>
        /// optional the status to pull - one of 'sent', 'hard' (bounce), or 'soft' (bounce). By default, all records are returned
        /// </summary>
         [DataMember(Name = "status")]
         public string Status { get; set; }
-        /// <summary>
-        /// optional for large data sets, the page number to start at - defaults to 1st page of data (page 0)
-        /// </summary>
-        [DataMember(Name = "start")]
-        public int Start { get; set; }
-        /// <summary>
-        /// optional for large data sets, the number of results to return - defaults to 25, upper limit set at 100
-        /// </summary>
-        [DataMember(Name = "limit")]
-        public int Limit { get; set; }
+
     }
 
     /// <summary>

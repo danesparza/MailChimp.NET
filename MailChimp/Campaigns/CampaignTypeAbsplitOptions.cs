@@ -35,7 +35,7 @@ namespace MailChimp.Campaigns
        /// <summary>
        /// optional the default time unit to wait before auto-selecting a winner - use "3600" for hours, "86400" for days. Defaults to 86400.
        /// </summary>
-       [DataMember(Name = "wait_time")]
+       [DataMember(Name = "wait_units")]
        public int WaitUnits
        {
            get;
@@ -44,7 +44,7 @@ namespace MailChimp.Campaigns
        /// <summary>
        /// optional the number of units to wait before auto-selecting a winner - defaults to 1, so if not set, a winner will be selected after 1 Day.
        /// </summary>
-       [DataMember(Name = "wait_units")]
+       [DataMember(Name = "wait_time")]
        public int WaitTime
        {
            get;
