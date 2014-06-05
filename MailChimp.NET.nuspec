@@ -11,7 +11,7 @@
         <iconUrl>https://si0.twimg.com/profile_images/3024276741/9fd71555b3317b7add1f2e2b5d4fd6da_bigger.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>.NET MailChimp API wrapper</description>
-        <releaseNotes>More MergeVar changes.  MergeVar base class is now back.  See project page for examples.  Also includes additional updates and bugfixes</releaseNotes>
+        <releaseNotes>Please see the project site for updated release notes</releaseNotes>
         <copyright>Copyright 2013</copyright>
         <language>en-US</language>
         <tags>mailchimp email</tags>
@@ -20,6 +20,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="..\MailChimp\bin\Release\MailChimp.dll" target="lib\net40\MailChimp.dll" />
+        <file src="MailChimp\bin\Release\MailChimp.dll" target="lib\net40\MailChimp.dll" />
     </files>
 </package>
