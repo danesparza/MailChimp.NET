@@ -129,15 +129,17 @@ Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some 
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
-- Campaigns related: **100%** (15 of 15)
-- Ecomm related: **100%** (3 of 3)
-- Folder related: **100%** (4 of 4)
-- Gallery related: **0%** (0 of 1)
-- List related: **78%** (32 of 41)
-- Helper related: **70%** (7 of 10)
-- Reports related: **27%** (5 of 18)
-- Templates related: **100%** (6 of 6)
-- User related: **86%** (6 of 7)
-- Vip related: **0%** (0 of 4)
+- [Campaigns](http://apidocs.mailchimp.com/api/2.0/#campaigns-methods) related: **100%** (15 of 15)
+- [Ecomm](http://apidocs.mailchimp.com/api/2.0/#ecomm-methods) related: **100%** (3 of 3)
+- [Folder](http://apidocs.mailchimp.com/api/2.0/#folders-methods) related: **100%** (4 of 4)
+- [Gallery](http://apidocs.mailchimp.com/api/2.0/#gallery-methods) related: **0%** (0 of 1)
+- [List](http://apidocs.mailchimp.com/api/2.0/#lists-methods) related: **78%** (32 of 41)
+- [Helper](http://apidocs.mailchimp.com/api/2.0/#helper-methods) related: **70%** (7 of 10)
+- [Reports](http://apidocs.mailchimp.com/api/2.0/#reports-methods) related: **27%** (5 of 18)
+- [Templates](http://apidocs.mailchimp.com/api/2.0/#templates-methods) related: **100%** (6 of 6)
+- [User](http://apidocs.mailchimp.com/api/2.0/#users-methods) related: **86%** (6 of 7)
+- [Vip](http://apidocs.mailchimp.com/api/2.0/#vip-methods) related: **0%** (0 of 4)
+- [Goal](http://apidocs.mailchimp.com/api/2.0/#goal-methods) related **0%** (0 of 2)
+- [Conversations](http://apidocs.mailchimp.com/api/2.0/#conversations-methods) related **0%** (0 of 3)
 
 **Overall**: **71%** (78 of 109)
