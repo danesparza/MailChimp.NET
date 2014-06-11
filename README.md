@@ -140,4 +140,4 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - User related: **86%** (6 of 7)
 - Vip related: **0%** (0 of 4)
 
-**Overall**: **69%** (75 of 110)
+**Overall**: **71%** (78 of 109)
