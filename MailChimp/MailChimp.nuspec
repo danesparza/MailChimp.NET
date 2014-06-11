@@ -8,7 +8,7 @@
         <owners>Dan Esparza</owners>
         <licenseUrl>https://github.com/danesparza/MailChimp.NET/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/danesparza/MailChimp.NET</projectUrl>
-        <iconUrl>https://si0.twimg.com/profile_images/3024276741/9fd71555b3317b7add1f2e2b5d4fd6da_bigger.png</iconUrl>
+        <iconUrl>https://raw.githubusercontent.com/danesparza/MailChimp.NET/master/freddie.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>.NET MailChimp API wrapper</description>
         <releaseNotes>Please see the project site for updated release notes</releaseNotes>
