@@ -130,13 +130,14 @@ Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some 
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
 - Campaigns related: **100%** (15 of 15)
-- Ecomm related: **0%** (0 of 3)
+- Ecomm related: **100%** (3 of 3)
 - Folder related: **100%** (4 of 4)
-- List related: **69%** (25 of 36)
-- Helper related: **60%** (6 of 10)
+- Gallery related: **0%** (0 of 1)
+- List related: **78%** (32 of 41)
+- Helper related: **70%** (7 of 10)
 - Reports related: **27%** (5 of 18)
 - Templates related: **100%** (6 of 6)
-- User related: **100%** (6 of 6)
+- User related: **86%** (6 of 7)
 - Vip related: **0%** (0 of 4)
 
-**Overall**: **64%** (66 of 102)
+**Overall**: **69%** (75 of 110)
