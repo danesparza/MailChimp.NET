@@ -39,5 +39,29 @@ namespace MailChimp.Lists
             get;
             set;
         }
+
+        [DataMember(Name = "groups")]
+        public List<GroupInterest> GroupInterest
+        {
+            get;
+            set;
+        }
+    }
+
+    public class GroupInterest
+    {
+        [DataMember(Name = "name")]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        [DataMember(Name = "interested")]
+        public bool Interested
+        {
+            get;
+            set;
+        }
     }
 }

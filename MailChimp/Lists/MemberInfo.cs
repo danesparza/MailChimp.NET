@@ -231,7 +231,7 @@ namespace MailChimp.Lists
         }
 
         [DataMember(Name = "merges")]
-        public Dictionary<string, string> MemberMergeInfo { get; set; }
+        public MergeVar MemberMergeInfo { get; set; }
 
     }
 }
