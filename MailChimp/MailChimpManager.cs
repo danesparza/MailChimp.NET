@@ -1354,6 +1354,32 @@ namespace MailChimp
         }
 
         /// <summary>
+        /// Save a segment against a list for later use. There is no limit to the number of segments which can be saved. 
+        /// Static Segments are not tied to any merge data, interest groups, etc. They essentially allow you to configure 
+        /// an unlimited number of custom segments which will have standard performance. When using proper segments, 
+        /// Static Segments are one of the available options for segmentation just as if you used a merge var (and they 
+        /// can be used with other segmentation options), though performance may degrade at that point. Saved Segments 
+        /// (called "auto-updating" in the app) are essentially just the match+conditions typically used.
+        /// </summary>
+        /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="segmentOptions">Various options for the new segment</param>
+        /// <returns></returns>
+        public SegmentAddResult AddSegment(string listId, AddCampaignSegmentOptions segmentOptions)
+        {
+            // our api action:
+            const string apiAction = "lists/segment-add";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                opts = segmentOptions,
+            };
+            return MakeAPICall<SegmentAddResult>(apiAction, args);
+        }
+
+        /// <summary>
         /// Delete a static segment. Note that this will, of course, remove any member affiliations with the segment
         /// </summary>
         /// <param name="listId">The list id to connect to (can be gathered using GetLists())</param>
