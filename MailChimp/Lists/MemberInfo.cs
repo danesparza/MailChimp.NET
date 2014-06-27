@@ -230,8 +230,10 @@ namespace MailChimp.Lists
             set;
         }
 
+        /// <summary>
+        /// Merge variables that apply to this member
+        /// </summary>
         [DataMember(Name = "merges")]
         public MergeVar MemberMergeInfo { get; set; }
-
     }
 }
