@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MailChimp.Campaigns;
 using MailChimp.Lists;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -519,6 +520,36 @@ namespace MailChimp.Tests
             StaticSegmentAddResult result = mc.AddStaticSegment(lists.Data[1].Id, "Test Segment");
             // Assert
             Assert.IsNotNull(result.NewStaticSegmentID);
+        }
+
+        [TestMethod]
+        public void AddSegment_Successful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            AddCampaignSegmentOptions options = new AddCampaignSegmentOptions
+            {
+                Name = "My Saved Segment",
+                SegmentType = "saved",
+                SegmentOptions = new CampaignSegmentOptions
+                {
+                    Match = "all",
+                    Conditions = new List<CampaignSegmentCriteria>
+                    {
+                        new CampaignSegmentCriteria
+                        {
+                            Field = "EMAIL",
+                            Operator = "ends",
+                            Value = ".com",
+                        }
+                    }
+                }
+            };
+            // Act
+            SegmentAddResult result = mc.AddSegment(lists.Data[1].Id, options);
+            // Assert
+            Assert.IsNotNull(result.NewSegmentID);
         }
 
         [TestMethod]
