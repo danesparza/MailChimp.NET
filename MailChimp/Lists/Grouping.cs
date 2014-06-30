@@ -40,6 +40,9 @@ namespace MailChimp.Lists
             set;
         }
 
+        /// <summary>
+        /// An array of group name and interest structs.
+        /// </summary>
         [DataMember(Name = "groups")]
         public List<GroupInterest> GroupInterests
         {
@@ -47,6 +50,7 @@ namespace MailChimp.Lists
             set;
         }
 
+        [DataContract]
         public class GroupInterest
         {
             [DataMember(Name = "name")]
