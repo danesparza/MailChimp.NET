@@ -108,53 +108,26 @@ namespace MailChimp
 			foreach (string row in listofmembers)
 			{
 				if (row.Length > 4)
-					iListofMembers.Add(row);
+                    iListofMembers.Add(row.Trim(new[] { '[', ']' }));
 			}
 
-			string[] keys = iListofMembers[0].Split('"', '"');
+            string[] keys = iListofMembers[0].Split(new[] { ',' });
 			List<string> iKeys = new List<string>();
 			foreach (string row in keys)
 			{
-				if (row != ",")
-				{
-					string final_row = JsonSerializer.DeserializeFromString<string>(row);   // This is to fix unicode characters
-					iKeys.Add(final_row);
-				}
+                string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
+                iKeys.Add(final_row);
 			}
-			iKeys.RemoveAt(0);
-			iKeys.RemoveAt(iKeys.Count - 1);
 
-			iListofMembers.RemoveAt(0);
-
-			for (int i = 0; i < iListofMembers.Count; i++)
+			for (int i = 1; i < iListofMembers.Count; i++)
 			{
-				string[] values = iListofMembers[i].Split('"', '"');
+                string[] values = iListofMembers[i].Split(new[] { ',' });
 				List<string> iValues = new List<string>();
 				foreach (string row in values)
 				{
-					if (row != ",")
-					{
-						if (row.Contains("null"))
-						{
-							string[] rows = row.Split(',');
-							foreach (string one in rows)
-							{
-								if (one == "null")
-								{
-									string final_row = JsonSerializer.DeserializeFromString<string>(one);   // This is to fix unicode characters
-									iValues.Add(final_row);
-								}
-							}
-						}
-						else
-						{
-							string final_row = JsonSerializer.DeserializeFromString<string>(row);   // This is to fix unicode characters
-							iValues.Add(final_row);
-						}
-					}
+                    string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
+                    iValues.Add(final_row);
 				}
-				iValues.RemoveAt(0);
-				iValues.RemoveAt(iValues.Count - 1);
 
 				Dictionary<string, string> contact = new Dictionary<string, string>();
 				for (int j = 0; j < iKeys.Count(); j++)
