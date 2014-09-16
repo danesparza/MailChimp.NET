@@ -200,6 +200,66 @@ namespace MailChimp.Tests
             Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
         }
 
+				[TestMethod]
+				public void SubscribeWithGroupSelectionUsingDictonary_Successful() {
+					//  Arrange
+					MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+					ListResult lists = mc.GetLists();
+					EmailParameter email = new EmailParameter() {
+						Email = "customeremail@righthere.com"
+					};
+
+					// find a list with interest groups...
+					string strListID = null;
+					int nGroupingID = 0;
+					string strGroupName = null;
+					foreach (ListInfo li in lists.Data) {
+						List<InterestGrouping> interests = mc.GetListInterestGroupings(li.Id);
+						if (interests != null) {
+							if (interests.Count > 0) {
+								if (interests[0].GroupNames.Count > 0) {
+									strListID = li.Id;
+									nGroupingID = interests[0].Id;
+									strGroupName = interests[0].GroupNames[0].Name;
+									break;
+								}
+							}
+						}
+					}
+					Assert.IsNotNull(strListID, "no lists found in this account with groupings / group names");
+					Assert.AreNotEqual(0, nGroupingID);
+					Assert.IsNotNull(strGroupName);
+
+					MergeVar mvso = new MergeVar();
+					mvso.Groupings = new List<Grouping>();
+					mvso.Groupings.Add(new Grouping());
+					mvso.Groupings[0].Id = nGroupingID;
+					mvso.Groupings[0].GroupNames = new List<string>();
+					mvso.Groupings[0].GroupNames.Add(strGroupName);
+					mvso.Add("FNAME","Testy");
+					mvso.Add("LNAME", "Testerson");
+
+					//  Act
+					EmailParameter results = mc.Subscribe(strListID, email, mvso);
+
+					//  Assert
+					Assert.IsNotNull(results);
+					Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+
+					// load
+					List<EmailParameter> emails = new List<EmailParameter>();
+					emails.Add(results);
+					MemberInfoResult memberInfos = mc.GetMemberInfo(strListID, emails);
+
+					// Assert
+					Assert.AreEqual(1, memberInfos.SuccessCount);
+					Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
+					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+				}
+
+
+
         [TestMethod]
         public void BatchSubscribe_Successful()
         {

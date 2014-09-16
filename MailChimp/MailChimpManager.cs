@@ -45,6 +45,7 @@ namespace MailChimp
         {
             // remove "__type" member from ServiceStack.Text JSON Serializer serialized strings
             JsConfig.ExcludeTypeInfo = true;
+						Lists.MergeVar.RegisterMergeVarFieldValuesJsonConversion();
         }
 
         /// <summary>
