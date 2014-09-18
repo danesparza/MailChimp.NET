@@ -14,7 +14,7 @@ namespace MailChimp.Lists
         /// this id takes precedence and can't change (unlike the name)
         /// </summary>
         [DataMember(Name = "id")]
-        public int Id
+        public int? Id
         {
             get;
             set;
