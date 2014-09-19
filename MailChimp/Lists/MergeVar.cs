@@ -52,9 +52,10 @@ namespace MailChimp.Lists
         /// suspended. We do validate this and it must be a valid date. 
         /// Use - 24 hour format in GMT, eg "2013-12-30 20:30:00" to be safe. 
         /// Generally, though, anything strtotime() understands we'll understand - http://us2.php.net/strtotime
+				/// UTC time
         /// </summary>
         [DataMember(Name = "optin_time")]
-        public string OptInTime
+				public DateTime? OptInTime
         {
             get;
             set;
@@ -218,7 +219,7 @@ namespace MailChimp.Lists
 								result.OptInIP = y.Get(item.Key);
 								break;
 							case "optin_time":
-								result.OptInTime = y.Get(item.Key);
+								result.OptInTime = y.Get<DateTime?>(item.Key);
 								break;
 							case "email":
 								// skip

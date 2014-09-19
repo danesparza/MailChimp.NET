@@ -43,8 +43,6 @@ namespace MailChimp
         //  Default constructor
         public MailChimpManager()
         {
-            // remove "__type" member from ServiceStack.Text JSON Serializer serialized strings
-            JsConfig.ExcludeTypeInfo = true;
 						Lists.MergeVar.RegisterMergeVarFieldValuesJsonConversion();
         }
 
@@ -2238,23 +2236,22 @@ namespace MailChimp
             //  Initialize the results to return:
             T results = default(T);
 
-            try
-            {
-                //  Call the API with the passed arguments:
-                var resultString = fullUrl.PostJsonToUrl(args);
-                results = resultString.Trim().FromJson<T>();
-            }
-            catch (Exception ex)
-            {
-                string errorBody = ex.GetResponseBody();
-                if (errorBody == null)
-                    throw;
-                //  Serialize the error information:
-                ApiError apiError = errorBody.FromJson<ApiError>();
+						using (JsConfig.With(excludeTypeInfo: true, alwaysUseUtc: true)) {
+							try {
+								//  Call the API with the passed arguments:
+								var resultString = fullUrl.PostJsonToUrl(args);
+								results = resultString.Trim().FromJson<T>();
+							} catch (Exception ex) {
+								string errorBody = ex.GetResponseBody();
+								if (errorBody == null)
+									throw;
+								//  Serialize the error information:
+								ApiError apiError = errorBody.FromJson<ApiError>();
 
-                //  Throw a new exception based on this information:
-                throw new MailChimpAPIException(apiError.Error, ex, apiError);
-            }
+								//  Throw a new exception based on this information:
+								throw new MailChimpAPIException(apiError.Error, ex, apiError);
+							}
+						}
 
             //  Return the results
             return results;
