@@ -69,7 +69,7 @@ EmailParameter results = mc.Subscribe("YourListID", email);
 ##### Subscribe an email address to a list and set their interest groups (custom merge variables):
 
 ```CSharp	
-// create a class that inherits MergeVar and add any additional merge variable fields:
+// optionally create a class that inherits MergeVar and add any additional merge variable fields:
 [System.Runtime.Serialization.DataContract]
 public class MyMergeVar : MergeVar
 {
@@ -97,6 +97,28 @@ EmailParameter email = new EmailParameter()
 };
 
 EmailParameter results = mc.Subscribe("YourListID", email, myMergeVars);
+
+// or use the Dictionary to specify the fields and values. 
+// GetMemberInfo will always return the fields and values using the dictionary and not the custom class.
+MergeVar myMergeVars = new MergeVar();
+myMergeVars.Groupings = new List<Grouping>();
+myMergeVars.Groupings.Add(new Grouping());
+myMergeVars.Groupings[0].Id = 1234; // replace with your grouping id
+myMergeVars.Groupings[0].GroupNames = new List<string>();
+myMergeVars.Groupings[0].GroupNames.Add("Your Group Name");
+myMergeVars.Add("FNAME", "Testy");
+myMergeVars.Add("LNAME", "Testerson");
+
+MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+
+//	Create the email parameter
+EmailParameter email = new EmailParameter()
+{
+	Email = "customeremail@righthere.com"
+};
+
+EmailParameter results = mc.Subscribe("YourListID", email, myMergeVars);
+
 ```
 
 ##### Getting location data for each list:
