@@ -142,4 +142,4 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - [Goal](http://apidocs.mailchimp.com/api/2.0/#goal-methods) related **0%** (0 of 2)
 - [Conversations](http://apidocs.mailchimp.com/api/2.0/#conversations-methods) related **0%** (0 of 3)
 
-**Overall**: **65%** (85 of 120)
+**Overall**: **71%** (85 of 120)
