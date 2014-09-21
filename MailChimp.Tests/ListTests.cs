@@ -198,6 +198,20 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsNotNull(results);
             Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+
+						// load
+						List<EmailParameter> emails = new List<EmailParameter>();
+						emails.Add(results);
+						MemberInfoResult memberInfos = mc.GetMemberInfo(strListID, emails);
+
+						// Assert
+						Assert.AreEqual(1, memberInfos.SuccessCount);
+						Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
+						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
+						Assert.AreEqual("Testy", memberInfos.Data[0].MemberMergeInfo["FNAME"]);
+						Assert.AreEqual("Testerson", memberInfos.Data[0].MemberMergeInfo["LNAME"]);
+
         }
 
 				[TestMethod]
@@ -255,7 +269,7 @@ namespace MailChimp.Tests
 					Assert.AreEqual(1, memberInfos.SuccessCount);
 					Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
 					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
-					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
 				}
 
 

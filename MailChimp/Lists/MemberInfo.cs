@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace MailChimp.Lists
@@ -60,10 +61,10 @@ namespace MailChimp.Lists
         }
 
         /// <summary>
-        /// The date/time the double optin was initiated. This may be blank if single optin is used.
+        /// The date/time the double optin was initiated. This may be blank if single optin is used. (UTC time)
         /// </summary>
         [DataMember(Name = "timestamp_signup")]
-        public string TimestampSignup
+        public DateTime? TimestampSignup
         {
             get;
             set;
@@ -80,10 +81,10 @@ namespace MailChimp.Lists
         }
 
         /// <summary>
-        /// The date/time the optin completed
+				/// The date/time the optin completed. (UTC time)
         /// </summary>
         [DataMember(Name = "timestamp_opt")]
-        public string TimestampOptIn
+				public DateTime? TimestampOptIn
         {
             get;
             set;
@@ -112,20 +113,20 @@ namespace MailChimp.Lists
         }
 
         /// <summary>
-        /// The date/time this email address entered it's current status
+				/// The date/time this email address entered it's current status (UTC time)
         /// </summary>
         [DataMember(Name = "timestamp")]
-        public string Timestamp
+				public DateTime? Timestamp
         {
             get;
             set;
         }
 
         /// <summary>
-        /// The last time this record was changed. If the record is old enough, this may be blank.
+				/// The last time this record was changed. If the record is old enough, this may be blank. (UTC time)
         /// </summary>
         [DataMember(Name = "info_changed")]
-        public string InfoChanged
+				public DateTime? InfoChanged
         {
             get;
             set;
