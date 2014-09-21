@@ -5,6 +5,7 @@ using MailChimp.Campaigns;
 using MailChimp.Ecomm;
 using MailChimp.Errors;
 using MailChimp.Folders;
+using MailChimp.Gallery;
 using MailChimp.Helper;
 using MailChimp.Lists;
 using MailChimp.Reports;
@@ -671,6 +672,172 @@ namespace MailChimp
             return MakeAPICall<FolderActionResult>(apiAction, args);
         }
 
+
+        #endregion
+
+        #region API: Gallery
+
+        /// <summary>
+        /// Add a file to a folder
+        /// </summary>
+        /// <param name="fileId">the id of the file you want to add to a folder, as returned by the list call </param>
+        /// <param name="folderId">the id of the folder to add the file to, as returned by the listFolders call </param>
+        public bool GalleryFolderAddFileTo(int fileId, int folderId)
+        {
+            //  Our api action:
+            string apiAction = "gallery/add-file-to-folder";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                file_id = fileId,
+                folder_id = folderId
+            };
+
+            //  Make the call:
+            return MakeAPICall<bool>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Adds a folder to the file gallery
+        /// </summary>
+        /// <param name="name">the name of the folder to add (255 character max) </param>
+        public AddGalleryFolderResult GalleryFolderAdd(string name)
+        {
+            //  Our api action:
+            string apiAction = "gallery/add-folder";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                name = name
+            };
+
+            //  Make the call:
+            return MakeAPICall<AddGalleryFolderResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Return a section of the image gallery
+        /// </summary>
+        /// <param name="type">Optional the gallery type to return - images or files - default to images</param>
+        /// <param name="start">Optional for large data sets, the page number to start at - defaults to 1st page of data (page 0)</param>
+        /// <param name="limit">Optional for large data sets, the number of results to return - defaults to 25, upper limit set at 100</param>
+        /// <param name="sortBy">Optional field to sort by - one of size, time, name - defaults to time </param>
+        /// <param name="sortDir">Optional field to sort by - one of asc, desc - defaults to desc</param>
+        /// <param name="searchTerm">Optional a term to search for in names</param>
+        /// <param name="folderId">Optional to return files that are in a specific folder</param>
+        /// <returns></returns>
+        public GalleryListResult GetGalleries(string type = "images", int start = 0, int limit = 25, string sortBy = "time", string sortDir = "desc", string searchTerm = null, int folderId = 0)
+        {
+            //  Our api action:
+            string apiAction = "gallery/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                opts = new
+                {
+                    type = type,
+                    start = start,
+                    limit = limit,
+                    sort_by = sortBy,
+                    sort_dir = sortDir,
+                    search_term = searchTerm,
+                    folder_id = folderId
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<GalleryListResult>(apiAction, args);
+        }
+
+        public GalleryFoldersResult GetGalleryFolders(int start = 0, int limit = 25, string searchTerm = null)
+        {
+            //  Our api action:
+            string apiAction = "gallery/list-folders";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                opts = new
+                {
+                    start = start,
+                    limit = limit,
+                    search_term = searchTerm
+                }
+            };
+
+            //  Make the call:
+            return MakeAPICall<GalleryFoldersResult>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Remove all files from a folder
+        /// </summary>
+        /// <remarks>the files are not deleted, they are only removed from the folder</remarks>
+        /// <param name="folderId">the id of the folder to remove the file from</param>
+        public bool GalleryFolderRemoveAllFilesFrom(int folderId)
+        {
+            //  Our api action:
+            string apiAction = "gallery/remove-all-files-from-folder";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                folder_id = folderId
+            };
+
+            //  Make the call:
+            return MakeAPICall<bool>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Remove a file from a folder
+        /// </summary>
+        /// <param name="fileId">the id of the file you want to remove from the folder</param>
+        /// <param name="folderId">the id of the folder to remove the file from</param>
+        public bool GalleryFolderRemoveFileFrom(int fileId, int folderId)
+        {
+            //  Our api action:
+            string apiAction = "gallery/remove-file-from-folder";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                file_id = fileId,
+                folder_id = folderId
+            };
+
+            //  Make the call:
+            return MakeAPICall<bool>(apiAction, args);
+        }
+
+        /// <summary>
+        /// Remove a folder
+        /// </summary>
+        /// <param name="folderId">the id of the folder to remove</param>
+        public bool GalleryFolderRemove(int folderId)
+        {
+            //  Our api action:
+            string apiAction = "gallery/remove-folder";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                folder_id = folderId
+            };
+
+            //  Make the call:
+            return MakeAPICall<bool>(apiAction, args);
+        }
 
         #endregion
 

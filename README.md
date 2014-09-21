@@ -154,7 +154,7 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - [Campaigns](http://apidocs.mailchimp.com/api/2.0/#campaigns-methods) related: **100%** (15 of 15)
 - [Ecomm](http://apidocs.mailchimp.com/api/2.0/#ecomm-methods) related: **100%** (3 of 3)
 - [Folder](http://apidocs.mailchimp.com/api/2.0/#folders-methods) related: **100%** (4 of 4)
-- [Gallery](http://apidocs.mailchimp.com/api/2.0/#gallery-methods) related: **0%** (0 of 1)
+- [Gallery](http://apidocs.mailchimp.com/api/2.0/#gallery-methods) related: **100%** (7 of 7)
 - [List](http://apidocs.mailchimp.com/api/2.0/#lists-methods) related: **78%** (32 of 41)
 - [Helper](http://apidocs.mailchimp.com/api/2.0/#helper-methods) related: **70%** (7 of 10)
 - [Reports](http://apidocs.mailchimp.com/api/2.0/#reports-methods) related: **27%** (5 of 18)
@@ -164,4 +164,4 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - [Goal](http://apidocs.mailchimp.com/api/2.0/#goal-methods) related **0%** (0 of 2)
 - [Conversations](http://apidocs.mailchimp.com/api/2.0/#conversations-methods) related **0%** (0 of 3)
 
-**Overall**: **71%** (78 of 109)
+**Overall**: **71%** (85 of 120)
