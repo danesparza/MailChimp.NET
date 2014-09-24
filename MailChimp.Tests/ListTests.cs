@@ -189,8 +189,8 @@ namespace MailChimp.Tests
             mvso.Groupings[0].Id = nGroupingID;
             mvso.Groupings[0].GroupNames = new List<string>();
             mvso.Groupings[0].GroupNames.Add(strGroupName);
-            mvso.FirstName = "Testy";
-            mvso.LastName = "Testerson";
+            mvso.FirstName = "Testy" + DateTime.Now;
+						mvso.LastName = "Testerson" + DateTime.Now;
 
             //  Act
             EmailParameter results = mc.Subscribe(strListID, email, mvso);
@@ -209,9 +209,8 @@ namespace MailChimp.Tests
 						Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
 						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
 						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
-						Assert.AreEqual("Testy", memberInfos.Data[0].MemberMergeInfo["FNAME"]);
-						Assert.AreEqual("Testerson", memberInfos.Data[0].MemberMergeInfo["LNAME"]);
-
+						Assert.AreEqual(mvso.FirstName, memberInfos.Data[0].MemberMergeInfo["FNAME"]);
+						Assert.AreEqual(mvso.LastName, memberInfos.Data[0].MemberMergeInfo["LNAME"]);
         }
 
 				[TestMethod]
@@ -290,6 +289,11 @@ namespace MailChimp.Tests
                     Email = "customeremail1@righthere.com"
                 }
             };
+						MergeVar mVar1 = new MergeVar();
+						mVar1.Add("FNAME", "first1" + DateTime.Now);
+						mVar1.Add("LNAME", "last1" + DateTime.Now);
+						email1.MergeVars = mVar1;
+						emails.Add(email1);
 
             BatchEmailParameter email2 = new BatchEmailParameter()
             {
@@ -298,16 +302,26 @@ namespace MailChimp.Tests
                     Email = "customeremail2@righthere.com"
                 }
             };
-
-            emails.Add(email1);
+						MergeVar mVar2 = new MergeVar();
+						mVar2.Add("FNAME", "first2" + DateTime.Now);
+						mVar2.Add("LNAME", "last2" + DateTime.Now);
+						email2.MergeVars = mVar2;
             emails.Add(email2);
 
             //  Act
-            BatchSubscribeResult results = mc.BatchSubscribe(lists.Data[1].Id, emails);
+            BatchSubscribeResult results = mc.BatchSubscribe(lists.Data[0].Id, emails);
 
             //  Assert
             Assert.IsNotNull(results);
             Assert.IsTrue(results.AddCount == 2);
+
+						// load
+						List<EmailParameter> emailsP = new List<EmailParameter>();
+						emailsP.Add(email1.Email);
+						MemberInfoResult memberInfo = mc.GetMemberInfo(lists.Data[0].Id, emailsP);
+						Assert.AreEqual(mVar1["FNAME"], memberInfo.Data[0].MemberMergeInfo["FNAME"]);
+						Assert.AreEqual(mVar1["LNAME"], memberInfo.Data[0].MemberMergeInfo["LNAME"]);
+
         }
 
         [TestMethod]
