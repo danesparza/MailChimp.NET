@@ -249,8 +249,8 @@ namespace MailChimp.Tests
 					mvso.Groupings[0].Id = nGroupingID;
 					mvso.Groupings[0].GroupNames = new List<string>();
 					mvso.Groupings[0].GroupNames.Add(strGroupName);
-					mvso.Add("FNAME","Testy");
-					mvso.Add("LNAME", "Testerson");
+					mvso.Add("FNAME","Testy" + DateTime.Now);
+					mvso.Add("LNAME", "Testerson" + DateTime.Now);
 
 					//  Act
 					EmailParameter results = mc.Subscribe(strListID, email, mvso);
@@ -267,8 +267,9 @@ namespace MailChimp.Tests
 					// Assert
 					Assert.AreEqual(1, memberInfos.SuccessCount);
 					Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
-					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
-					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
+					Assert.AreEqual(mvso["FNAME"], memberInfos.Data[0].MemberMergeInfo["FNAME"]);
+					Assert.AreEqual(mvso["LNAME"], memberInfos.Data[0].MemberMergeInfo["LNAME"]);
+
 				}
 
 
