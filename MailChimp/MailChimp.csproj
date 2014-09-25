@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MailChimp</RootNamespace>
     <AssemblyName>MailChimp</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -33,8 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -42,7 +41,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -70,10 +68,26 @@
     <Compile Include="Campaigns\CampaignTypeRssOptions.cs" />
     <Compile Include="Campaigns\CampaignUpdateError.cs" />
     <Compile Include="Campaigns\CampaignUpdateResult.cs" />
+    <Compile Include="Ecomm\Order.cs" />
+    <Compile Include="Ecomm\OrderItem.cs" />
+    <Compile Include="Ecomm\OrderItemResult.cs" />
+    <Compile Include="Ecomm\OrderListResult.cs" />
+    <Compile Include="Ecomm\OrderResult.cs" />
+    <Compile Include="Gallery\AddGalleryFolderResult.cs" />
+    <Compile Include="Gallery\Gallery.cs" />
+    <Compile Include="Gallery\GalleryFolder.cs" />
+    <Compile Include="Gallery\GalleryFoldersResult.cs" />
+    <Compile Include="Gallery\GalleryListResult.cs" />
     <Compile Include="Helper\InlineCss.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
+    <Compile Include="Lists\AddCampaignSegmentOptions.cs" />
     <Compile Include="Lists\CompleteResult.cs" />
+    <Compile Include="Lists\SegmentAddResult.cs" />
+    <Compile Include="Lists\WebhookSources.cs" />
+    <Compile Include="Lists\WebhookActions.cs" />
+    <Compile Include="Lists\WebhookAddResult.cs" />
+    <Compile Include="Lists\WebhookInfo.cs" />
     <Compile Include="Lists\InterestGroupingResult.cs" />
     <Compile Include="Lists\MergeVar.cs" />
     <Compile Include="Lists\MergeVarError.cs" />
@@ -86,6 +100,11 @@
     <Compile Include="Lists\MergeVarResult.cs" />
     <Compile Include="MailChimpExportManager.cs" />
     <Compile Include="Reports\Absplit.cs" />
+    <Compile Include="Reports\ClickDetail.cs" />
+    <Compile Include="Reports\CommonOptions.cs" />
+    <Compile Include="Reports\BounceMessages.cs" />
+    <Compile Include="Reports\NotOpened.cs" />
+    <Compile Include="Reports\Opened.cs" />
     <Compile Include="Reports\SentTo.cs" />
     <Compile Include="Reports\Clicks.cs" />
     <Compile Include="Reports\Timeseries.cs" />
@@ -141,6 +160,7 @@
     <Compile Include="Lists\SegmentResult.cs" />
     <Compile Include="MailChimpManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Unsubscribes.cs" />
     <Compile Include="Templates\TemplateAddResult.cs" />
     <Compile Include="Templates\TemplateDeleteResult.cs" />
     <Compile Include="Templates\TemplateFilters.cs" />
@@ -161,7 +181,6 @@
     <Compile Include="Webhooks\UnsubscribeWebhookResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ecomm\" />
     <Folder Include="VIP\" />
   </ItemGroup>
   <ItemGroup>

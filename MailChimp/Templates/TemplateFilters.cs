@@ -45,6 +45,16 @@ namespace MailChimp.Templates
             set;
         }
 
-
+        /// <summary>
+        /// Include templates created and saved using the new Drag & Drop editor. 
+        /// Note: You will not be able to edit or create new drag & drop templates via this API. 
+        /// This is useful only for creating a new campaign based on a drag & drop template.
+        /// </summary>
+        [DataMember(Name = "include_drag_and_drop")]
+        public bool IncludeDragAndDrop
+        {
+            get;
+            set;
+        }
     }
 }

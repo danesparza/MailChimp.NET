@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MailChimp.Lists;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace MailChimp.Webhooks
@@ -73,7 +74,7 @@ namespace MailChimp.Webhooks
         /// The merges supplied
         /// </summary>
         [DataMember(Name = "merges")]
-        public Dictionary<string, string> Merges
+        public MergeVar Merges
         {
             get;
             set;
