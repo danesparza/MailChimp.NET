@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MailChimp.Campaigns;
 using MailChimp.Lists;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -86,12 +87,28 @@ namespace MailChimp.Tests
         public void GetListInterestGroupings_Successful()
         {
             //  Arrange
-            MailChimpManager mc = new MailChimpManager("efb48a02f2f56120e2f3f6e2fef71803-us6");
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
             ListResult lists = mc.GetLists(new ListFilter(){ListName = "TestAPIGetInterestGroup"});
             Assert.IsNotNull(lists);
             Assert.IsTrue(lists.Data.Any());
             //  Act
             List<InterestGrouping> results = mc.GetListInterestGroupings(lists.Data.FirstOrDefault().Id);
+
+            //  Assert
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Any());
+        }
+
+        [TestMethod]
+        public void GetListInterestGroupingsWithCountRequested_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager("efb48a02f2f56120e2f3f6e2fef71803-us6");
+            ListResult lists = mc.GetLists(new ListFilter() { ListName = "TestAPIGetInterestGroup" });
+            Assert.IsNotNull(lists);
+            Assert.IsTrue(lists.Data.Any());
+            //  Act
+            List<InterestGrouping> results = mc.GetListInterestGroupings(lists.Data.FirstOrDefault().Id, true);
 
             //  Assert
             Assert.IsNotNull(results);
@@ -181,7 +198,81 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsNotNull(results);
             Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+
+						// load
+						List<EmailParameter> emails = new List<EmailParameter>();
+						emails.Add(results);
+						MemberInfoResult memberInfos = mc.GetMemberInfo(strListID, emails);
+
+						// Assert
+						Assert.AreEqual(1, memberInfos.SuccessCount);
+						Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
+						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+						Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
+						Assert.AreEqual("Testy", memberInfos.Data[0].MemberMergeInfo["FNAME"]);
+						Assert.AreEqual("Testerson", memberInfos.Data[0].MemberMergeInfo["LNAME"]);
+
         }
+
+				[TestMethod]
+				public void SubscribeWithGroupSelectionUsingDictonary_Successful() {
+					//  Arrange
+					MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+					ListResult lists = mc.GetLists();
+					EmailParameter email = new EmailParameter() {
+						Email = "customeremail@righthere.com"
+					};
+
+					// find a list with interest groups...
+					string strListID = null;
+					int nGroupingID = 0;
+					string strGroupName = null;
+					foreach (ListInfo li in lists.Data) {
+						List<InterestGrouping> interests = mc.GetListInterestGroupings(li.Id);
+						if (interests != null) {
+							if (interests.Count > 0) {
+								if (interests[0].GroupNames.Count > 0) {
+									strListID = li.Id;
+									nGroupingID = interests[0].Id;
+									strGroupName = interests[0].GroupNames[0].Name;
+									break;
+								}
+							}
+						}
+					}
+					Assert.IsNotNull(strListID, "no lists found in this account with groupings / group names");
+					Assert.AreNotEqual(0, nGroupingID);
+					Assert.IsNotNull(strGroupName);
+
+					MergeVar mvso = new MergeVar();
+					mvso.Groupings = new List<Grouping>();
+					mvso.Groupings.Add(new Grouping());
+					mvso.Groupings[0].Id = nGroupingID;
+					mvso.Groupings[0].GroupNames = new List<string>();
+					mvso.Groupings[0].GroupNames.Add(strGroupName);
+					mvso.Add("FNAME","Testy");
+					mvso.Add("LNAME", "Testerson");
+
+					//  Act
+					EmailParameter results = mc.Subscribe(strListID, email, mvso);
+
+					//  Assert
+					Assert.IsNotNull(results);
+					Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
+
+					// load
+					List<EmailParameter> emails = new List<EmailParameter>();
+					emails.Add(results);
+					MemberInfoResult memberInfos = mc.GetMemberInfo(strListID, emails);
+
+					// Assert
+					Assert.AreEqual(1, memberInfos.SuccessCount);
+					Assert.AreEqual(2, memberInfos.Data[0].MemberMergeInfo.Count);
+					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+					Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("LNAME"));
+				}
+
+
 
         [TestMethod]
         public void BatchSubscribe_Successful()
@@ -339,7 +430,7 @@ namespace MailChimp.Tests
                 //  Write out each of the locations:
                 foreach(var location in locations)
                 {
-                    Debug.WriteLine("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total);
+                    Debug.WriteLine(string.Format("Country: {0} - {2} users, accounts for {1}% of list subscribers", location.Country, location.Percent, location.Total));
                 }
             }
         }
@@ -503,6 +594,36 @@ namespace MailChimp.Tests
             StaticSegmentAddResult result = mc.AddStaticSegment(lists.Data[1].Id, "Test Segment");
             // Assert
             Assert.IsNotNull(result.NewStaticSegmentID);
+        }
+
+        [TestMethod]
+        public void AddSegment_Successful()
+        {
+            // Arrange 
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            AddCampaignSegmentOptions options = new AddCampaignSegmentOptions
+            {
+                Name = "My Saved Segment",
+                SegmentType = "saved",
+                SegmentOptions = new CampaignSegmentOptions
+                {
+                    Match = "all",
+                    Conditions = new List<CampaignSegmentCriteria>
+                    {
+                        new CampaignSegmentCriteria
+                        {
+                            Field = "EMAIL",
+                            Operator = "ends",
+                            Value = ".com",
+                        }
+                    }
+                }
+            };
+            // Act
+            SegmentAddResult result = mc.AddSegment(lists.Data[1].Id, options);
+            // Assert
+            Assert.IsNotNull(result.NewSegmentID);
         }
 
         [TestMethod]

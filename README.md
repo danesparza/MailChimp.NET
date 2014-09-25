@@ -3,14 +3,16 @@ MailChimp.NET
 
 .NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/), built with MailChimp love :heart:
 
+[![Build status](https://ci.appveyor.com/api/projects/status/sltbowtdfnjj79yb)](https://ci.appveyor.com/project/danesparza/mailchimp-net)
+
 ### Quick Start
 
-1. Install the [NuGet package](https://nuget.org/packages/MailChimp.NET/) from the package manager console:
+Install the [NuGet package](https://nuget.org/packages/MailChimp.NET/) from the package manager console:
 
 ```powershell
 Install-Package MailChimp.NET
 ```
-2. Next, you will need to provide MailChimp.NET with your API key in code.  Need help finding your API key?  Check here: http://kb.mailchimp.com/article/where-can-i-find-my-api-key
+Next, you will need to provide MailChimp.NET with your API key in code.  Need help finding your API key?  Check here: http://kb.mailchimp.com/article/where-can-i-find-my-api-key
 
 In your application, call:
 
@@ -67,7 +69,7 @@ EmailParameter results = mc.Subscribe("YourListID", email);
 ##### Subscribe an email address to a list and set their interest groups (custom merge variables):
 
 ```CSharp	
-// create a class that inherits MergeVar and add any additional merge variable fields:
+// optionally create a class that inherits MergeVar and add any additional merge variable fields:
 [System.Runtime.Serialization.DataContract]
 public class MyMergeVar : MergeVar
 {
@@ -95,6 +97,28 @@ EmailParameter email = new EmailParameter()
 };
 
 EmailParameter results = mc.Subscribe("YourListID", email, myMergeVars);
+
+// or use the Dictionary to specify the fields and values. 
+// GetMemberInfo will always return the fields and values using the dictionary and not the custom class.
+MergeVar myMergeVars = new MergeVar();
+myMergeVars.Groupings = new List<Grouping>();
+myMergeVars.Groupings.Add(new Grouping());
+myMergeVars.Groupings[0].Id = 1234; // replace with your grouping id
+myMergeVars.Groupings[0].GroupNames = new List<string>();
+myMergeVars.Groupings[0].GroupNames.Add("Your Group Name");
+myMergeVars.Add("FNAME", "Testy");
+myMergeVars.Add("LNAME", "Testerson");
+
+MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
+
+//	Create the email parameter
+EmailParameter email = new EmailParameter()
+{
+	Email = "customeremail@righthere.com"
+};
+
+EmailParameter results = mc.Subscribe("YourListID", email, myMergeVars);
+
 ```
 
 ##### Getting location data for each list:
@@ -127,14 +151,17 @@ Also:  If you're reading this and you're from MailChimp, we wouldn't mind [some 
 ### Status
 Here is the progress so far (according to [the MailChimp API docs](http://apidocs.mailchimp.com/api/2.0/#method-sections) ) :
 
-- Campaigns related: **93%** (14 of 15)
-- Ecomm related: **0%** (0 of 3)
-- Folder related: **100%** (4 of 4)
-- List related: **69%** (25 of 36)
-- Helper related: **60%** (6 of 10)
-- Reports related: **11%** (2 of 18)
-- Templates related: **100%** (6 of 6)
-- User related: **100%** (6 of 6)
-- Vip related: **0%** (0 of 4)
+- [Campaigns](http://apidocs.mailchimp.com/api/2.0/#campaigns-methods) related: **100%** (15 of 15)
+- [Ecomm](http://apidocs.mailchimp.com/api/2.0/#ecomm-methods) related: **100%** (3 of 3)
+- [Folder](http://apidocs.mailchimp.com/api/2.0/#folders-methods) related: **100%** (4 of 4)
+- [Gallery](http://apidocs.mailchimp.com/api/2.0/#gallery-methods) related: **100%** (7 of 7)
+- [List](http://apidocs.mailchimp.com/api/2.0/#lists-methods) related: **78%** (32 of 41)
+- [Helper](http://apidocs.mailchimp.com/api/2.0/#helper-methods) related: **70%** (7 of 10)
+- [Reports](http://apidocs.mailchimp.com/api/2.0/#reports-methods) related: **27%** (5 of 18)
+- [Templates](http://apidocs.mailchimp.com/api/2.0/#templates-methods) related: **100%** (6 of 6)
+- [User](http://apidocs.mailchimp.com/api/2.0/#users-methods) related: **86%** (6 of 7)
+- [Vip](http://apidocs.mailchimp.com/api/2.0/#vip-methods) related: **0%** (0 of 4)
+- [Goal](http://apidocs.mailchimp.com/api/2.0/#goal-methods) related **0%** (0 of 2)
+- [Conversations](http://apidocs.mailchimp.com/api/2.0/#conversations-methods) related **0%** (0 of 3)
 
-**Overall**: **61%** (62 of 102)
+**Overall**: **71%** (85 of 120)

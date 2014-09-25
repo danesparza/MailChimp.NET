@@ -33,7 +33,9 @@ namespace MailChimp.Tests
             CampaignContent details = mc.GetCampaignContent(campaignId);
 
             //  Assert
-            Assert.IsFalse(string.IsNullOrWhiteSpace(details.Html));
+            // Changed from IsNullOrWhiteSpace to IsNullOrEmpty for .NET 3.5 compatibility. Consider using extension method
+            // for IsNullOrWhiteSpace support
+            Assert.IsFalse(string.IsNullOrEmpty(details.Html));
         }
 
         [TestMethod]
@@ -153,6 +155,18 @@ namespace MailChimp.Tests
             var result = mc.UpdateCampaign(campaigns.Data[0].Id, "options", new { title = "Different Campaign Title" });
             // Assert
             Assert.IsTrue(result.Errors.Count == 0);
+        }
+
+        [TestMethod]
+        public void GetCampaignTemplateContent_Successful()
+        {
+            // Arrange
+            var mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            CampaignListResult campaigns = mc.GetCampaigns();
+            //Act
+            var result = mc.GetCampaignTemplateContent(campaigns.Data[0].Id);
+            // Assert
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MailChimp
 		/// The HTTPS endpoint for the API.  
 		/// See http://apidocs.mailchimp.com/export/1.0/#api-endpoints for more information
 		/// </summary>
-		private string _httpsUrl = "https://{0}.api.mailchimp.com/export/1.0/{1}";
+		private string _httpsUrl = "https://{0}.api.mailchimp.com/export/1.0/{1}/";
 
 		/// <summary>
 		/// The datacenter prefix.  This will be automatically determined
@@ -95,34 +95,6 @@ namespace MailChimp
 			return utcSyncString;
 		}
 
-		static string ReturnFullUrlWithParameters(String url, object args)
-		{
-			string returnString = url;
-			Dictionary<String, String> parameters = args.ToStringDictionary();
-			List<string> keys = new List<string>();
-			List<string> values = new List<string>();
-			
-			foreach(var pair in parameters)
-			{
-				keys.Add(pair.Key);
-				values.Add(pair.Value);
-			}
-
-			for (int i = 0; i < parameters.Count; i++)
-			{
-				if (i == 0)
-				{
-					returnString += "?" + keys[i] + "=" + values[i];
-				}
-				else
-				{
-					returnString += "&" + keys[i] + "=" + values[i];
-				}
-			}
-
-			return returnString;
-		}
-
 		static List<Dictionary<string, string>> ParseExportApiResults(string stringFromServer)
 		{
 			List<Dictionary<string, string>> returnList = new List<Dictionary<string, string>>();
@@ -136,53 +108,26 @@ namespace MailChimp
 			foreach (string row in listofmembers)
 			{
 				if (row.Length > 4)
-					iListofMembers.Add(row);
+                    iListofMembers.Add(row.Trim(new[] { '[', ']' }));
 			}
 
-			string[] keys = iListofMembers[0].Split('"', '"');
+            string[] keys = iListofMembers[0].Split(new[] { ',' });
 			List<string> iKeys = new List<string>();
 			foreach (string row in keys)
 			{
-				if (row != ",")
-				{
-					string final_row = JsonSerializer.DeserializeFromString<string>(row);   // This is to fix unicode characters
-					iKeys.Add(final_row);
-				}
+                string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
+                iKeys.Add(final_row);
 			}
-			iKeys.RemoveAt(0);
-			iKeys.RemoveAt(iKeys.Count - 1);
 
-			iListofMembers.RemoveAt(0);
-
-			for (int i = 0; i < iListofMembers.Count; i++)
+			for (int i = 1; i < iListofMembers.Count; i++)
 			{
-				string[] values = iListofMembers[i].Split('"', '"');
+                string[] values = iListofMembers[i].Split(new[] { ',' });
 				List<string> iValues = new List<string>();
 				foreach (string row in values)
 				{
-					if (row != ",")
-					{
-						if (row.Contains("null"))
-						{
-							string[] rows = row.Split(',');
-							foreach (string one in rows)
-							{
-								if (one == "null")
-								{
-									string final_row = JsonSerializer.DeserializeFromString<string>(one);   // This is to fix unicode characters
-									iValues.Add(final_row);
-								}
-							}
-						}
-						else
-						{
-							string final_row = JsonSerializer.DeserializeFromString<string>(row);   // This is to fix unicode characters
-							iValues.Add(final_row);
-						}
-					}
+                    string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
+                    iValues.Add(final_row);
 				}
-				iValues.RemoveAt(0);
-				iValues.RemoveAt(iValues.Count - 1);
 
 				Dictionary<string, string> contact = new Dictionary<string, string>();
 				for (int j = 0; j < iKeys.Count(); j++)
@@ -220,11 +165,9 @@ namespace MailChimp
 
 			try
 			{
-				//  Call the API with the passed arguments:
-				fullUrl = ReturnFullUrlWithParameters(fullUrl, args);
-				string result = WebRequestExtensions.GetStringFromUrl(fullUrl);
-				returnList = ParseExportApiResults(result);
-				
+                //  Call the API with the passed arguments:
+                var resultString = fullUrl.PostJsonToUrl(args);
+                returnList = ParseExportApiResults(resultString);
 			}
 			catch (Exception ex)
 			{
@@ -255,7 +198,7 @@ namespace MailChimp
 		/// <param name="since">only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format</param>
 		/// <param name="hashed"> if, instead of full list data, you'd prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only "sha256" is supported. NOT IN USE NOW</param>        
 		/// <returns></returns>
-		public List<Dictionary<string, string>> GetAllMembersForList(string listId, string status = "subscribed", CampaignSegmentOptions segment = null, string since = "", string hashed = "")
+		public List<Dictionary<string, string>> GetAllMembersForList(string listId, string status = "subscribed", CampaignSegmentOptions segment = null, string since = "1900-01-01 00:00:00", string hashed = "")
 		//int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC", CampaignSegmentOptions segment = null)
 		{
 			//  Our api action:
