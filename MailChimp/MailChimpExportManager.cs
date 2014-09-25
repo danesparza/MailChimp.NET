@@ -95,34 +95,6 @@ namespace MailChimp
 			return utcSyncString;
 		}
 
-		static string ReturnFullUrlWithParameters(String url, object args)
-		{
-			string returnString = url;
-			Dictionary<String, String> parameters = args.ToStringDictionary();
-			List<string> keys = new List<string>();
-			List<string> values = new List<string>();
-			
-			foreach(var pair in parameters)
-			{
-				keys.Add(pair.Key);
-				values.Add(pair.Value);
-			}
-
-			for (int i = 0; i < parameters.Count; i++)
-			{
-				if (i == 0)
-				{
-					returnString += "?" + keys[i] + "=" + values[i];
-				}
-				else
-				{
-					returnString += "&" + keys[i] + "=" + values[i];
-				}
-			}
-
-			return returnString;
-		}
-
 		static List<Dictionary<string, string>> ParseExportApiResults(string stringFromServer)
 		{
 			List<Dictionary<string, string>> returnList = new List<Dictionary<string, string>>();
