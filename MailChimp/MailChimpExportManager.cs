@@ -108,26 +108,18 @@ namespace MailChimp
 			foreach (string row in listofmembers)
 			{
 				if (row.Length > 4)
-                    iListofMembers.Add(row.Trim(new[] { '[', ']' }));
+					iListofMembers.Add(row.Trim(new[] { '[', ']' }));
 			}
 
-            string[] keys = iListofMembers[0].Split(new[] { ',' });
 			List<string> iKeys = new List<string>();
-			foreach (string row in keys)
-			{
-                string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
-                iKeys.Add(final_row);
-			}
+			iKeys = rowParser(iListofMembers[0]);
+			
 
 			for (int i = 1; i < iListofMembers.Count; i++)
 			{
-                string[] values = iListofMembers[i].Split(new[] { ',' });
 				List<string> iValues = new List<string>();
-				foreach (string row in values)
-				{
-                    string final_row = JsonSerializer.DeserializeFromString<string>(row.Trim(new[] { '"' }));   // This is to fix unicode characters
-                    iValues.Add(final_row);
-				}
+				iValues = rowParser(iListofMembers[i]);
+
 
 				Dictionary<string, string> contact = new Dictionary<string, string>();
 				for (int j = 0; j < iKeys.Count(); j++)
@@ -137,6 +129,51 @@ namespace MailChimp
 				returnList.Add(contact);
 			}
 			return returnList;
+		}
+
+		static List<string> rowParser(String row)
+		{
+			List<string> columnList = new List<string>();
+			String columnString;
+
+			while (row != "")	//Loop until row is empty (all values listed)
+			{
+				if (row.Substring(0, 1) == "\"")			//If first mark is quotation mark (column has string value)
+				{
+					if (row.Contains("\","))			//If theres still next column, comma separated
+					{
+						columnString = row.Substring(1, row.Substring(1).IndexOf("\","));			//all between " and ", marks
+						row = row.Substring(row.IndexOf("\",") + 2);								//let's cut that column out of the row string
+						columnString = JsonSerializer.DeserializeFromString<string>(columnString);	// This is to fix unicode characters
+						columnList.Add(columnString);				//let's add that column to list
+					}
+					else if (row.Substring(row.Length - 1).Contains("\""))		//If there's not next column, but at least closing quotation mark (The last column)
+					{
+						columnString = row.Substring(1, row.Substring(1).IndexOf("\""));		//all between " and " marks
+						row = "";						//let's clear the row string
+						columnString = JsonSerializer.DeserializeFromString<string>(columnString);	// This is to fix unicode characters
+						columnList.Add(columnString);				//let's add that column to list
+					}
+				}
+				else					//If first column doesn't have a quotation mark
+				{
+					if (row.Contains(","))					//If theres still next column, comma separated
+					{
+						columnString = row.Substring(0, row.IndexOf(","));		//all from start to comma mark
+						row = row.Substring(row.IndexOf(",") + 1);		//let's cut that column out of the row string
+						columnString = JsonSerializer.DeserializeFromString<string>(columnString);	// This is to fix unicode characters
+						columnList.Add(columnString);					//let's add that column to list 
+					}
+					else				//If this is last column
+					{
+						columnString = row;						//save null as string value
+						row = "";							//let's clear the row string
+						columnString = JsonSerializer.DeserializeFromString<string>(columnString);	// This is to fix unicode characters
+						columnList.Add(columnString);					//let's add that column to list
+					}
+				}
+			}
+			return columnList;
 		}
 
 		#endregion
@@ -165,8 +202,8 @@ namespace MailChimp
 
 			try
 			{
-                //  Call the API with the passed arguments:
-                var resultString = fullUrl.PostJsonToUrl(args);
+				//  Call the API with the passed arguments:
+				var resultString = fullUrl.PostJsonToUrl(args);
                 returnList = ParseExportApiResults(resultString);
 			}
 			catch (Exception ex)
