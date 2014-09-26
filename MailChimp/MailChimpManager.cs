@@ -1297,7 +1297,7 @@ namespace MailChimp
         /// EmailParameter results = mc.Subscribe(strListID, email, myMergeVars);
         /// </code>
         /// </example>
-        public EmailParameter Subscribe(string listId, EmailParameter emailParam, object mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
+        public EmailParameter Subscribe(string listId, EmailParameter emailParam, MergeVar mergeVars = null, string emailType = "html", bool doubleOptIn = true, bool updateExisting = false, bool replaceInterests = true, bool sendWelcome = false)
         {
             //  Our api action:
             string apiAction = "lists/subscribe";
@@ -1308,7 +1308,7 @@ namespace MailChimp
                 apikey = this.APIKey,
                 id = listId,
                 email = emailParam,
-                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
+                merge_vars = mergeVars,
                 email_type = emailType,
                 double_optin = doubleOptIn,
                 update_existing = updateExisting,
