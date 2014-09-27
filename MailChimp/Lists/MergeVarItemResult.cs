@@ -53,7 +53,7 @@ namespace MailChimp.Lists
         /// <summary>
         /// Whether the field is displayed in thelist dashboard 
         /// </summary>
-        [DataMember(Name = "public")]
+        [DataMember(Name = "show")]
         public bool Show
         {
             get;
@@ -122,6 +122,7 @@ namespace MailChimp.Lists
         /// <summary>
         /// an unchanging id for the merge var 
         /// </summary>
+				[DataMember(Name = "id")]
         public int Id
         {
             get;
