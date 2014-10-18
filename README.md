@@ -24,6 +24,14 @@ MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
 ListResult lists = mc.GetLists();
 ```
 
+### Getting help
+
+For help and support, first check out the examples below.  
+
+If you can't figure out what you need from the examples (or if you're running into a tough problem) you might want to check out the [MailChimp support site](http://kb.mailchimp.com/), or ping the [MailChimp API support](https://twitter.com/MailChimp_API) twitter account.  
+
+If you've got a question/bug/feature request for the API wrapper itself, please use [Github issues](https://github.com/danesparza/MailChimp.NET/issues) and consider contributing to the project yourself.  See the "Making contributions" section for more information on how to contribute.  
+
 ### Examples
 
 ##### Getting the first 100 users in each list:
