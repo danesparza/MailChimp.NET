@@ -134,6 +134,34 @@ namespace MailChimp.Tests
             Assert.IsTrue(!string.IsNullOrEmpty(results.LEId));
         }
 
+        [TestMethod]
+        public void UpdateMember_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+            ListResult lists = mc.GetLists();
+            EmailParameter email = new EmailParameter()
+            {
+                Email = "customeremail@righthere.com"
+            };
+            var listId = lists.Data[0].Id;
+            MyMergeVar mergeVar = new MyMergeVar();
+            EmailParameter subscriptionResults = mc.Subscribe(listId, email, mergeVar, "html", false, true);
+
+            //  Act
+            mergeVar.FirstName = "some name";
+            mc.UpdateMember(listId, subscriptionResults, mergeVar);
+
+            // load
+            List<EmailParameter> emails = new List<EmailParameter>();
+            emails.Add(email);
+            MemberInfoResult memberInfos = mc.GetMemberInfo(listId, emails);
+
+            //  Assert
+            Assert.IsTrue(memberInfos.Data[0].MemberMergeInfo.ContainsKey("FNAME"));
+            Assert.AreEqual("some name", memberInfos.Data[0].MemberMergeInfo["FNAME"]);
+        }
+
         [System.Runtime.Serialization.DataContract] 
         public class MyMergeVar : MergeVar
         {

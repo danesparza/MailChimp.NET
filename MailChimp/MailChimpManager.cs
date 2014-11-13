@@ -1338,7 +1338,7 @@ namespace MailChimp
                 apikey = this.APIKey,
                 id = listId,
                 email = emailParam,
-                merge_vars = (object)mergeVars, // cast to object so ServiceStack grabs the entire object (IE if it is inherited with custom merge fields added)
+                merge_vars = mergeVars,
                 email_type = emailType,
                 replace_interests = replaceInterests
             };
