@@ -138,5 +138,20 @@ namespace MailChimp.Tests
             //  Assert
             Assert.IsNotNull(details.Html);
         }
+
+        [TestMethod]
+        public void GetVerifiedDomains_Successful()
+        {
+            //  Arrange
+            MailChimpManager mc = new MailChimpManager(TestGlobal.Test_APIKey);
+
+            //  Act
+            List<VerifiedDomain> domains = mc.GetVerifiedDomains();
+
+            //  Assert
+            Debug.WriteLine(domains.Count);
+            Assert.AreNotEqual(0, domains.Count);
+        }
+
     }
 }

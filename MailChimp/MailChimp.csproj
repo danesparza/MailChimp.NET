@@ -81,6 +81,7 @@
     <Compile Include="Helper\InlineCss.cs" />
     <Compile Include="Helper\Match.cs" />
     <Compile Include="Helper\Matches.cs" />
+    <Compile Include="Helper\VerifiedDomain.cs" />
     <Compile Include="Lists\AddCampaignSegmentOptions.cs" />
     <Compile Include="Lists\CompleteResult.cs" />
     <Compile Include="Lists\SegmentAddResult.cs" />
