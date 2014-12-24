@@ -1921,6 +1921,21 @@ namespace MailChimp
             return MakeAPICall<InlineCss>(apiAction, args);
         }
 
+        public List<VerifiedDomain> GetVerifiedDomains()
+        {
+            //  Our api action:
+            string apiAction = "helper/verified-domains";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey
+            };
+
+            //  Make the call:
+            return MakeAPICall<List<VerifiedDomain>>(apiAction, args);
+        }
+
         #endregion
 
         #region API: Users
