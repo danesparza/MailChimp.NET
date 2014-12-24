@@ -66,6 +66,19 @@ namespace MailChimp
 			this._dataCenterPrefix = GetDatacenterPrefix(apiKey);
 		}
 
+        /// <summary>
+        /// Create an instance of the wrapper with an Access Token and a datacenter prefix
+        /// -- Primarily used when OAuth has been used to connect to MailChimp
+        /// </summary>
+        /// <param name="accessToken">The access token obtained through an OAuth call</param>
+        /// <param name="dataCenterPrefix">The data center prefix obtained following an OAuth call</param>
+        public MailChimpExportManager(string accessToken, string dataCenterPrefix)
+            :this()
+        {
+            this.APIKey = accessToken;
+            this._dataCenterPrefix = dataCenterPrefix;
+        }
+
 		/// <summary>
 		/// Gets / sets your API key for all operations.  
 		/// For help getting your API key, please see 
