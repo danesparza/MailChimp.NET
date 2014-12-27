@@ -1082,7 +1082,7 @@ namespace MailChimp
         /// </summary>
         /// <param name="listId"></param>
         /// <returns></returns>
-        public InterestGroupingResult AddListInterestGrouping(string listId, string name, string type, List<InterestGrouping.InnerGroup> groups)
+        public InterestGroupingResult AddListInterestGrouping(string listId, string name, string type, List<string> groups)
         {
             //  Our api action:
             string apiAction = "lists/interest-grouping-add";
