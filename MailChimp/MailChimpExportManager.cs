@@ -8,12 +8,38 @@ using MailChimp.Campaigns;
 
 namespace MailChimp
 {
-	/// <summary>
+    #region Interface
+    public interface IMailChimpExportManager
+    {
+        /// <summary>
+        /// Gets / sets your API key for all operations.  
+        /// For help getting your API key, please see 
+        /// http://kb.mailchimp.com/article/where-can-i-find-my-api-key
+        /// </summary>
+        string APIKey { get; set; }
+
+        /// <summary>
+        /// Exports/dumps members of a list and all of their associated details. 
+        /// This is a very similar to exporting via the web interface.
+        /// </summary>
+        /// <param name="listId">the list id to connect to (can be gathered using GetLists())</param>
+        /// <param name="status">optional - the status to get members for - one of(subscribed, unsubscribed, cleaned)</param>
+        /// <param name="segment">refine the members list by segments (maximum of 5 conditions)</param>
+        /// <param name="since">only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format</param>
+        /// <param name="hashed"> if, instead of full list data, you'd prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only "sha256" is supported. NOT IN USE NOW</param>        
+        /// <returns></returns>
+        List<Dictionary<string, string>> GetAllMembersForList(string listId, string status = "subscribed", CampaignSegmentOptions segment = null, string since = "1900-01-01 00:00:00", string hashed = "")
+            //int start = 0, int limit = 25, string sort_field = "", string sort_dir = "ASC", CampaignSegmentOptions segment = null)
+            ;
+    }
+    #endregion
+
+    /// <summary>
 	/// .NET API Wrapper for the Mailchimp Export v1.0 API.
 	/// More information here: http://apidocs.mailchimp.com/export/1.0/
 	/// </summary>
-	public class MailChimpExportManager
-	{
+	public class MailChimpExportManager : IMailChimpExportManager
+    {
 		#region Fields and properties
 
 		/// <summary>
