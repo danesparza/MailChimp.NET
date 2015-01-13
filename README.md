@@ -46,7 +46,7 @@ ListResult lists = mc.GetLists();
 //  For each list
 foreach(var list in lists.Data)
 {
-	//  Write out the list name:
+    //  Write out the list name:
 	Debug.WriteLine("Users for the list " + list.Name);
 	
 	//  Get the first 100 members of each list:
@@ -151,6 +151,40 @@ foreach(var list in lists.Data)
 }
 ```
 
+### Mocking
+The `IMailChimpManager` and `IMailChimpExportManager` interfaces have been included to allow you to easily mock this API for your own testing.
+
+If you were to use a framework like [Moq](http://github.com/moq/moq4) you might write something like:
+
+```CSharp
+public class ThingThatDependsOnMailChimpManager{
+	IMailChimpManager _mailChimpManager;
+
+	public ThingThatDependsOnMailChimpManager(IMailChimpManager mailChimpManager){
+		_mailChimpManager = mailChimpManager;
+	}
+
+	public bool DoSomething(){
+		_mailChimpManager.UpdateCampaign("campaignId", "name", new object());
+		return true;
+	}
+}
+```
+```CSharp
+// Arrange
+Mock<IMailChimpManager> mailChimpManagerMock = new Mock<IMailChimpManager>();
+
+mailChimpManagerMock.Setup(x => x.UpdateCampaign(It.IsAny<string>, It.IsAny<string>, It.IsAny<object>)
+.Return(new CampaignUpdateResult());
+
+// Act
+var thing = new ThingThatDependsOnMailChimpManager(mailChimpManagerMock.Object);
+var result = thing.DoSomething();
+
+// Assert
+Assert.IsTrue(result);
+```
+
 ### Making contributions
 This project is not affiliated with [MailChimp](http://mailchimp.com/about/).  All contributors to this project are unpaid average folks (just like you!) who choose to volunteer their time.  If you like MailChimp and want to contribute, we would appreciate your help!  To get started, just [fork the repo](https://help.github.com/articles/fork-a-repo), make your changes and submit a pull request.   
 
@@ -173,3 +207,4 @@ Here is the progress so far (according to [the MailChimp API docs](http://apidoc
 - [Conversations](http://apidocs.mailchimp.com/api/2.0/#conversations-methods) related **0%** (0 of 3)
 
 **Overall**: **71%** (85 of 120)
+
