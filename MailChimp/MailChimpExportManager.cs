@@ -159,9 +159,12 @@ namespace MailChimp
 				List<string> iValues = new List<string>();
 				iValues = rowParser(iListofMembers[i]);
 
-
-				Dictionary<string, string> contact = new Dictionary<string, string>();
-				for (int j = 0; j < iKeys.Count(); j++)
+                Dictionary<string, string> contact = new Dictionary<string, string>();
+                
+                // make sure we avoid index out of bounds errors
+                // when not all contacts have all values
+                var count = Math.Min(iKeys.Count(), iValues.Count);
+                for (int j = 0; j < count; j++)
 				{
 					contact.Add(iKeys[j], iValues[j]);
 				}
@@ -173,10 +176,20 @@ namespace MailChimp
 		static List<string> rowParser(String row)
 		{
 			List<string> columnList = new List<string>();
-			String columnString;
+            string columnString;
+            string previousRow = string.Empty;
 
-			while (row != "")	//Loop until row is empty (all values listed)
-			{
+            // Loop until row is empty (all values listed) or we have not processed the row (avoid infinite loop)
+			while (row != string.Empty && row != previousRow)
+            {
+                previousRow = row;
+
+                // if all that is left in the row is a quotation mark, we're done
+                if (row.Equals("\""))
+                {
+                    return columnList;
+                }
+
 				if (row.Substring(0, 1) == "\"")			//If first mark is quotation mark (column has string value)
 				{
 					if (row.Contains("\","))			//If theres still next column, comma separated
