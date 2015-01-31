@@ -350,7 +350,7 @@ namespace MailChimp
         /// </summary>
         /// <param name="listId"></param>
         /// <returns></returns>
-        InterestGroupingResult AddListInterestGrouping(string listId, string name, string type, List<InterestGrouping.InnerGroup> groups);
+        InterestGroupingResult AddListInterestGrouping(string listId, string name, string type, List<string> groups);
 
         /// <summary>
         /// Delete an existing Interest Grouping - this will permanently delete all contained interest groups and will remove those selections from all list members
