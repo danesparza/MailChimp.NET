@@ -11,7 +11,7 @@ namespace MailChimp.Lists
         /// <summary>
         /// the URL for this Webhook
         /// </summary>
-        [DataMember(Name = "total")]
+        [DataMember(Name = "url")]
         public string Url
         {
             get;
