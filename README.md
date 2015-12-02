@@ -39,6 +39,7 @@ If you've got a question/bug/feature request for the API wrapper itself, please 
 ```CSharp
 using MailChimp;
 using MailChimp.Lists;
+using MailChimp.Helper;
 
 MailChimpManager mc = new MailChimpManager("YourApiKeyHere-us2");
 ListResult lists = mc.GetLists();
