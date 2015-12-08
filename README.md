@@ -154,6 +154,14 @@ foreach(var list in lists.Data)
 ### Mocking
 The `IMailChimpManager` and `IMailChimpExportManager` interfaces have been included to allow you to easily mock this API for your own testing.
 
+To set up in your dependency injector, bind the interface with a constructor argument passing your API key. This example uses [Ninject](http://www.ninject.org/) loading the value from an app setting in the Web.config named 'MailChimpApiKey':
+
+```CSharp
+kernel.Bind<IMailChimpManager>()
+	.To<MailChimpManager>()
+	.WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["MailChimpApiKey");
+```
+
 If you were to use a framework like [Moq](http://github.com/moq/moq4) you might write something like:
 
 ```CSharp
