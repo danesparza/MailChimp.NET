@@ -160,7 +160,7 @@ To set up in your dependency injector, bind the interface with a constructor arg
 ```CSharp
 kernel.Bind<IMailChimpManager>()
 	.To<MailChimpManager>()
-	.WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["MailChimpApiKey");
+	.WithConstructorArgument("apiKey", ConfigurationManager.AppSettings["MailChimpApiKey"]);
 ```
 
 If you were to use a framework like [Moq](http://github.com/moq/moq4) you might write something like:
