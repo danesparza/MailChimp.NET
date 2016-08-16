@@ -23,6 +23,7 @@ namespace MailChimp.Reports
         public List<UnsubscribesData> Data { get; set; }
     }
 
+    [DataContract]
     public class UnsubscribesData
     {
         /// <summary>

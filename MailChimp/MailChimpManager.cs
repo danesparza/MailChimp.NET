@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MailChimp.Automations;
 using MailChimp.Campaigns;
 using MailChimp.Ecomm;
 using MailChimp.Errors;
@@ -13,7 +14,6 @@ using MailChimp.Templates;
 using MailChimp.Users;
 using ServiceStack.Text;
 using System.IO;
-
 
 namespace MailChimp
 {
@@ -958,6 +958,30 @@ namespace MailChimp
             {
                 return "";
             }
+        }
+
+        #endregion
+
+        #region API: Automations
+
+        public AutomationListResult GetAutomations(AutomationFilter filterParam = null, int start = 0, int limit = 25, string sort_field = "create_time", string sort_dir = "DESC")
+        {
+            //  Our api action:
+            string apiAction = "automations/list";
+
+            //  Create our arguments object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                filters = filterParam,
+                start = start,
+                limit = limit,
+                sort_field = sort_field,
+                sort_dir = sort_dir
+            };
+
+            //  Make the call:
+            return MakeAPICall<AutomationListResult>(apiAction, args);
         }
 
         #endregion
@@ -2518,6 +2542,22 @@ namespace MailChimp
                 type = segmentType
             };
             return MakeAPICall<SegmentResult>(apiAction, args);
+        }
+
+        public CompleteResult UpdateSegment(string listId, string segmentId, SegmentTestOptions segmentOptions)
+        {
+            // our api action:
+            string apiAction = "lists/segment-update";
+
+            // create our arguements object:
+            object args = new
+            {
+                apikey = this.APIKey,
+                id = listId,
+                seg_id = segmentId,
+                opts = segmentOptions
+            };
+            return MakeAPICall<CompleteResult>(apiAction, args);
         }
 
         /// <summary>
