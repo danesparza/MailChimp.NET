@@ -1,4 +1,4 @@
-MailChimp.NET [![Build status](https://ci.appveyor.com/api/projects/status/sltbowtdfnjj79yb?svg=true)](https://ci.appveyor.com/project/danesparza/mailchimp-net)
+MailChimp.NET [![Build status](https://ci.appveyor.com/api/projects/status/sltbowtdfnjj79yb?svg=true)](https://ci.appveyor.com/project/danesparza/mailchimp-net) [![deprecated](http://badges.github.io/stability-badges/dist/deprecated.svg)](http://github.com/badges/stability-badges)
 =============
 
 .NET Wrapper for the [MailChimp v2.0 API](http://apidocs.mailchimp.com/api/2.0/), built with MailChimp love :heart:
