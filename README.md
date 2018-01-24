@@ -183,7 +183,7 @@ public class ThingThatDependsOnMailChimpManager{
 // Arrange
 Mock<IMailChimpManager> mailChimpManagerMock = new Mock<IMailChimpManager>();
 
-mailChimpManagerMock.Setup(x => x.UpdateCampaign(It.IsAny<string>, It.IsAny<string>, It.IsAny<object>)
+mailChimpManagerMock.Setup(x => x.UpdateCampaign(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())
 .Return(new CampaignUpdateResult());
 
 // Act
